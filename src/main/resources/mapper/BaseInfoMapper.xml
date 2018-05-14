@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kurumi.mapper.BaseInfoMapper" >
+ 
+ <!-- 依据医院编号获取医院 -->
+ <select id="getHospitalByCode" resultType="map">
+  	select id, name as label,code as uniq_code from hospital where code = #{hospitalCode}
+ </select>
+ 
+ <!-- 依据医院id获取医疗科室 -->
+ <select id="getMedicalDeptByHospitalId" resultType="map">
+  	select name as label,code as uniq_code from medical_office
+  	where hospital_id = #{hospitalId}
+ </select>
+ 
+ <!-- 依据编号获取医疗科室 -->
+ <select id="getMedicalDeptByCode" resultType="map">
+  	select id, name as label,code as uniq_code from medical_office
+  	where code = #{code}
+ </select>
+ 
+ <!-- 获取就诊类型依据编号 -->
+ <select id="getTreatmentTypeByCode" resultType="map">
+  	select id,name as label,code as uniq_code from treatment_type
+  	where code = #{code}
+ </select>
+ 
+ <!-- 获取保密级别依据编号 -->
+ <select id="getTreatmentSignByCode" resultType="map">
+  	select id,name as label,code as uniq_code from treatment_sign
+  	where code = #{code}
+ </select>
+ 
+ <!-- 获取医疗付费方式 -->
+ <select id="getMedicalPaymentTypes" resultType="map">
+  	select name as label,code as uniq_code from medical_payment_type
+ </select>
+ 
+ <!-- 获取性别 -->
+ <select id="getSexs" resultType="map">
+  	select name as label,code as uniq_code from sex
+ </select>
+ 
+ <!-- 获取性别依据编号 -->
+ <select id="getSexByCode" resultType="map">
+  	select id,name as label,code as uniq_code from sex
+  	where code = #{code}
+ </select>
+ 
+ <!-- 获取身份证件类型 -->
+ <select id="getIdDocumentTypes" resultType="map">
+  	select name as label,code as uniq_code from identity_document_type
+ </select>
+ 
+ <!-- 获取身份证件类型依据编号 -->
+ <select id="getIdDocumentTypeByCode" resultType="map">
+  	select id,name as label,code as uniq_code from identity_document_type
+  	where code = #{code}
+ </select>
+ 
+ <!-- 获取婚姻 -->
+ <select id="getMarriages" resultType="map">
+  	select name as label,code as uniq_code from marriage
+ </select>
+ 
+ <!-- 获取国籍 -->
+ <select id="getNationalitys" resultType="map">
+  	select name as label,code as uniq_code from nationality
+ </select>
+ 
+ <!-- 获取民族 -->
+ <select id="getNations" resultType="map">
+  	select name as label,code as uniq_code from nation
+ </select>
+ 
+ <!-- 获取职业 -->
+ <select id="getProfessions" resultType="map">
+  	select name as label,code as uniq_code from profession
+ </select>
+ 
+ <!-- 获取亲属关系 -->
+ <select id="getRelativeRelations" resultType="map">
+  	select name as label,code as uniq_code from relative_relation
+ </select>
+ 
+ <!-- 获取入院方式 -->
+ <select id="getInHospitalTypes" resultType="map">
+  	select name as label,code as uniq_code from in_hospital_type
+ </select>
+ 
+ <!-- 获取入院方式 依据编号-->
+ <select id="getInHospitalTypeByCode" resultType="map">
+  	select id, name as label,code as uniq_code from in_hospital_type
+  	where code = #{code}
+ </select>
+ 
+ <!-- 获取入院状况 -->
+ <select id="getInHospitalStates" resultType="map">
+  	select name as label,code as uniq_code from in_hospitalization_state
+ </select>
+ 
+ <!-- 获取出院方式 -->
+ <select id="getOutHospitalTypes" resultType="map">
+  	select name as label,code as uniq_code from out_hospital_type
+ </select>
+ 
+ <!-- 获取出院方式 依据编号-->
+ <select id="getOutHospitalTypeByCode" resultType="map">
+  	select id, name as label,code as uniq_code from out_hospital_type
+  	where code = #{code}
+ </select>
+ 
+ <!-- 获取再住院目的 -->
+ <select id="getRehospitalAims" resultType="map">
+  	select name as label,code as uniq_code from rehospitalization_aim
+ </select>
+ 
+ <!-- 获取死亡原因 -->
+ <select id="getHospitalDealthReasons" resultType="map">
+  	select name as label,code as uniq_code from hospitalization_dealth_reason
+ </select>
+ 
+ <!-- 疾病诊断类型 -->
+ <select id="getDiagTypes" resultType="map">
+  	select name as label,code as uniq_code from diagnose_type
+ </select>
+ 
+ <!-- 疾病治疗结果 -->
+ <select id="getTreatmentResults" resultType="map">
+  	select name as label,code as uniq_code from treatment_result
+ </select>
+ 
+ <!-- 模糊搜索疾病 -->
+ <!-- <select id="getDiseaseByQueryName" resultType="map">
+  	select CONCAT(code,'-',name) as label,code as uniq_code from std_disease
+  	where code like #{queryName} or name like #{queryName} or index_code like #{queryName}
+ </select> -->
+ 
+ <!-- 模糊搜索疾病 -->
+ <select id="getDiseaseByQueryName" resultType="map">
+  	select name as label,code as uniq_code from std_disease
+  	where code like #{queryName} or name like #{queryName} or index_code like #{queryName}
+ </select>
+ 
+ 
+ <!-- 模糊搜索医疗工作人员 -->
+ <select id="getMedicalWorkerByQueryName" resultType="map">
+  	select name as label,code as uniq_code from medical_worker
+  	where code like #{queryName} or name like #{queryName}
+ </select>
+ 
+ <!-- 获取ABO血型 -->
+ <select id="getBloodTypes" resultType="map">
+  	select name as label,code as uniq_code from blood_type
+ </select>
+ 
+ <!-- 获取RH血型 -->
+ <select id="getRhBloodTypes" resultType="map">
+  	select name as label,code as uniq_code from rh_blood_type
+ </select>
+ 
+ <!-- 获取诊断对比符合类型-->
+ <select id="getDiagAccordTypes" resultType="map">
+  	select name as label,code as uniq_code from diagnostic_coincidence_type
+ </select>
+ 
+ 
+ <!-- 获取切口等级-->
+ <select id="getIncisionLevels" resultType="map">
+  	select name as label,code as uniq_code from std_incision_level
+ </select>
+ 
+ <!-- 获取愈合类型-->
+ <select id="getCicatrizeTypes" resultType="map">
+  	select name as label,code as uniq_code from std_cicatrization_type
+ </select>
+ 
+ <!-- 获取手术级别-->
+ <select id="getOpsLevels" resultType="map">
+  	select name as label,code as uniq_code from std_ops_level
+ </select>
+ 
+ 
+ <!-- 获取麻醉方式-->
+ <select id="getAnaesthesiaWays" resultType="map">
+  	select name as label,code as uniq_code from std_anaesthesia_way
+ </select>
+ 
+ <!-- 获取麻醉分级-->
+ <select id="getAnaesthesiaLevels" resultType="map">
+  	select name as label,code as uniq_code from std_anaesthesia_level
+ </select>
+ 
+ <!-- 模糊搜索手术操作 -->
+ <select id="getOperateByQueryName" resultType="map">
+  	select name as label,code as uniq_code from std_operation
+  	where code like #{queryName} or name like #{queryName} or index_code like #{queryName}
+ </select>
+ 
+ <!-- 获取ICU类型-->
+ <select id="getICUTypes" resultType="map">
+  	select name as label,code as uniq_code from icu_type
+ </select>
+ 
+ <!-- 获取过敏药物类型-->
+ <select id="getAllergyDrugTypes" resultType="map">
+  	select name as label,code as uniq_code from drug_allergy_type
+ </select>
+ 
+ <!-- 获取过压疮来源-->
+ <select id="getPressureSoreCradles" resultType="map">
+  	select name as label,code as uniq_code from pressure_sore_cradle
+ </select>
+ 
+ <!-- 获取过压疮分期-->
+ <select id="getPressureSorePhases" resultType="map">
+  	select name as label,code as uniq_code from pressure_sore_phase
+ </select>
+ 
+ <!-- 获取过压疮部位-->
+ <select id="getPressureSoreParts" resultType="map">
+  	select name as label,code as uniq_code from pressure_sore_part
+ </select>
+ 
+ <!-- 获取抗菌用药目的-->
+ <select id="getAntibacterialDrugPurposes" resultType="map">
+  	select name as label,code as uniq_code from std_antibacterial_drug_purpose
+ </select>
+ 
+ <!-- 获取抗菌药物分类-->
+ <select id="getAntibacterialDrugClassificatorys" resultType="map">
+  	select name as label,code as uniq_code from std_antibacterial_drug_classificatory
+ </select>
+ 
+ <!-- 获取抗菌用药方案-->
+ <select id="getAntibacterialDrugRegimens" resultType="map">
+  	select name as label,code as uniq_code from std_antibacterial_drug_regimen
+ </select>
+ 
+ <!-- 获取病原体-->
+ <select id="getPathogens" resultType="map">
+  	select name as label,code as uniq_code from std_pathogeny
+ </select>
+ 
+ 
+ <!-- 获取病原学检测标本-->
+ <select id="getPathogenyCheckSpecimens" resultType="map">
+  	select name as label,code as uniq_code from std_pathogeny_exemplar
+ </select>
+ 
+ <!-- 获取易感因素-->
+ <select id="getPredisposeFactors" resultType="map">
+  	select name as label,code as uniq_code from std_predisposing_factor
+ </select>
+ 
+ <!-- 依据编号获取示踪类型-->
+ <select id="getTreatmentTraceTypeByCode" resultType="map" >
+   	select id,code,name,status from treatment_trace_type
+   	where code = #{code}
+  </select>
+  
+   <!-- 获取第一级指控标准-->
+ <select id="getQualityControlOfFirstLevel" resultType="map" >
+   select t.code,t.project,t.score from quality_control_standard t where code like '_';
+  </select>
+  
+  <!-- 依据上一级编号获取指控标准-->
+ <select id="getQualityControlByUpOneLevelCode" resultType="map" >
+   select t.code,t.project,t.score from quality_control_standard t where 
+   t.code like #{upOneLevelCode}
+  </select>
+  
+  
+ 
+ 
+</mapper>
