@@ -37,21 +37,38 @@ request.setAttribute("basePath", basePath);
 <div id="nav">
  <ul class="multiUl">
   <li><a href="${basePath }/index">首页</a></li>
-  <shiro:hasRole name="role_version_1">
+  <shiro:hasAnyRoles name="role_version_1,role_version_1.1">
   	<li><a href="${basePath }medical_record/pigeonholed_index" id="demoBtn">病案归档</a></li>
-  </shiro:hasRole>
-  <shiro:hasRole name="role_version_1">
+  </shiro:hasAnyRoles>
+  <shiro:hasAnyRoles name="role_version_1,role_version_1.1">
   	<li><a href="${basePath }medical_record/quality_control_index" id="demoBtn1">病案质控</a></li>
-  </shiro:hasRole>
-  
-  <li><a href="#" id="demoBtn2">病案扫描</a></li>
-  <li><a href="#" id="demoBtn3">病案编码</a></li>
-  <li><a href="#" id="demoBtn4">病案上架</a></li>
-  <li><a href="#" id="demoBtn5">窗口服务</a></li>
-  <li><a href="#" id="demoBtn6">借阅记录</a></li>
-  <li><a href="${basePath }medical_record/trace_index" id="demoBtn7">病案示踪</a></li>
-  <li><a href="#" id="demoBtn8">环节质控</a></li>
-  <li><a href="#" id="demoBtn9">工作质控</a></li>
-  <li><a href="#" id="demoBtn10">数据管理</a></li>
+  </shiro:hasAnyRoles>
+  <shiro:hasAnyRoles name="role_version_1.1">
+  	<li><a href="${basePath }medical_record/scan_index" id="demoBtn2">病案扫描</a></li>
+  </shiro:hasAnyRoles>
+  <shiro:hasAnyRoles name="role_version_2">
+  	<li><a href="#" id="demoBtn3">病案编码</a></li>
+  </shiro:hasAnyRoles>
+  <shiro:hasAnyRoles name="role_version_2">
+  	<li><a href="#" id="demoBtn4">病案上架</a></li>
+  </shiro:hasAnyRoles>
+  <shiro:hasAnyRoles name="role_version_2">
+  	<li><a href="#" id="demoBtn5">窗口服务</a></li>
+  </shiro:hasAnyRoles>
+  <shiro:hasAnyRoles name="role_version_2">
+  	<li><a href="#" id="demoBtn6">借阅记录</a></li>
+  </shiro:hasAnyRoles>
+  <shiro:hasAnyRoles name="role_version_2">
+  	<li><a href="${basePath }medical_record/trace_index" id="demoBtn7">病案示踪</a></li>
+  </shiro:hasAnyRoles>
+  <shiro:hasAnyRoles name="role_version_2">
+  	<li><a href="#" id="demoBtn8">环节质控</a></li>
+  </shiro:hasAnyRoles>
+  <shiro:hasAnyRoles name="role_version_2">
+  	<li><a href="#" id="demoBtn9">工作质控</a></li>
+  </shiro:hasAnyRoles>
+  <shiro:hasAnyRoles name="role_version_2">
+  	<li><a href="#" id="demoBtn10">数据管理</a></li>
+  </shiro:hasAnyRoles>
  </ul>
 </div>

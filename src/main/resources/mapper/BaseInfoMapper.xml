@@ -254,8 +254,8 @@
  </select>
  
  <!-- 依据编号获取示踪类型-->
- <select id="getTreatmentTraceTypeByCode" resultType="map" >
-   	select id,code,name,status from treatment_trace_type
+ <select id="getTraceTypeByCode" resultType="map" >
+   	select id,code,name,status from trace_type
    	where code = #{code}
   </select>
   

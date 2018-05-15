@@ -49,19 +49,6 @@ public class BaseInfoServiceImpl implements BaseInfoService {
 		List<Map<String, Object>> nations = baseInfoMapper.getNations();
 		baseInfo.put("nations", nations);
 		
-		
-		List<Map<String, Object>> tjIdentifys = baseInfoMapper.getTjIdentifys();
-		baseInfo.put("tjIdentifys", tjIdentifys);
-		
-		List<Map<String, Object>> tjTopUnits = baseInfoMapper.getTjTopUnits();
-		baseInfo.put("tjTopUnits", tjTopUnits);
-		
-		List<Map<String, Object>> tjDutys = baseInfoMapper.getTjDutys();
-		baseInfo.put("tjDutys", tjDutys);
-		
-		List<Map<String, Object>> tjChargeTypes = baseInfoMapper.getTjChargeTypes();
-		baseInfo.put("tjChargeTypes", tjChargeTypes);
-		
 		List<Map<String, Object>> professions = baseInfoMapper.getProfessions();
 		baseInfo.put("professions", professions);
 		

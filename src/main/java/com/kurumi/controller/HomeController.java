@@ -23,14 +23,6 @@ public class HomeController {
 	@Autowired
 	private MyConfig myConfig;
 	
-	@GetMapping("/ajax_home")
-	@ResponseBody
-	public String ajaxDiseaseByQueryName(String queryName){
-		
-		
-		return "abc";
-	}
-	
 	@GetMapping("/")
 	public String home(){
 		
@@ -78,6 +70,7 @@ public class HomeController {
 					Subject subject=SecurityUtils.getSubject();
 					Session session = subject.getSession();
 					session.setAttribute("remoteLoginUrl", myConfig.getRemoteLoginUrl());
+					session.setAttribute("currentVersion", myConfig.getCurrentVersion());
 					UsernamePasswordToken token = new UsernamePasswordToken(loginName, MD5Util.getMD5(password));
 					SecurityUtils.getSubject().login(token);
 					respondResult = new RespondResult(true, RespondResult.successCode, "登陆成功", "");

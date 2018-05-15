@@ -44,6 +44,8 @@ public class MyShiroRealm extends AuthorizingRealm {
         	roleSet = MyShiroRealm.roleSet;
 		}else{
 			List<Map<String, Object>> roles =(List<Map<String, Object>>) session.getAttribute("roles");
+			String currentVersion =  (String)session.getAttribute("currentVersion");
+			roleSet.add(currentVersion);
 			if(roles != null){
 	        	for (Map<String, Object> role : roles) {
 	        		roleSet.add((String)role.get("role_code"));
@@ -106,6 +108,8 @@ public class MyShiroRealm extends AuthorizingRealm {
 	    		List<Map<String, Object>> roles = (List<Map<String, Object>>)datas.get("roles");
 	    		session.setAttribute("roles", roles);
 	    		MyShiroRealm.roleSet = new HashSet<String>();
+	    		String currentVersion =  (String)session.getAttribute("currentVersion");
+				roleSet.add(currentVersion);
 	    		for (Map<String, Object> role : roles) {
 	        		roleSet.add((String)role.get("role_code"));
 				}

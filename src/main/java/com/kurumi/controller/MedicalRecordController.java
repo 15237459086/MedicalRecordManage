@@ -48,6 +48,13 @@ public class MedicalRecordController {
 		return "quality_control_index.default";
 	}
 	
+	@GetMapping("/scan_index")
+	public String scanIndex(){
+		
+		
+		return "scan_index.default";
+	}
+	
 	@GetMapping("/trace_index")
 	public String traceIndex(){
 		

@@ -983,7 +983,13 @@
 			note.out_hospital_type_name,
 			note.treatment_sign_code,
 			note.treatment_sign_name,
-			quality_control.score
+			CASE locate('BAZK',traces.trace_type_codes)
+			WHEN 0 THEN
+				null
+			ELSE
+				quality_control.score
+			END as score
+			
 		from
 		medical_record note
 		inner join
@@ -1044,6 +1050,7 @@
 		from
 		medical_record record1
 		inner join medical_record_trace trace
+		on record1.visit_guid = trace.visit_guid
 		GROUP BY record1.visit_guid) traces
 		on note.visit_guid = traces.visit_guid
 		left join medical_record_quality_control quality_control
@@ -1331,12 +1338,7 @@
 		where note.visit_guid = record1.visit_guid
 		and note.out_dept_code = record1.out_dept_code
 		and locate('BAZK',traces.trace_type_codes) &gt; 0
-		))/sum((select
-		count(record1.visit_guid) from medical_record record1
-		where note.visit_guid = record1.visit_guid
-		and note.out_dept_code = record1.out_dept_code
-		and locate('BAZK',traces.trace_type_codes) &gt; 0
-		))*100 as
+		))/count(note.visit_guid)*100 as
 		quality_control_rate,
 		sum((select count(record1.visit_guid) from
 		medical_record record1
@@ -1350,12 +1352,7 @@
 		and note.out_dept_code = record1.out_dept_code
 		and locate('BAZK',traces.trace_type_codes) &gt; 0
 		and quality_control.score &gt;= 89.5
-		)) /sum((select
-		count(record1.visit_guid) from medical_record record1
-		where note.visit_guid = record1.visit_guid
-		and note.out_dept_code = record1.out_dept_code
-		and locate('BAZK',traces.trace_type_codes) &gt; 0
-		))*100 as
+		)) /count(note.visit_guid)*100 as
 		quality_control_a_rate,
 		sum((select count(record1.visit_guid) from
 		medical_record record1
@@ -1372,11 +1369,7 @@
 		and locate('BAZK',traces.trace_type_codes) &gt; 0
 		and quality_control.score &gt;= 74.5 and 89.5&gt;quality_control.score
 		))
-		/sum((select count(record1.visit_guid) from medical_record record1
-		where note.visit_guid = record1.visit_guid
-		and note.out_dept_code = record1.out_dept_code
-		and locate('BAZK',traces.trace_type_codes) &gt; 0
-		))*100 as
+		/count(note.visit_guid)*100 as
 		quality_control_b_rate,
 		sum((select count(record1.visit_guid) from
 		medical_record record1
@@ -1390,12 +1383,7 @@
 		and note.out_dept_code = record1.out_dept_code
 		and locate('BAZK',traces.trace_type_codes) &gt; 0
 		and 74.5&gt;quality_control.score
-		)) /sum((select
-		count(record1.visit_guid) from medical_record record1
-		where note.visit_guid = record1.visit_guid
-		and note.out_dept_code = record1.out_dept_code
-		and locate('BAZK',traces.trace_type_codes) &gt; 0
-		))*100 as
+		)) /count(note.visit_guid)*100 as
 		quality_control_c_rate
 
 		from

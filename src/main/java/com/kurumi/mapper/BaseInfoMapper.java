@@ -71,29 +71,6 @@ public interface BaseInfoMapper {
 	List<Map<String,Object>> getNations();
 	
 	
-	/**
-	 * 获取身份（军卫）
-	 * @return
-	 */
-	List<Map<String,Object>> getTjIdentifys();
-	
-	/**
-	 * 获取大单位（军卫）
-	 * @return
-	 */
-	List<Map<String,Object>> getTjTopUnits();
-	
-	/**
-	 * 获取勤务（军卫）
-	 * @return
-	 */
-	List<Map<String,Object>> getTjDutys();
-	
-	/**
-	 * 获取费别 （军卫）
-	 * @return
-	 */
-	List<Map<String,Object>> getTjChargeTypes();
 	
 	/**
 	 * 获取职业
@@ -302,7 +279,7 @@ public interface BaseInfoMapper {
 	 * 依据编号获取示踪类型
 	 * @return
 	 */
-	List<Map<String,Object>> getTreatmentTraceTypeByCode(@Param("code")String code);
+	List<Map<String,Object>> getTraceTypeByCode(@Param("code")String code);
 	
 	
 	/**

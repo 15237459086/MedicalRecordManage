@@ -16,6 +16,9 @@ public class MyConfig {
 	
 	@Value("${config.remote.login.url}")
 	private String remoteLoginUrl;
+	
+	@Value("${config.current.version}")
+	private String currentVersion;
 
 	public String getRemoteLoginUrl() {
 		return remoteLoginUrl;
@@ -23,6 +26,14 @@ public class MyConfig {
 
 	public void setRemoteLoginUrl(String remoteLoginUrl) {
 		this.remoteLoginUrl = remoteLoginUrl;
+	}
+
+	public String getCurrentVersion() {
+		return currentVersion;
+	}
+
+	public void setCurrentVersion(String currentVersion) {
+		this.currentVersion = currentVersion;
 	}
 	
 	

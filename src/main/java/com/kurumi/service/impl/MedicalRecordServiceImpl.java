@@ -67,7 +67,7 @@ public class MedicalRecordServiceImpl implements MedicalRecordService {
 		if(count < 0){
 			return 0;
 		}
-		List<Map<String,Object>> treatmentTraceTypes = baseInfoMapper.getTreatmentTraceTypeByCode(MedicalRecordTrace.VISIT_INIT);
+		List<Map<String,Object>> treatmentTraceTypes = baseInfoMapper.getTraceTypeByCode(MedicalRecordTrace.VISIT_INIT);
 		if(treatmentTraceTypes.size() == 0){
 			return 0;
 		}
@@ -112,7 +112,7 @@ public class MedicalRecordServiceImpl implements MedicalRecordService {
 		if(count > 0){
 			return 0; //病案已归档
 		}
-		List<Map<String,Object>> treatmentTraceTypes = baseInfoMapper.getTreatmentTraceTypeByCode(MedicalRecordTrace.VISIT_PIGEONHOLE);
+		List<Map<String,Object>> treatmentTraceTypes = baseInfoMapper.getTraceTypeByCode(MedicalRecordTrace.VISIT_PIGEONHOLE);
 		if(treatmentTraceTypes.size() == 0){
 			return -2; //归档失踪类型不存在
 		}
@@ -255,7 +255,7 @@ public class MedicalRecordServiceImpl implements MedicalRecordService {
 			return 2; //此前质控已完成
 		}
 		
-		List<Map<String,Object>> treatmentTraceTypes = baseInfoMapper.getTreatmentTraceTypeByCode(MedicalRecordTrace.VISIT_QUALITY);
+		List<Map<String,Object>> treatmentTraceTypes = baseInfoMapper.getTraceTypeByCode(MedicalRecordTrace.VISIT_QUALITY);
 		if(treatmentTraceTypes.size() == 0){
 			return -2; //质控示踪类型不存在
 		}
