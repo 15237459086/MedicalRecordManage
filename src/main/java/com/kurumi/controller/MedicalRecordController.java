@@ -1,9 +1,13 @@
 package com.kurumi.controller;
 
+import java.io.OutputStream;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,6 +25,8 @@ import com.kurumi.pojo.RespondResult;
 import com.kurumi.query.MedicalRecordQuery;
 import com.kurumi.service.BaseInfoService;
 import com.kurumi.service.MedicalRecordService;
+import com.kurumi.util.DateUtil;
+import com.kurumi.util.ExcelUtil;
 
 @Controller
 @RequestMapping("/medical_record")
@@ -86,6 +92,11 @@ public class MedicalRecordController {
 	@GetMapping("/query_trace")
 	public String queryTrace(){
 		return "trace/query_trace";
+	}
+	
+	@GetMapping("/scan_upload")
+	public String scanUpload(){
+		return "scan/scan_upload";
 	}
 	
 	@GetMapping("/ajax_query_un_pigeonhole")
@@ -495,5 +506,77 @@ public class MedicalRecordController {
 		}
 		
 		return respondResult;
+	}
+	
+	@GetMapping("/pigeonholedBeyondToExcel")
+	public void pigeonholedBeyondToExcel(MedicalRecordQuery params,String beyondDay,HttpServletResponse response) {
+		String[] headers = { "姓名", "病案号", "住院号","住院次数", "出院科室", "出院日期","离院方式", "归档日期", "迟送天数" };
+		OutputStream out = null;
+		List<String> keys = new ArrayList<String>();
+		keys.add("patient_name");
+		keys.add("mr_id");
+		keys.add("only_id");
+		keys.add("visit_number");
+		keys.add("out_dept_name");
+		keys.add("out_hospital_date");
+		keys.add("out_hospital_type_name");
+		keys.add("trace_date");
+		keys.add("beyond_number_day");
+		try{
+			List<Map<String,Object>> medicalRecords = new ArrayList<Map<String,Object>>();
+			int count = 0;
+			if(!params.queryUnEncodingEmpty()){
+				medicalRecords = medicalRecordService.getMedicalRecordOfPigeonholedBeyond(params);
+				count= medicalRecordService.getMedicalRecordCount(params);
+			}
+			response.setContentType("octets/stream");
+			String title= "数据导出";
+			StringBuilder downLoadFileName = new StringBuilder();
+			if(!medicalRecords.isEmpty()){
+				float rate = ((float)medicalRecords.size()/count)*100;
+				title = new StringBuilder().append(DateUtil.dateFormat(params.getOutHospitalStartDate())).append("到").append(DateUtil.dateFormat(params.getOutHospitalEndDate()))
+						.append("的报表").append("---").append(params.getBeyondNumberOfDay()).append("日归档率为：").append(new  DecimalFormat("##0.00").format(rate)).append("%").toString();
+				
+				downLoadFileName = new StringBuilder(
+						"attachment;filename=");
+				downLoadFileName.append(title)
+						.append(".xls");
+			}else{
+				downLoadFileName = new StringBuilder(
+						"attachment;filename=");
+				title = new StringBuilder().append(DateUtil.dateFormat(params.getOutHospitalStartDate())).append("到").append(DateUtil.dateFormat(params.getOutHospitalEndDate()))
+						.append("的报表").append("---").append(params.getBeyondNumberOfDay()).append("日无迟送病案").toString();
+				downLoadFileName.append(title)
+						.append(".xls");
+			}
+			String encodeStr = new String(downLoadFileName.toString().getBytes(
+					"GB2312"), "ISO_8859_1");
+			response.addHeader("Content-Disposition", encodeStr);
+			out = response.getOutputStream();
+			ExcelUtil.exportExcel(out, title, headers, keys, medicalRecords);
+			
+			
+		}catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}finally{
+			if(out != null){
+				try {
+					out.flush();
+				} catch (Exception e2) {
+					// TODO: handle exception
+				}
+				try {
+					out.close();
+				} catch (Exception e2) {
+					// TODO: handle exception
+				}
+			}
+			
+		}
+		
+		
+		
+		
 	}
 }

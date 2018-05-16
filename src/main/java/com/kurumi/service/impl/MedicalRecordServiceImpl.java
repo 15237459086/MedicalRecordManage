@@ -30,8 +30,6 @@ import com.kurumi.util.StringUtil;
 public class MedicalRecordServiceImpl implements MedicalRecordService {
 	
 	
-	private final String userId = "admin1";
-	
 	@Autowired
 	private MedicalRecordMapper medicalRecordMapper;
 	
@@ -100,10 +98,12 @@ public class MedicalRecordServiceImpl implements MedicalRecordService {
 		return 0;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Transactional(propagation=Propagation.REQUIRED)
 	@Override
 	public int pigeonholeMedicalRecord(String visitGuid, String pigeonholeDateTime, String treatmentSignId) {
 		// TODO Auto-generated method stub
+		
 		MedicalRecord medicalRecord = medicalRecordMapper.selectByPrimaryKey(visitGuid);
 		if(medicalRecord == null){
 			return -1; //病案不存在
@@ -135,8 +135,11 @@ public class MedicalRecordServiceImpl implements MedicalRecordService {
 		MedicalRecordTrace medicalRecordTrace = new MedicalRecordTrace();
 		
 		medicalRecordTrace.setVisitGuid(medicalRecord.getVisitGuid());
-		medicalRecordTrace.setCreateUserId(userId);
-		medicalRecordTrace.setCreateUserName(userId);
+		Subject subject=SecurityUtils.getSubject();
+		Session session = subject.getSession();
+		Map<String, Object> currentUser = (Map<String, Object>)session.getAttribute("currentUser");
+		medicalRecordTrace.setCreateUserId((String)currentUser.get("user_code"));
+		medicalRecordTrace.setCreateUserName((String)currentUser.get("user_name"));
 		medicalRecordTrace.setTraceTypeCode((String)treatmentTraceTypes.get(0).get("code"));
 		medicalRecordTrace.setTraceTypeName((String)treatmentTraceTypes.get(0).get("name"));
 		Date pigeonholeDate = null;
@@ -203,6 +206,7 @@ public class MedicalRecordServiceImpl implements MedicalRecordService {
 		return medicalRecordMapper.getMedicalRecordByVisitGuid(visitGuid);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Transactional(propagation=Propagation.REQUIRED)
 	@Override
 	public int addQualityControlItem(String visitGuid, MedicalRecordQualityControlItem qualityControlItem) {
@@ -213,8 +217,11 @@ public class MedicalRecordServiceImpl implements MedicalRecordService {
 		if(qualityControl == null){
 			qualityControl = new MedicalRecordQualityControl();
 			qualityControl.setVisitGuid(visitGuid);
-			qualityControl.setCreateUserId(userId);
-			qualityControl.setCreateUserName(userId);
+			Subject subject=SecurityUtils.getSubject();
+			Session session = subject.getSession();
+			Map<String, Object> currentUser = (Map<String, Object>)session.getAttribute("currentUser");
+			qualityControl.setCreateUserId((String)currentUser.get("user_code"));
+			qualityControl.setCreateUserName((String)currentUser.get("user_name"));
 			BigDecimal score = qualityControl.getScore().subtract(qualityControlItem.getDeduction());
 			if(score.doubleValue() < 0){
 				score = BigDecimal.ZERO;
@@ -234,8 +241,11 @@ public class MedicalRecordServiceImpl implements MedicalRecordService {
 			return count;
 		}
 		qualityControlItem.setMedicalRecordQualityControlId(qualityControl.getId());
-		qualityControlItem.setLastUserId(userId);
-		qualityControlItem.setLastUserName(userId);
+		Subject subject=SecurityUtils.getSubject();
+		Session session = subject.getSession();
+		Map<String, Object> currentUser = (Map<String, Object>)session.getAttribute("currentUser");
+		qualityControlItem.setLastUserId((String)currentUser.get("user_code"));
+		qualityControlItem.setLastUserName((String)currentUser.get("user_name"));
 		count = medicalRecordMapper.insertQualityControlItem(qualityControlItem);
 		return count;
 	}
@@ -262,8 +272,13 @@ public class MedicalRecordServiceImpl implements MedicalRecordService {
 		MedicalRecordTrace medicalRecordTrace = new MedicalRecordTrace();
 		
 		medicalRecordTrace.setVisitGuid(visitGuid);
-		medicalRecordTrace.setCreateUserId(userId);
-		medicalRecordTrace.setCreateUserName(userId);
+		Subject subject=SecurityUtils.getSubject();
+		Session session = subject.getSession();
+		@SuppressWarnings("unchecked")
+		Map<String, Object> currentUser = (Map<String, Object>)session.getAttribute("currentUser");
+		
+		medicalRecordTrace.setCreateUserId((String)currentUser.get("user_code"));
+		medicalRecordTrace.setCreateUserName((String)currentUser.get("user_name"));
 		medicalRecordTrace.setTraceTypeCode((String)treatmentTraceTypes.get(0).get("code"));
 		medicalRecordTrace.setTraceTypeName((String)treatmentTraceTypes.get(0).get("name"));
 		count = medicalRecordMapper.insertMedicalRecordTrace(medicalRecordTrace);

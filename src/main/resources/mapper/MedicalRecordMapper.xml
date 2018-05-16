@@ -754,6 +754,7 @@
 		note.treatment_sign_name,
 		note.version,
 		note_trace.trace_date,
+		date_format(note_trace.trace_date,'%Y-%m-%d') as trace_date_format,
 		(to_days(note_trace.trace_date ) - to_days(note.out_hospital_date_time ) - (select count(1) from
 		hospital_holidays holidays where
 		DATE_FORMAT(note.out_hospital_date_time,'%Y-%m-%d') &lt;=
@@ -1011,8 +1012,9 @@
 			<if test="status == 1">
 				and locate('BAZK',traces.trace_type_codes) >0
 			</if>
-			and locate('BAGD',traces.trace_type_codes) >0
+			
 		</if>
+		and locate('BAGD',traces.trace_type_codes) >0
 		<if test="patientName != null">
 			and note.patient_name=#{patientName}
 		</if>
@@ -1064,8 +1066,9 @@
 			<if test="status == 1">
 				and locate('BAZK',traces.trace_type_codes) >0
 			</if>
-			and locate('BAGD',traces.trace_type_codes) >0
+			
 		</if>
+		and locate('BAGD',traces.trace_type_codes) >0
 		<if test="patientName != null">
 			and note.patient_name=#{patientName}
 		</if>
@@ -1423,6 +1426,124 @@
 		group by note.out_dept_name
 
 	</select>
+	
+	
+	<select id="getMedicalRecordOfScan" resultType="map"
+		parameterType="com.kurumi.query.MedicalRecordQuery">
+		select
+			note.visit_guid,
+			note.patient_name,
+			note.sex_code,
+			note.sex_name,
+			date_format(note.birthday,'%Y-%m-%d') as birthday,
+			note.document_type_code,
+			note.document_type_name,
+			note.id_number,
+			note.only_id,
+			note.mr_id,
+			note.visit_number,
+			date_format(note.in_hospital_date_time,'%Y-%m-%d') as in_hospital_date,
+			date_format(note.in_hospital_date_time,'%Y-%m-%d %H:%i:%S') as in_hospital_date_time,
+			note.in_dept_code,
+			note.in_dept_name,
+			date_format(note.out_hospital_date_time,'%Y-%m-%d') as out_hospital_date,
+			date_format(note.out_hospital_date_time,'%Y-%m-%d %H:%i:%S') as
+			out_hospital_date_time,
+			note.out_dept_code,
+			note.out_dept_name,
+			note.out_hospital_type_code,
+			note.out_hospital_type_name,
+			note.treatment_sign_code,
+			note.treatment_sign_name,
+			CASE locate('BAZK',traces.trace_type_codes)
+			WHEN 0 THEN
+				"未质控"
+			ELSE
+				"已质控"
+			END as quality_control_status_name
+			
+		from
+		medical_record note
+		inner join
+		(select record1.visit_guid,GROUP_CONCAT(trace.trace_type_code) as trace_type_codes
+		from
+		medical_record record1
+		inner join medical_record_trace trace
+		on record1.visit_guid = trace.visit_guid
+		GROUP BY record1.visit_guid) traces
+		on note.visit_guid = traces.visit_guid
+		left join medical_record_quality_control quality_control
+		on quality_control.visit_guid = note.visit_guid
+		where 1=1
+		and locate('BAGD',traces.trace_type_codes) >0
+		<if test="patientName != null">
+			and note.patient_name=#{patientName}
+		</if>
+		<if test="idNumber != null">
+			and note.id_number=#{idNumber}
+		</if>
+
+		<if test="mrId != null">
+			and note.mr_id=#{mrId}
+		</if>
+		<if test="onlyId != null">
+			and note.only_id=#{onlyId}
+		</if>
+		<if test="outHospitalStartDate!=null and outHospitalEndDate!=null">
+   	  <![CDATA[and (CAST(note.out_hospital_date_time AS date) >= #{outHospitalStartDate} and CAST(note.out_hospital_date_time AS date) <= #{outHospitalEndDate})]]>
+		</if>
+		<if test="outHospitalDeptCode!=null">
+			and note.out_dept_code = #{outHospitalDeptCode}
+		</if>
+		<if test="outHospitalTypeCode!=null">
+			and note.out_hospital_type_code = #{outHospitalTypeCode}
+		</if>
+		limit #{currentStartNum},#{pageSize}
+
+	</select>
+	
+	<select id="getMedicalRecordCountOfScan" resultType="int"
+		parameterType="com.kurumi.query.MedicalRecordQuery">
+		select
+			count(note.visit_guid)
+		from
+		medical_record note
+		inner join
+		(select record1.visit_guid,GROUP_CONCAT(trace.trace_type_code) as trace_type_codes
+		from
+		medical_record record1
+		inner join medical_record_trace trace
+		on record1.visit_guid = trace.visit_guid
+		GROUP BY record1.visit_guid) traces
+		on note.visit_guid = traces.visit_guid
+		left join medical_record_quality_control quality_control
+		on quality_control.visit_guid = note.visit_guid
+		where 1=1
+		and locate('BAGD',traces.trace_type_codes) >0
+		<if test="patientName != null">
+			and note.patient_name=#{patientName}
+		</if>
+		<if test="idNumber != null">
+			and note.id_number=#{idNumber}
+		</if>
+
+		<if test="mrId != null">
+			and note.mr_id=#{mrId}
+		</if>
+		<if test="onlyId != null">
+			and note.only_id=#{onlyId}
+		</if>
+		<if test="outHospitalStartDate!=null and outHospitalEndDate!=null">
+   	  <![CDATA[and (CAST(note.out_hospital_date_time AS date) >= #{outHospitalStartDate} and CAST(note.out_hospital_date_time AS date) <= #{outHospitalEndDate})]]>
+		</if>
+		<if test="outHospitalDeptCode!=null">
+			and note.out_dept_code = #{outHospitalDeptCode}
+		</if>
+		<if test="outHospitalTypeCode!=null">
+			and note.out_hospital_type_code = #{outHospitalTypeCode}
+		</if>
+	</select>
+	
 	<!-- <select id="getMedicalRecord" resultType="map" parameterType="com.hutao.manage.query.MedicalRecordQuery"> 
 		select date_format(note.out_hospital_date_time,'%Y-%m-%d') out_hospital_date,note.visit_guid 
 		first_level_guid,note.patient_name patient_name, note.id_number,note.mr_id, 

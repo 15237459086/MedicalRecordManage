@@ -19,7 +19,7 @@
     <ul>
     <li class="Label_1">出院日期：&nbsp;</li>
     <li class="Label_2">
-    	<input class="input_box" name="outHospitalStartDate" type="text" style="width:46%" onFocus="WdatePicker()"/>-<input class="input_box" type="text" style="width:46%" name="outHospitalEndDate" onFocus="WdatePicker()" />
+    	<input class="input_box" name="outHospitalStartDate" id="outHospitalStartDate" required="required" type="text" style="width:46%" onFocus="WdatePicker()"/>-<input class="input_box" type="text" style="width:46%" id="outHospitalEndDate" name="outHospitalEndDate" required="required" onFocus="WdatePicker()" />
     </li>
     <li class="Label_1">出院科室：&nbsp;</li>
     <li class="Label_2">
@@ -47,6 +47,7 @@
 		      <td class="tdLabel_4">出院科室</td>
 		      <td class="tdLabel_4">出院日期</td>
 		      <td class="tdLabel_4">离院方式</td>
+		      <td class="tdLabel_4">归档日期</td>
 		      <td class="tdLabel_4">迟送天数</td>
 	      </tr>
       </thead>
@@ -60,6 +61,7 @@
 	      <td class="tdLabel_5"><span class="out_dept_name"></span></td>
 	      <td class="tdLabel_5"><span class="out_hospital_date"></span></td>
 	      <td class="tdLabel_5"><span class="out_hospital_type_name"></span></td>
+	      <td class="tdLabel_5"><span class="trace_date_format"></span></td>
 	      <td class="tdLabel_5"><span class="beyond_number_day"></span></td>
 	     </tr>
       	

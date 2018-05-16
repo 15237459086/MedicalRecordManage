@@ -253,6 +253,21 @@ public interface MedicalRecordMapper {
 	int getMedicalRecordCountOfHomePage(MedicalRecordQuery medicalRecordQuery);
 	
 	
+	/**
+	 * 获取扫描病案
+	 * @return
+	 */
+	List<Map<String,Object>> getMedicalRecordOfScan(MedicalRecordQuery medicalRecordQuery);
+	
+	/**
+	 * 获取扫描病案数量
+	 * @return
+	 */
+	int getMedicalRecordCountOfScan(MedicalRecordQuery medicalRecordQuery);
+	
+    
+	
+	
 	/*List<Map<String,Object>> getCollectionStatistics(MedicalRecordTraceQuery medicalRecordTraceQuery);
 
 	*//**

@@ -16,5 +16,6 @@ request.setAttribute("basePath", basePath);
 <script type="text/javascript" src="${basePath}assets/jqPaginator/jqPaginator.js"></script>
 <script type="text/javascript" src="${basePath}assets/layer/layer.js"></script>
 
-<script type="text/javascript" src="${basePath}assets/formvalidator/js/formValidator-4.1.1.js"></script>
-<script type="text/javascript" src="${basePath}assets/formvalidator/js/formValidatorRegex.js"></script>
+<script type="text/javascript" src="${basePath}assets/jqueryValidate/jquery.validate.js"></script>
+
+<script type="text/javascript" src="${basePath}assets/jqueryValidate/localization/messages_zh.js"></script>

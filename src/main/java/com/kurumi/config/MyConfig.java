@@ -17,6 +17,9 @@ public class MyConfig {
 	@Value("${config.remote.login.url}")
 	private String remoteLoginUrl;
 	
+	@Value("${config.image.resource.path}")
+	private String imageRecourcePath;
+	
 	@Value("${config.current.version}")
 	private String currentVersion;
 
@@ -34,6 +37,14 @@ public class MyConfig {
 
 	public void setCurrentVersion(String currentVersion) {
 		this.currentVersion = currentVersion;
+	}
+
+	public String getImageRecourcePath() {
+		return imageRecourcePath;
+	}
+
+	public void setImageRecourcePath(String imageRecourcePath) {
+		this.imageRecourcePath = imageRecourcePath;
 	}
 	
 	

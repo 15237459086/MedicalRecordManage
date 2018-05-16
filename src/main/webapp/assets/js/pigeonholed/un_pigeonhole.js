@@ -176,6 +176,7 @@ function addFormSubmit(){
 				}else{
 					layer.msg("添加成功！");
 					layer.close(addFormIndex);
+					$("#queryForm input[name='mrId']").val($("#addForm input[name='mrId']").val());
 					$('#queryBtn').click();
 				}
 			}else{

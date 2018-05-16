@@ -98,14 +98,34 @@ function addRows(medicalRecordRates){
 		add_content.find("span[class='out_dept_name']").html(medicalRecordRate.out_dept_name);
 		add_content.find("span[class='medical_record_count']").html(medicalRecordRate.medical_record_count);
 		add_content.find("span[class='medical_record_pigeonhold_count']").html(medicalRecordRate.medical_record_pigeonhold_count);
-		add_content.find("span[class='medical_record_pigeonhold_rate']").html(medicalRecordRate.medical_record_pigeonhold_rate);
-		add_content.find("span[class='two_dys_pigeonhole_count']").html(medicalRecordRate.two_dys_pigeonhole_count);
-		add_content.find("span[class='two_dys_pigeonhole_rate']").html(medicalRecordRate.two_dys_pigeonhole_rate+"%");
-		add_content.find("span[class='three_dys_pigeonhole_count']").html(medicalRecordRate.three_dys_pigeonhole_count);
+		add_content.find("span[class='medical_record_pigeonhold_rate']").html(medicalRecordRate.medical_record_pigeonhold_rate+"%");
+		var two_dys_pigeonhole_count = medicalRecordRate.two_dys_pigeonhole_count;
+		two_dys_pigeonhole_count = (typeof(two_dys_pigeonhole_count) == "undefined")?0:two_dys_pigeonhole_count;
+		add_content.find("span[class='two_dys_pigeonhole_count']").html(two_dys_pigeonhole_count);
+		var two_dys_pigeonhole_rate = medicalRecordRate.two_dys_pigeonhole_rate;
+		two_dys_pigeonhole_rate = (typeof(two_dys_pigeonhole_rate) == "undefined")?0:two_dys_pigeonhole_rate;
 		
-		add_content.find("span[class='three_dys_pigeonhole_rate']").html(medicalRecordRate.three_dys_pigeonhole_rate+"%");
-		add_content.find("span[class='seven_dys_pigeonhole_count']").html(medicalRecordRate.seven_dys_pigeonhole_count);
-		add_content.find("span[class='seven_dys_pigeonhole_rate']").html(medicalRecordRate.seven_dys_pigeonhole_rate+"%");
+		add_content.find("span[class='two_dys_pigeonhole_rate']").html(two_dys_pigeonhole_rate+"%");
+		
+		var three_dys_pigeonhole_count = medicalRecordRate.three_dys_pigeonhole_count;
+		three_dys_pigeonhole_count = (typeof(three_dys_pigeonhole_count) == "undefined")?0:three_dys_pigeonhole_count;
+		
+		add_content.find("span[class='three_dys_pigeonhole_count']").html(three_dys_pigeonhole_count);
+		
+		var three_dys_pigeonhole_rate = medicalRecordRate.three_dys_pigeonhole_rate;
+		three_dys_pigeonhole_rate = (typeof(three_dys_pigeonhole_rate) == "undefined")?0:three_dys_pigeonhole_rate;
+		
+		add_content.find("span[class='three_dys_pigeonhole_rate']").html(three_dys_pigeonhole_rate+"%");
+		
+		var seven_dys_pigeonhole_count = medicalRecordRate.seven_dys_pigeonhole_count;
+		seven_dys_pigeonhole_count = (typeof(seven_dys_pigeonhole_count) == "undefined")?0:seven_dys_pigeonhole_count;
+		
+		add_content.find("span[class='seven_dys_pigeonhole_count']").html(seven_dys_pigeonhole_count);
+		
+		var seven_dys_pigeonhole_rate = medicalRecordRate.seven_dys_pigeonhole_rate;
+		seven_dys_pigeonhole_rate = (typeof(seven_dys_pigeonhole_rate) == "undefined")?0:seven_dys_pigeonhole_rate;
+		
+		add_content.find("span[class='seven_dys_pigeonhole_rate']").html(seven_dys_pigeonhole_rate+"%");
 		$("#query_show_table tbody").append(add_content);
     } 
 	
