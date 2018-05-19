@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kurumi.mapper.MedicalRecordImageMapper" >
+  <resultMap id="BaseResultMap" type="com.kurumi.pojo.MedicalRecordImage" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="file_hash" property="fileHash" jdbcType="VARCHAR" />
+    <result column="visit_guid" property="visitGuid" jdbcType="VARCHAR" />
+    <result column="mr_page_type_code" property="mrPageTypeCode" jdbcType="VARCHAR" />
+    <result column="create_user_id" property="createUserId" jdbcType="VARCHAR" />
+    <result column="create_user_name" property="createUserName" jdbcType="VARCHAR" />
+    <result column="create_date_time" property="createDateTime" jdbcType="TIMESTAMP" />
+    <result column="last_user_id" property="lastUserId" jdbcType="VARCHAR" />
+    <result column="last_user_name" property="lastUserName" jdbcType="VARCHAR" />
+    <result column="last_date_time" property="lastDateTime" jdbcType="TIMESTAMP" />
+    <result column="version" property="version" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, file_hash, visit_guid, mr_page_type_code, create_user_id, create_user_name, create_date_time, 
+    last_user_id, last_user_name, last_date_time, version
+  </sql>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from medical_record_image
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from medical_record_image
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+ 
+  <insert id="insert" parameterType="com.kurumi.pojo.MedicalRecordImage" >
+    insert into medical_record_image (id, file_hash, visit_guid, 
+      mr_page_type_code, create_user_id, create_user_name, 
+      create_date_time, last_user_id, last_user_name, 
+      last_date_time, version)
+    values (#{id,jdbcType=INTEGER}, #{fileHash,jdbcType=VARCHAR}, #{visitGuid,jdbcType=VARCHAR}, 
+      #{mrPageTypeCode,jdbcType=VARCHAR}, #{createUserId,jdbcType=VARCHAR}, #{createUserName,jdbcType=VARCHAR}, 
+      #{createDateTime,jdbcType=TIMESTAMP}, #{lastUserId,jdbcType=VARCHAR}, #{lastUserName,jdbcType=VARCHAR}, 
+      #{lastDateTime,jdbcType=TIMESTAMP}, #{version,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.kurumi.pojo.MedicalRecordImage" >
+    insert into medical_record_image
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="fileHash != null" >
+        file_hash,
+      </if>
+      <if test="visitGuid != null" >
+        visit_guid,
+      </if>
+      <if test="mrPageTypeCode != null" >
+        mr_page_type_code,
+      </if>
+      <if test="createUserId != null" >
+        create_user_id,
+      </if>
+      <if test="createUserName != null" >
+        create_user_name,
+      </if>
+      <if test="createDateTime != null" >
+        create_date_time,
+      </if>
+      <if test="lastUserId != null" >
+        last_user_id,
+      </if>
+      <if test="lastUserName != null" >
+        last_user_name,
+      </if>
+      <if test="lastDateTime != null" >
+        last_date_time,
+      </if>
+      <if test="version != null" >
+        version,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="fileHash != null" >
+        #{fileHash,jdbcType=VARCHAR},
+      </if>
+      <if test="visitGuid != null" >
+        #{visitGuid,jdbcType=VARCHAR},
+      </if>
+      <if test="mrPageTypeCode != null" >
+        #{mrPageTypeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserId != null" >
+        #{createUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserName != null" >
+        #{createUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="createDateTime != null" >
+        #{createDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUserId != null" >
+        #{lastUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUserName != null" >
+        #{lastUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="lastDateTime != null" >
+        #{lastDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="version != null" >
+        #{version,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  
+  
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.kurumi.pojo.MedicalRecordImage" >
+    update medical_record_image
+    <set >
+      <if test="fileHash != null" >
+        file_hash = #{fileHash,jdbcType=VARCHAR},
+      </if>
+      <if test="visitGuid != null" >
+        visit_guid = #{visitGuid,jdbcType=VARCHAR},
+      </if>
+      <if test="mrPageTypeCode != null" >
+        mr_page_type_code = #{mrPageTypeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserId != null" >
+        create_user_id = #{createUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserName != null" >
+        create_user_name = #{createUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="createDateTime != null" >
+        create_date_time = #{createDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUserId != null" >
+        last_user_id = #{lastUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUserName != null" >
+        last_user_name = #{lastUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="lastDateTime != null" >
+        last_date_time = #{lastDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="version != null" >
+        version = #{version,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.kurumi.pojo.MedicalRecordImage" >
+    update medical_record_image
+    set file_hash = #{fileHash,jdbcType=VARCHAR},
+      visit_guid = #{visitGuid,jdbcType=VARCHAR},
+      mr_page_type_code = #{mrPageTypeCode,jdbcType=VARCHAR},
+      create_user_id = #{createUserId,jdbcType=VARCHAR},
+      create_user_name = #{createUserName,jdbcType=VARCHAR},
+      create_date_time = #{createDateTime,jdbcType=TIMESTAMP},
+      last_user_id = #{lastUserId,jdbcType=VARCHAR},
+      last_user_name = #{lastUserName,jdbcType=VARCHAR},
+      last_date_time = #{lastDateTime,jdbcType=TIMESTAMP},
+      version = #{version,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  
+  <select id="getCountByFileHashAndVisitGuid" resultType="int" >
+    select 
+    	count(id)
+    from medical_record_image
+    where  file_hash = #{fileHash,jdbcType=VARCHAR} and visit_guid = #{visitGuid,jdbcType=VARCHAR}
+  </select>
+  
+  <!-- <select id="getMrPageTypesOfPaginationCountByVisitGuid" resultType="map" >
+  	
+   	select page_type.page_type_code,page_type.name as page_type_name ,count(resource.mr_page_type) as pagination_count
+	from medical_record_image image 
+	inner join mr_page_type page_type 
+	on resource.mr_page_type = page_type.id
+	where image.visitGuid = #{visitGuid}
+	group by page_type.page_type_code, page_type.name
+  </select>
+   -->
+  <select id="getImageFilesByVisitGuid" resultType="map">
+  	select 
+  		file.mr_page_type_code,scan_image.file_hash,scan_image.file_name,scan_image.file_type,page_type.sort_code,page_type.name as page_type_name
+  	 from 
+  	 	medical_record_image file
+  	 inner join scan_image
+  	 on file.file_hash = scan_image.file_hash
+  	 left join mr_page_type page_type
+  	 on file.mr_page_type_code = page_type.code
+  	 where file.visit_guid=#{visitGuid}
+  </select>
+  
+   <select id="getImageFileByFileHash" resultType="map">
+  	select 
+  		file.mr_page_type_code,scan_image.file_hash,scan_image.file_name,scan_image.file_type
+  	 from 
+  	 	medical_record_image file
+  	 inner join scan_image
+  	 on file.file_hash = scan_image.file_hash
+  	 where file.file_hash=#{fileHash}
+  </select>
+  
+  <select id="selectByVisitGuidAndFileHash" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from medical_record_image
+    where visit_guid = #{visitGuid} and file_hash = #{fileHash}
+  </select>
+  
+  <select id="getPaginationCountByVisitGuid" resultType="map">
+	select page_type.code,count(image.visit_guid) as count from mr_page_type page_type 
+	left join medical_record_image image
+	on  image.mr_page_type_code = page_type.code
+	where image.visit_guid = #{visitGuid}
+	group by  page_type.code
+  </select>
+  
+  <select id="getUnPaginationImageCountByVisitGuid" resultType="int" >
+    select 
+    	count(id)
+    from medical_record_image
+    where  mr_page_type_code is null and visit_guid = #{visitGuid,jdbcType=VARCHAR}
+  </select>
+  
+  
+</mapper>

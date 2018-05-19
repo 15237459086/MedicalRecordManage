@@ -4,7 +4,9 @@ String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 request.setAttribute("basePath", basePath);
 %>
-
-
-This is my JSP page. <br>
-  
+<script>
+	$(function(){
+		var url = $($("#nav ul li a")[1]).attr("href"); 
+		window.location.href = url;
+	});
+</script>

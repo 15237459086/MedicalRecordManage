@@ -292,5 +292,13 @@ public class BaseInfoServiceImpl implements BaseInfoService {
 		return baseInfoMapper.getQualityControlByUpOneLevelCode(String.format("%s__", upOneLevelCode));
 	}
 
-
+	/**
+	 * 获取标签类型
+	 * @return
+	 */
+	@Override
+	public List<Map<String, Object>> getMrPageTypes() {
+		// TODO Auto-generated method stub
+		return baseInfoMapper.getMrPageTypes();
+	}
 }

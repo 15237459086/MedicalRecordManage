@@ -270,6 +270,12 @@
    t.code like #{upOneLevelCode}
   </select>
   
+  <select id="getMrPageTypes" resultType="map">
+    select 
+    	id, code, name, index_code, sort_code
+    from mr_page_type
+    order by code
+  </select>
   
  
  

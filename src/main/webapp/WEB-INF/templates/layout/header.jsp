@@ -36,7 +36,7 @@ request.setAttribute("basePath", basePath);
 <!------导航条--------->
 <div id="nav">
  <ul class="multiUl">
-  <li><a href="${basePath }/index">首页</a></li>
+  <li><a href="${basePath }index">首页</a></li>
   <shiro:hasAnyRoles name="role_version_1,role_version_1.1">
   	<li><a href="${basePath }medical_record/pigeonholed_index" id="demoBtn">病案归档</a></li>
   </shiro:hasAnyRoles>

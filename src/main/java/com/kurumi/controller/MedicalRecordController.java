@@ -94,11 +94,6 @@ public class MedicalRecordController {
 		return "trace/query_trace";
 	}
 	
-	@GetMapping("/scan_upload")
-	public String scanUpload(){
-		return "scan/scan_upload";
-	}
-	
 	@GetMapping("/ajax_query_un_pigeonhole")
 	@ResponseBody
 	public RespondResult ajaxQueryUnPigeonhole(MedicalRecordQuery params){

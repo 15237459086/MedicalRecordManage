@@ -16,6 +16,9 @@ public class RespondResult {
 	//请求失败
 	public static String errorCode = "-1";
 	
+	//资源不足
+	public static String lackCode = "-2";
+	
 	private boolean isSuccess;
 	
 	private String stateCode;

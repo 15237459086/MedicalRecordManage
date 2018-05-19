@@ -76,6 +76,10 @@ public interface BaseInfoService {
 	List<Map<String,Object>> getQualityControlByUpOneLevelCode(String upOneLevelCode);
 	
 	
-	
+	/**
+	 * 获取标签类型
+	 * @return
+	 */
+	List<Map<String, Object>> getMrPageTypes();
 	
 }

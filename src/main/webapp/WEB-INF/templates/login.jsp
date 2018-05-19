@@ -104,7 +104,7 @@
 							var stateCode = data['stateCode'];
 							if(1==stateCode){
 								layer.msg("登陆成功");
-								window.location.replace(basePath);
+								window.location.replace(basePath+"index");
 							}else{
 								var resultData = data['data'];
 								layer.msg(resultData);

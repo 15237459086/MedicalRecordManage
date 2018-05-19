@@ -294,4 +294,9 @@ public interface BaseInfoMapper {
 	 */
 	List<Map<String,Object>> getQualityControlByUpOneLevelCode(@Param("upOneLevelCode")String upOneLevelCode);
 	
+	/**
+	 * 获取标签类型
+	 * @return
+	 */
+	List<Map<String,Object>> getMrPageTypes();
 }

@@ -24,7 +24,7 @@ $(document).ready(function(){
 		$(this).addClass("current");
 		$(this).siblings("h4").removeClass("current");
 	})
-	$("#list_DH .list_menu2 h4").first().click();
+	/*$("#list_DH .list_menu2 h4").first().click();*/
 	
 		
 });

@@ -17,6 +17,7 @@
 	 
    <div class="search_table">
    <input type="hidden" id="basePath" value="${basePath }"/>
+   <input type="hidden" id="errorCode" value="${errorCode }"/>
    <form id="queryForm">
    	<input type="hidden" name="currentPage" value="1"/>
     <ul>
@@ -84,7 +85,7 @@
  
  
 
-<div id="scan_uplaod_div" hidden="hidden" class="list_con_table" style="height: 500px;">
+<div id="scan_upload_div" hidden="hidden" class="list_con_table" style="height: 500px;">
 	 <table style="width:934px; float:left; border-collapse:collapse;" id="scan_upload_tb">
       <thead>
 	      <tr>
@@ -117,6 +118,7 @@
      <br/>
 	 <div class="kv-main" style="margin-top: 70px;">
             <form action="${basePath}medical_record_scan/images_upload" method="post" enctype="multipart/form-data">
+            	<input type="hidden" name="visitGuid" id="visitGuid"/>
             	<div style="overflow-y: scroll;max-height: 300px;">
                 	<input id="file-0" class="file" style="width: 300px;" type="file" name="uploadImages" multiple data-min-file-count="1" accept="image/gif,image/jpeg,image/jpg,image/png">
                 </div>

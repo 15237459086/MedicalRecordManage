@@ -15,6 +15,13 @@ $(function(){
 			
 		}
 	});
+	
+	var errorCode =$("#errorCode").val();
+	if(errorCode ==1){
+		layer.msg("上传文件个数为0");
+	}else if(errorCode ==2){
+		layer.msg("上传失败");
+	}
 });
 
 function init(baseInfo){
@@ -243,13 +250,16 @@ function pigeonholeSubmit(){
 
 
 function scanUploadFormShow(obj){
-	
+	$("#visitGuid").val("");
 	$("#query_div").attr("hidden","hidden");
-	$("#scan_uplaod_div").removeAttr("hidden");
+	$("#scan_upload_div").removeAttr("hidden");
 	$("#btn_reset").click();
 	 var content = $(obj).parent().parent();
 	 var trOjb = $("#scan_upload_tb tbody tr");
-	 trOjb.attr("id",content.attr("id"));
+	 var visitGuid = content.attr("id");
+	 $("#visitGuid").val(visitGuid);
+		 
+	 trOjb.attr("id",visitGuid);
 	 trOjb.find(".only_id").html(content.find(".only_id").html());
 	 trOjb.find(".mr_id").html(content.find(".mr_id").html());
 	 trOjb.find(".patient_name").html(content.find(".patient_name").html());
@@ -263,8 +273,8 @@ function scanUploadFormShow(obj){
 }
 
 function btnRetreat(){
-	
-	$("#scan_uplaod_div").attr("hidden","hidden");
+	$("#visitGuid").val("");
+	$("#scan_upload_div").attr("hidden","hidden");
 	$("#query_div").removeAttr("hidden");
 	$("#btn_reset").click();
 	 var trOjb = $("#scan_upload_tb tbody tr");
