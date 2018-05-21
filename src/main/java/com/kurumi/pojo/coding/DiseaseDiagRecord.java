@@ -23,6 +23,11 @@ public class DiseaseDiagRecord {
 	private String diagTypeCode;
 	
 	/**
+	 * 诊断类型名称
+	 */
+	private String diagTypeName;
+	
+	/**
 	 * 疾病诊断原始编号
 	 */
 	private String diseaseDiagOriginalCode;
@@ -31,11 +36,6 @@ public class DiseaseDiagRecord {
 	 * 疾病诊断原始描述
 	 */
 	private String diseaseDiagOriginalDesc;
-	
-	/**
-	 * 诊断类型名称
-	 */
-	private String diagTypeName;
 	
 	/**
 	 * 疾病诊断编号
@@ -47,6 +47,22 @@ public class DiseaseDiagRecord {
 	 */
 	private String diseaseDiagName;
 	
+	/**
+	 * 疾病诊断版本
+	 */
+	private String diseaseDiagVersion;
+	
+	public String getDiseaseDiagVersion() {
+		return diseaseDiagVersion;
+	}
+
+	public void setDiseaseDiagVersion(String diseaseDiagVersion) {
+		this.diseaseDiagVersion = diseaseDiagVersion;
+	}
+
+
+
+
 	/**
 	 * 治疗结果编号
 	 */

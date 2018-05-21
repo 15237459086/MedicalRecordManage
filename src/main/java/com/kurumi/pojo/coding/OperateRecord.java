@@ -52,10 +52,17 @@ public class OperateRecord {
 	private String operateName;
 	
 	/**
+	 * 手术版本
+	 */
+	private String operateVersion;
+	
+	/**
 	 * 合并手术1
 	 */
 	private String mergeOperateCode1;
 	
+	
+
 	/**
 	 * 合并手术名称1
 	 */
@@ -357,5 +364,11 @@ public class OperateRecord {
 		this.operateOriginalCode = operateOriginalCode;
 	}
 
-	
+	public String getOperateVersion() {
+		return operateVersion;
+	}
+
+	public void setOperateVersion(String operateVersion) {
+		this.operateVersion = operateVersion;
+	}
 }

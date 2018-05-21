@@ -51,7 +51,7 @@
 		    	
 		    </li>
 		    <li class="Label_5">
-		     <a id="updateBtn" onclick="updateQualityControlFormSubmit()">修改评分</a>
+		     <a id="updateBtn" onclick="updateBtnClick()">修改评分</a>
 		     
 		    </li>
 		    </ul>
@@ -100,24 +100,24 @@
     </li>
     <li class="Label_1" style="height: 120px;padding-top: 40px;">评价项目：&nbsp;</li>
     <li class="Label_2" style="width: 54.6%;height: 120px;">
-    	<select class="input_box" name="firstLevelCode">
+    	<select class="input_box" id="firstLevelCode" name="firstLevelCode">
     		<option value="">-----  选择一级评价项目  -----</option>
     	</select>
     	<input type="hidden" name="firstLevelName" />
     	<br/>
-    	<select class="input_box" name="secondLevelCode">
+    	<select class="input_box" id="secondLevelCode" name="secondLevelCode">
     		<option value="">-----  选择二级评价项目  -----</option>
     	</select>
     	<input type="hidden" name="secondLevelName" />
     	<br/>
-    	<select class="input_box" name="thirdLevelCode">
+    	<select class="input_box"  id="thirdLevelCode" name="thirdLevelCode">
     		<option value="">-----  选择三级评价项目  -----</option>
     	</select>
     	<input type="hidden" name="thirdLevelName" />
     </li>
     <li class="Label_1" style="height: 120px;">扣分：&nbsp;</li>
     <li class="Label_2" style="height: 120px;padding-top: 40px;">
-    	<input class="input_box" type="text" name="deduction" style="width: 50px;"/>
+    	<input class="input_box" id="deduction" type="text" name="deduction" style="width: 50px;"/>
     	
     </li>
     <li class="Label_1">其他说明：&nbsp;</li>
@@ -127,7 +127,7 @@
     </li>
     <li class="Label_5">
      <a id="finishBtn" onclick="qualityControlFinishSubmit()">质控完成</a>
-     <a id="addBtn" onclick="addQualityControlFormSubmit()">新增质控</a>
+     <a id="addBtn" onclick="addBtnClick()">新增质控</a>
      
     </li>
     </ul>

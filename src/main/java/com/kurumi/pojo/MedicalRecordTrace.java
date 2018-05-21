@@ -21,10 +21,11 @@ public class MedicalRecordTrace {
 	//病案编页
 	public static final String VISIT_PAGINATION = "BABY";
 	
-	//病案编目
+	//病案编码
 	public static String VISIT_PAGE="BABM";
 	
-	
+	//病案编码
+	public static String VISIT_PUBLISH="BNKFX";
 	
 	private Integer id;
 

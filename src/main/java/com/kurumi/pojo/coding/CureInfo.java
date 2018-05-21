@@ -166,12 +166,12 @@ public class CureInfo {
     private String malignantTumorHighestDiagBasisName;
     
 	/**
-	 * 随诊期限
+	 * 是否随诊期限编码
 	 */
 	private String followUpClinicLimitCode;
 	
 	/**
-	 * 随诊期限
+	 * 是否随诊期限名称
 	 */
 	private String followUpClinicLimitName;
 	
@@ -179,11 +179,6 @@ public class CureInfo {
 	 * 随诊期限天数
 	 */
 	private BigDecimal followUpClinicDayNumber;
-	
-	/**
-	 * 随诊期限数
-	 */
-	private BigDecimal followInterval;
 	
 	/**
 	 * 随诊期限单位编号
@@ -194,6 +189,13 @@ public class CureInfo {
 	 * 随诊期限单位名称
 	 */
 	private String followUpClinicUnitName;
+	
+	
+	/**
+	 * 随诊期限数
+	 */
+	private BigDecimal followInterval;
+	
 	
 	/**
 	 * 诊断符合集合

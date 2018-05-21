@@ -5,6 +5,7 @@ import java.util.Date;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.kurumi.util.StringUtil;
 
 public class MedicalRecord {
     private String visitGuid;
@@ -58,35 +59,35 @@ public class MedicalRecord {
     private Integer version;
 
     public String getVisitGuid() {
-        return visitGuid;
+        return StringUtil.meaningStr(visitGuid);
     }
 
     public void setVisitGuid(String visitGuid) {
-        this.visitGuid = visitGuid == null ? null : visitGuid.trim();
+        this.visitGuid = StringUtil.meaningStr(visitGuid);
     }
 
     public String getPatientName() {
-        return patientName;
+        return StringUtil.meaningStr(patientName);
     }
 
     public void setPatientName(String patientName) {
-        this.patientName = patientName == null ? null : patientName.trim();
+        this.patientName = StringUtil.meaningStr(patientName);
     }
 
     public String getSexCode() {
-        return sexCode;
+        return StringUtil.meaningStr(sexCode);
     }
 
     public void setSexCode(String sexCode) {
-        this.sexCode = sexCode == null ? null : sexCode.trim();
+        this.sexCode = StringUtil.meaningStr(sexCode);
     }
 
     public String getSexName() {
-        return sexName;
+        return StringUtil.meaningStr(sexName);
     }
 
     public void setSexName(String sexName) {
-        this.sexName = sexName == null ? null : sexName.trim();
+        this.sexName = StringUtil.meaningStr(sexName);
     }
 
     public Date getBirthday() {
@@ -98,43 +99,43 @@ public class MedicalRecord {
     }
 
     public String getDocumentTypeCode() {
-        return documentTypeCode;
+        return StringUtil.meaningStr(documentTypeCode);
     }
 
     public void setDocumentTypeCode(String documentTypeCode) {
-        this.documentTypeCode = documentTypeCode == null ? null : documentTypeCode.trim();
+        this.documentTypeCode = StringUtil.meaningStr(documentTypeCode);
     }
 
     public String getDocumentTypeName() {
-        return documentTypeName;
+        return StringUtil.meaningStr(documentTypeName);
     }
 
     public void setDocumentTypeName(String documentTypeName) {
-        this.documentTypeName = documentTypeName == null ? null : documentTypeName.trim();
+        this.documentTypeName = StringUtil.meaningStr(documentTypeName);
     }
 
     public String getIdNumber() {
-        return idNumber;
+        return StringUtil.meaningStr(idNumber);
     }
 
     public void setIdNumber(String idNumber) {
-        this.idNumber = idNumber == null ? null : idNumber.trim();
+        this.idNumber = StringUtil.meaningStr(idNumber);
     }
 
     public String getOnlyId() {
-        return onlyId;
+        return StringUtil.meaningStr(onlyId);
     }
 
     public void setOnlyId(String onlyId) {
-        this.onlyId = onlyId == null ? null : onlyId.trim();
+        this.onlyId = StringUtil.meaningStr(onlyId);
     }
 
     public String getMrId() {
-        return mrId;
+        return StringUtil.meaningStr(mrId);
     }
 
     public void setMrId(String mrId) {
-        this.mrId = mrId == null ? null : mrId.trim();
+        this.mrId = StringUtil.meaningStr(mrId);
     }
 
     public Integer getVisitNumber() {
@@ -154,19 +155,19 @@ public class MedicalRecord {
     }
 
     public String getInDeptCode() {
-        return inDeptCode;
+        return StringUtil.meaningStr(inDeptCode);
     }
 
     public void setInDeptCode(String inDeptCode) {
-        this.inDeptCode = inDeptCode == null ? null : inDeptCode.trim();
+        this.inDeptCode = StringUtil.meaningStr(inDeptCode);
     }
 
     public String getInDeptName() {
-        return inDeptName;
+        return StringUtil.meaningStr(inDeptName);
     }
 
     public void setInDeptName(String inDeptName) {
-        this.inDeptName = inDeptName == null ? null : inDeptName.trim();
+        this.inDeptName = StringUtil.meaningStr(inDeptName);
     }
 
     public Date getOutHospitalDateTime() {
@@ -178,51 +179,51 @@ public class MedicalRecord {
     }
 
     public String getOutDeptCode() {
-        return outDeptCode;
+        return StringUtil.meaningStr(outDeptCode);
     }
 
     public void setOutDeptCode(String outDeptCode) {
-        this.outDeptCode = outDeptCode == null ? null : outDeptCode.trim();
+        this.outDeptCode = StringUtil.meaningStr(outDeptCode);
     }
 
     public String getOutDeptName() {
-        return outDeptName;
+        return StringUtil.meaningStr(outDeptName);
     }
 
     public void setOutDeptName(String outDeptName) {
-        this.outDeptName = outDeptName == null ? null : outDeptName.trim();
+        this.outDeptName = StringUtil.meaningStr(outDeptName);
     }
 
     public String getOutHospitalTypeCode() {
-        return outHospitalTypeCode;
+        return StringUtil.meaningStr(outHospitalTypeCode);
     }
 
     public void setOutHospitalTypeCode(String outHospitalTypeCode) {
-        this.outHospitalTypeCode = outHospitalTypeCode == null ? null : outHospitalTypeCode.trim();
+        this.outHospitalTypeCode = StringUtil.meaningStr(outHospitalTypeCode);
     }
 
     public String getOutHospitalTypeName() {
-        return outHospitalTypeName;
+        return StringUtil.meaningStr(outHospitalTypeName);
     }
 
     public void setOutHospitalTypeName(String outHospitalTypeName) {
-        this.outHospitalTypeName = outHospitalTypeName == null ? null : outHospitalTypeName.trim();
+        this.outHospitalTypeName = StringUtil.meaningStr(outHospitalTypeName);
     }
 
     public String getTreatmentSignCode() {
-        return treatmentSignCode;
+        return StringUtil.meaningStr(treatmentSignCode);
     }
 
     public void setTreatmentSignCode(String treatmentSignCode) {
-        this.treatmentSignCode = treatmentSignCode == null ? null : treatmentSignCode.trim();
+        this.treatmentSignCode = StringUtil.meaningStr(treatmentSignCode);
     }
 
     public String getTreatmentSignName() {
-        return treatmentSignName;
+        return StringUtil.meaningStr(treatmentSignName);
     }
 
     public void setTreatmentSignName(String treatmentSignName) {
-        this.treatmentSignName = treatmentSignName == null ? null : treatmentSignName.trim();
+        this.treatmentSignName = StringUtil.meaningStr(treatmentSignName);
     }
 
     public Integer getVersion() {

@@ -42,12 +42,12 @@
 	<div id="new_table">
 	<form action="" id="templateAddForm">
 	<table style="margin-top: 10px;">
-		<tr><td class="input_td">住院号:</td><td><input id="textOnlyId" name="onlyId" class="input_text" type="text" title=''></td></tr>
+		<tr><td class="input_td">住院号:</td><td><input name="onlyId" class="input_text" type="text"></td></tr>
 		
-		<tr><td class="input_td">姓　　名:</td><td><input name='patientName' class="input_text" type="text" title=''></td></tr>
-		<tr><td class="input_td">身份证号:</td><td><input name='idNumber' class="input_text" type="text" title=''></td></tr>
-		<tr><td class="input_td">病 案 号:</td><td><input required="required" name='mrId' id="mrId" class="input_text" type="text" title=''></td></tr>
-		<tr><td class="input_td">住院次数:</td><td><input  name='visitNumber' class="input_text" type="text" title=''></td></tr>
+		<tr><td class="input_td">姓　　名:</td><td><input name='patientName' class="input_text" type="text"></td></tr>
+		<tr><td class="input_td">身份证号:</td><td><input name='idNumber' class="input_text" type="text"></td></tr>
+		<tr><td class="input_td">病 案 号:</td><td><input  name='mrId' class="input_text" type="text"></td></tr>
+		<tr><td class="input_td">住院次数:</td><td><input  name='visitNumber' class="input_text" type="text"></td></tr>
 		<tr><td class="input_td">出院科室:</td>
 		<td>
 			<select name="outDeptCode" class="input_text">
@@ -63,7 +63,7 @@
     		</select>
     		<input name='outHospitalTypeName' type="hidden">
 		</td></tr>
-		<tr><td></td><td><a class="input_submit" onclick="addFormSubmit()">新增病案</a></td></tr>
+		<tr><td></td><td><a class="input_submit" onclick="clickAddFormSubmitBtn()">新增病案</a></td></tr>
 	</table>
 	</form>
 	</div>
@@ -71,21 +71,31 @@
 	<div id="pigeonhole_table">
 	
 	<table>
-		<tr><td class="input_td">姓　　名:</td><td><input id='patientName' disabled="disabled" class="input_text" type="text" title=''></td></tr>
-		<tr><td class="input_td">身份证号:</td><td><input id='idNumber'  disabled="disabled" class="input_text" type="text" title=''></td></tr>
-		<tr><td class="input_td">病 案 号:</td><td><input  id='mrId'  disabled="disabled" class="input_text" type="text" title=''></td></tr>
-		<tr><td class="input_td">住院次数:</td><td><input  disabled="disabled" id='visitNumber' class="input_text" type="text" title=''></td></tr>
+		<tr>
+			<td class="input_td">姓　　名:</td>
+			<td><input disabled="disabled" name="patientName" class="input_text" type="text"></td></tr>
+		<tr>
+			<td class="input_td">身份证号:</td>
+			<td><input disabled="disabled" name="idNumber" class="input_text" type="text"></td>
+		</tr>
+		<tr>
+			<td class="input_td">病 案 号:</td>
+			<td><input disabled="disabled" name="mrId" class="input_text" type="text"></td></tr>
+		<tr>
+			<td class="input_td">住院次数:</td>
+			<td><input disabled="disabled" name='visitNumber' class="input_text" type="text"></td>
+		</tr>
 		<tr><td class="input_td">出院科室:</td>
 		<td>
-			<input  id="outDeptName"  disabled="disabled" class="input_text" type="text" title=''>
+			<input disabled="disabled" name="outDeptName" class="input_text" type="text">
 			
 		</td></tr>
 		<tr><td class="input_td">出院日期:</td>
-		<td><input id='outHospitalDateTime'  disabled="disabled" class="input_text" type="text"></td>
+		<td><input name='outHospitalDateTime'  disabled="disabled" class="input_text" type="text"></td>
 		</tr>
 		<tr><td class="input_td">离院方式:</td>
 		<td>
-			<input  id=outHospitalTypeName  disabled="disabled" class="input_text" type="text" title=''>
+			<input name=outHospitalTypeName  disabled="disabled" class="input_text" type="text" title=''>
 		</td>
 		</tr>
 		

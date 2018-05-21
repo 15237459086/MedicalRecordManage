@@ -42,7 +42,7 @@ public class BasicInfo {
 	/**
 	 * 年龄（年）
 	 */
-	private BigDecimal age;
+	private BigDecimal yearOfAge;
 	
 	
 	/**
@@ -59,6 +59,21 @@ public class BasicInfo {
 	 * 年龄(天)
 	 */
 	private String dayOfAge;
+	
+	/**
+	 * 年龄单位编号
+	 */
+	private String ageUnitCode;
+	
+	/**
+	 * 年龄单位名称
+	 */
+	private String ageUnitName;
+	
+	/**
+	 * 年龄数值
+	 */
+	private BigDecimal ageNumber;
 	
 	/**
      * 婚姻状况编号
@@ -84,26 +99,55 @@ public class BasicInfo {
     
     
     /**
-     *	出生地（户口）编号
+     *	出生地编号
      */
     private String birthAddressCode;
     
     /**
-     * 出生地（户口）
+     * 出生地
      * 
      */
     private String birthAddress;
     
     /**
-     * 出生地（户口）行政划分
+     * 出生地行政划分
      */
     private Regionalism birthRegionalism = new Regionalism();
     
     /**
-     * 出生地（户口）
+     * 出生地邮编
      * 
      */
     private String birthAddressPostCode;
+    
+    /**
+     * 联系号码
+     */
+    private String telePhone;
+    
+    /**
+     * 国籍编号
+     */
+    private String nationalityCode;
+    
+    /**
+     * 国籍名称
+     * 
+     */
+    private String nationalityName;
+    
+    /**
+     * 民族编号
+     */
+    private String nationCode;
+    
+    /**
+     * 民族名称
+     * 
+     */
+    private String nationName;
+    
+    
     
     
     /**
@@ -123,61 +167,30 @@ public class BasicInfo {
 	
     
     /**
-     * 电话号码
-     */
-    private String telePhone;
-    
-    /**
-	 * 常住地地址编号
+	 * 户口地址编号
 	 */
-	private String permanentAddressCode;
+	private String registeredAddressCode;
 	
 	/**
-	 * 常住地地址
+	 * 户口地址
 	 */
-	private String permanentAddress;
+	private String registeredAddress;
 	
 	/**
-     * 常住地行政划分
+     * 户口行政划分
      */
-    private Regionalism permanentAddressRegionalism = new Regionalism();
+    private Regionalism registeredAddressRegionalism = new Regionalism();
 	
 	/**
-	 * 常住地电话
+	 * 户口电话
 	 */
-	private String permanentAddressPhone;
+	private String registeredAddressPhone;
+	
 	
 	/**
-	 * 常住地移动电话
+	 * 户口邮编
 	 */
-	private String permanentAddressMobilePhone;
-	
-	/**
-	 * 常住地邮编
-	 */
-	private String permanentAddressPostCode;
-    
-    /**
-     * 民族编号
-     */
-    private String nationCode;
-    
-    /**
-     * 民族名称
-     * 
-     */
-    private String nationName;
-    
-    /**
-     * 国籍编号
-     */
-    private String nationalityCode;
-    
-    /**
-     * 国籍名称
-     * 
-     */
-    private String nationalityName;
+	private String registeredAddressPostCode;
     
     
 	/**
@@ -193,9 +206,10 @@ public class BasicInfo {
 	private String idDocumentTypeName;
 	
 	/**
-	 * 患者证件号
+	 * 证件号
 	 */
 	private String idNumber;
+	
 	
 	/**
 	 * 医院编号
@@ -222,6 +236,7 @@ public class BasicInfo {
 	 */
 	private BigDecimal visitNumber;
 	
+	
 	/**
 	 * 医疗付费方式编号
 	 */
@@ -241,7 +256,6 @@ public class BasicInfo {
 	 * 健康卡号
 	 */
 	private String medicalHealthNumber;
-	
 	
 	/**
 	 * 工作单位名称
@@ -273,7 +287,35 @@ public class BasicInfo {
 	 */
 	private String workUnitPostCode;
 	
+    /**
+	 * 常住地地址编号
+	 */
+	private String permanentAddressCode;
 	
+	/**
+	 * 常住地地址
+	 */
+	private String permanentAddress;
+	
+	/**
+     * 常住地行政划分
+     */
+    private Regionalism permanentAddressRegionalism = new Regionalism();
+	
+	/**
+	 * 常住地电话
+	 */
+	private String permanentAddressPhone;
+	
+	/**
+	 * 常住地移动电话
+	 */
+	private String permanentAddressMobilePhone;
+	
+	/**
+	 * 常住地邮编
+	 */
+	private String permanentAddressPostCode;
 	
 	/**
 	 * 联系人名称
@@ -306,7 +348,7 @@ public class BasicInfo {
 	private String linkManAddress;
 	
 	/**
-     * 工作单位行政划分
+     * 联系人地址行政划分
      */
     private Regionalism linkManAddressRegionalism = new Regionalism();
 	
@@ -372,6 +414,13 @@ public class BasicInfo {
     private Date inHospitalDateTime;
     
     /**
+     * 入科时间
+     */
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
+	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    private Date inDeptDateTime;
+    
+    /**
      * 入院科室编号
      */
     private String inDeptCode;
@@ -382,11 +431,36 @@ public class BasicInfo {
     private String inDeptName;
     
     /**
+     * 入院病区名称
+     */
+    private String inHospitalWardName;
+    
+    /**
+     * 入院病房名称
+     */
+    private String inHospitalHouseName;
+    
+    /**
+     * 入院床位名称
+     */
+    private String inHospitalBedName;
+    
+    
+    
+    /**
      * 出院时间
      */
     @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
 	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date outHospitalDateTime;
+    
+    /**
+     * 出科时间
+     */
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
+	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    private Date outDeptDateTime;
+    
     
     /**
      * 出院科室编号
@@ -397,6 +471,22 @@ public class BasicInfo {
      * 出院科室名称
      */
     private String outDeptName;
+    
+    
+    /**
+     * 出院病区名称
+     */
+    private String outHospitalWardName;
+    
+    /**
+     * 出院病房名称
+     */
+    private String outHospitalHouseName;
+    
+    /**
+     * 出院床位名称
+     */
+    private String outHospitalBedName;
     
     /**
 	 * 出院方式编号
@@ -508,37 +598,21 @@ public class BasicInfo {
      * 是否尸检名称
      */
     private String autopsyName;
-	
-    /**
-     * 入院病区名称
-     */
-    private String inHospitalWardName;
     
     /**
-     * 入院病房名称
+     * 病理号
      */
-    private String inHospitalHouseName;
+    private String pathologyNumber;
     
     /**
-     * 入院床位名称
+     * 过敏药物描述
      */
-    private String inHospitalBedName;
-    
-    
-    /**
-     * 出院病区名称
-     */
-    private String outHospitalWardName;
+    private String drugAllergyDesc;
     
     /**
-     * 出院病房名称
+     * 转科描述
      */
-    private String outHospitalHouseName;
-    
-    /**
-     * 出院床位名称
-     */
-    private String outHospitalBedName;
+    private String changeDeptDesc;
 
 	public String getVisitGuid() {
 		return visitGuid;
@@ -580,15 +654,13 @@ public class BasicInfo {
 		this.birthday = birthday;
 	}
 
-	public BigDecimal getAge() {
-		return age;
+	public BigDecimal getYearOfAge() {
+		return yearOfAge;
 	}
 
-	public void setAge(BigDecimal age) {
-		this.age = age;
+	public void setYearOfAge(BigDecimal yearOfAge) {
+		this.yearOfAge = yearOfAge;
 	}
-
-	
 
 	public String getMonthOfAge() {
 		return monthOfAge;
@@ -678,84 +750,12 @@ public class BasicInfo {
 		this.birthAddressPostCode = birthAddressPostCode;
 	}
 
-	public String getNativePlaceCode() {
-		return nativePlaceCode;
-	}
-
-	public void setNativePlaceCode(String nativePlaceCode) {
-		this.nativePlaceCode = nativePlaceCode;
-	}
-
-	public String getNativePlace() {
-		return nativePlace;
-	}
-
-	public void setNativePlace(String nativePlace) {
-		this.nativePlace = nativePlace;
-	}
-
-	public Regionalism getNativePlaceRegionalism() {
-		return nativePlaceRegionalism;
-	}
-
-	public void setNativePlaceRegionalism(Regionalism nativePlaceRegionalism) {
-		this.nativePlaceRegionalism = nativePlaceRegionalism;
-	}
-
 	public String getTelePhone() {
 		return telePhone;
 	}
 
 	public void setTelePhone(String telePhone) {
 		this.telePhone = telePhone;
-	}
-
-	public String getPermanentAddressCode() {
-		return permanentAddressCode;
-	}
-
-	public void setPermanentAddressCode(String permanentAddressCode) {
-		this.permanentAddressCode = permanentAddressCode;
-	}
-
-	public String getPermanentAddress() {
-		return permanentAddress;
-	}
-
-	public void setPermanentAddress(String permanentAddress) {
-		this.permanentAddress = permanentAddress;
-	}
-
-	public Regionalism getPermanentAddressRegionalism() {
-		return permanentAddressRegionalism;
-	}
-
-	public void setPermanentAddressRegionalism(Regionalism permanentAddressRegionalism) {
-		this.permanentAddressRegionalism = permanentAddressRegionalism;
-	}
-
-	public String getPermanentAddressPhone() {
-		return permanentAddressPhone;
-	}
-
-	public void setPermanentAddressPhone(String permanentAddressPhone) {
-		this.permanentAddressPhone = permanentAddressPhone;
-	}
-
-	public String getPermanentAddressMobilePhone() {
-		return permanentAddressMobilePhone;
-	}
-
-	public void setPermanentAddressMobilePhone(String permanentAddressMobilePhone) {
-		this.permanentAddressMobilePhone = permanentAddressMobilePhone;
-	}
-
-	public String getPermanentAddressPostCode() {
-		return permanentAddressPostCode;
-	}
-
-	public void setPermanentAddressPostCode(String permanentAddressPostCode) {
-		this.permanentAddressPostCode = permanentAddressPostCode;
 	}
 
 	public String getNationCode() {
@@ -788,6 +788,70 @@ public class BasicInfo {
 
 	public void setNationalityName(String nationalityName) {
 		this.nationalityName = nationalityName;
+	}
+
+	public String getNativePlaceCode() {
+		return nativePlaceCode;
+	}
+
+	public void setNativePlaceCode(String nativePlaceCode) {
+		this.nativePlaceCode = nativePlaceCode;
+	}
+
+	public String getNativePlace() {
+		return nativePlace;
+	}
+
+	public void setNativePlace(String nativePlace) {
+		this.nativePlace = nativePlace;
+	}
+
+	public Regionalism getNativePlaceRegionalism() {
+		return nativePlaceRegionalism;
+	}
+
+	public void setNativePlaceRegionalism(Regionalism nativePlaceRegionalism) {
+		this.nativePlaceRegionalism = nativePlaceRegionalism;
+	}
+
+	public String getRegisteredAddressCode() {
+		return registeredAddressCode;
+	}
+
+	public void setRegisteredAddressCode(String registeredAddressCode) {
+		this.registeredAddressCode = registeredAddressCode;
+	}
+
+	public String getRegisteredAddress() {
+		return registeredAddress;
+	}
+
+	public void setRegisteredAddress(String registeredAddress) {
+		this.registeredAddress = registeredAddress;
+	}
+
+	public Regionalism getRegisteredAddressRegionalism() {
+		return registeredAddressRegionalism;
+	}
+
+	public void setRegisteredAddressRegionalism(Regionalism registeredAddressRegionalism) {
+		this.registeredAddressRegionalism = registeredAddressRegionalism;
+	}
+
+	public String getRegisteredAddressPhone() {
+		return registeredAddressPhone;
+	}
+
+	public void setRegisteredAddressPhone(String registeredAddressPhone) {
+		this.registeredAddressPhone = registeredAddressPhone;
+	}
+
+	public String getRegisteredAddressPostCode() {
+		return registeredAddressPostCode;
+	}
+
+	public void setRegisteredAddressPostCode(String registeredAddressPostCode) {
+		this.registeredAddressPostCode = registeredAddressPostCode;
 	}
 
 	public String getIdDocumentTypeCode() {
@@ -934,6 +998,54 @@ public class BasicInfo {
 		this.workUnitPostCode = workUnitPostCode;
 	}
 
+	public String getPermanentAddressCode() {
+		return permanentAddressCode;
+	}
+
+	public void setPermanentAddressCode(String permanentAddressCode) {
+		this.permanentAddressCode = permanentAddressCode;
+	}
+
+	public String getPermanentAddress() {
+		return permanentAddress;
+	}
+
+	public void setPermanentAddress(String permanentAddress) {
+		this.permanentAddress = permanentAddress;
+	}
+
+	public Regionalism getPermanentAddressRegionalism() {
+		return permanentAddressRegionalism;
+	}
+
+	public void setPermanentAddressRegionalism(Regionalism permanentAddressRegionalism) {
+		this.permanentAddressRegionalism = permanentAddressRegionalism;
+	}
+
+	public String getPermanentAddressPhone() {
+		return permanentAddressPhone;
+	}
+
+	public void setPermanentAddressPhone(String permanentAddressPhone) {
+		this.permanentAddressPhone = permanentAddressPhone;
+	}
+
+	public String getPermanentAddressMobilePhone() {
+		return permanentAddressMobilePhone;
+	}
+
+	public void setPermanentAddressMobilePhone(String permanentAddressMobilePhone) {
+		this.permanentAddressMobilePhone = permanentAddressMobilePhone;
+	}
+
+	public String getPermanentAddressPostCode() {
+		return permanentAddressPostCode;
+	}
+
+	public void setPermanentAddressPostCode(String permanentAddressPostCode) {
+		this.permanentAddressPostCode = permanentAddressPostCode;
+	}
+
 	public String getLinkManName() {
 		return linkManName;
 	}
@@ -1078,6 +1190,14 @@ public class BasicInfo {
 		this.inHospitalDateTime = inHospitalDateTime;
 	}
 
+	public Date getInDeptDateTime() {
+		return inDeptDateTime;
+	}
+
+	public void setInDeptDateTime(Date inDeptDateTime) {
+		this.inDeptDateTime = inDeptDateTime;
+	}
+
 	public String getInDeptCode() {
 		return inDeptCode;
 	}
@@ -1094,12 +1214,44 @@ public class BasicInfo {
 		this.inDeptName = inDeptName;
 	}
 
+	public String getInHospitalWardName() {
+		return inHospitalWardName;
+	}
+
+	public void setInHospitalWardName(String inHospitalWardName) {
+		this.inHospitalWardName = inHospitalWardName;
+	}
+
+	public String getInHospitalHouseName() {
+		return inHospitalHouseName;
+	}
+
+	public void setInHospitalHouseName(String inHospitalHouseName) {
+		this.inHospitalHouseName = inHospitalHouseName;
+	}
+
+	public String getInHospitalBedName() {
+		return inHospitalBedName;
+	}
+
+	public void setInHospitalBedName(String inHospitalBedName) {
+		this.inHospitalBedName = inHospitalBedName;
+	}
+
 	public Date getOutHospitalDateTime() {
 		return outHospitalDateTime;
 	}
 
 	public void setOutHospitalDateTime(Date outHospitalDateTime) {
 		this.outHospitalDateTime = outHospitalDateTime;
+	}
+
+	public Date getOutDeptDateTime() {
+		return outDeptDateTime;
+	}
+
+	public void setOutDeptDateTime(Date outDeptDateTime) {
+		this.outDeptDateTime = outDeptDateTime;
 	}
 
 	public String getOutDeptCode() {
@@ -1116,6 +1268,30 @@ public class BasicInfo {
 
 	public void setOutDeptName(String outDeptName) {
 		this.outDeptName = outDeptName;
+	}
+
+	public String getOutHospitalWardName() {
+		return outHospitalWardName;
+	}
+
+	public void setOutHospitalWardName(String outHospitalWardName) {
+		this.outHospitalWardName = outHospitalWardName;
+	}
+
+	public String getOutHospitalHouseName() {
+		return outHospitalHouseName;
+	}
+
+	public void setOutHospitalHouseName(String outHospitalHouseName) {
+		this.outHospitalHouseName = outHospitalHouseName;
+	}
+
+	public String getOutHospitalBedName() {
+		return outHospitalBedName;
+	}
+
+	public void setOutHospitalBedName(String outHospitalBedName) {
+		this.outHospitalBedName = outHospitalBedName;
 	}
 
 	public String getOutHospitalTypeCode() {
@@ -1278,54 +1454,55 @@ public class BasicInfo {
 		this.autopsyName = autopsyName;
 	}
 
-	public String getInHospitalWardName() {
-		return inHospitalWardName;
+	public String getPathologyNumber() {
+		return pathologyNumber;
 	}
 
-	public void setInHospitalWardName(String inHospitalWardName) {
-		this.inHospitalWardName = inHospitalWardName;
+	public void setPathologyNumber(String pathologyNumber) {
+		this.pathologyNumber = pathologyNumber;
 	}
 
-	public String getInHospitalHouseName() {
-		return inHospitalHouseName;
+	public String getAgeUnitCode() {
+		return ageUnitCode;
 	}
 
-	public void setInHospitalHouseName(String inHospitalHouseName) {
-		this.inHospitalHouseName = inHospitalHouseName;
+	public void setAgeUnitCode(String ageUnitCode) {
+		this.ageUnitCode = ageUnitCode;
 	}
 
-	public String getInHospitalBedName() {
-		return inHospitalBedName;
+	public String getAgeUnitName() {
+		return ageUnitName;
 	}
 
-	public void setInHospitalBedName(String inHospitalBedName) {
-		this.inHospitalBedName = inHospitalBedName;
+	public void setAgeUnitName(String ageUnitName) {
+		this.ageUnitName = ageUnitName;
 	}
 
-	public String getOutHospitalWardName() {
-		return outHospitalWardName;
+	public BigDecimal getAgeNumber() {
+		return ageNumber;
 	}
 
-	public void setOutHospitalWardName(String outHospitalWardName) {
-		this.outHospitalWardName = outHospitalWardName;
+	public void setAgeNumber(BigDecimal ageNumber) {
+		this.ageNumber = ageNumber;
 	}
 
-	public String getOutHospitalHouseName() {
-		return outHospitalHouseName;
+	public String getDrugAllergyDesc() {
+		return drugAllergyDesc;
 	}
 
-	public void setOutHospitalHouseName(String outHospitalHouseName) {
-		this.outHospitalHouseName = outHospitalHouseName;
+	public void setDrugAllergyDesc(String drugAllergyDesc) {
+		this.drugAllergyDesc = drugAllergyDesc;
 	}
 
-	public String getOutHospitalBedName() {
-		return outHospitalBedName;
+	public String getChangeDeptDesc() {
+		return changeDeptDesc;
 	}
 
-	public void setOutHospitalBedName(String outHospitalBedName) {
-		this.outHospitalBedName = outHospitalBedName;
+	public void setChangeDeptDesc(String changeDeptDesc) {
+		this.changeDeptDesc = changeDeptDesc;
 	}
-    
+
+	
 	
     
 }

@@ -1,4 +1,45 @@
+jQuery.validator.addMethod("mobile", function(value, element) {
+    var length = value.length;
+    var mobile = /^1[34578]\d{9}$/;/*/^1(3|4|5|7|8)\d{9}$/*/
+    return this.optional(element) || (length == 11 && mobile.test(value));
+}, "请正确填写手机号码");
 
+
+jQuery.validator.addMethod("idCard", function(value, element) {
+    var length = value.length;
+    //15位和18位身份证号码的正则表达式  
+    var regIdCard = /^(^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$)|(^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])((\d{4})|\d{3}[Xx])$)$/;  
+    //如果通过该验证，说明身份证格式正确，但准确性还需计算  
+    if (regIdCard.test(value)) {  
+        if (value.length == 18) {  
+            var idCardWi = new Array(7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2); //将前17位加权因子保存在数组里  
+           var idCardY = new Array(1, 0, 10, 9, 8, 7, 6, 5, 4, 3, 2); //这是除以11后，可能产生的11位余数、验证码，也保存成数组  
+            var idCardWiSum = 0; //用来保存前17位各自乖以加权因子后的总和  
+            for (var i = 0; i < 17; i++) {  
+                idCardWiSum += value.substring(i, i + 1) * idCardWi[i];  
+            }  
+            var idCardMod = idCardWiSum % 11;//计算出校验码所在数组的位置  
+            var idCardLast = value.substring(17);//得到最后一位身份证号码  
+           //如果等于2，则说明校验码是10，身份证号码最后一位应该是X  
+            if (idCardMod == 2) {  
+                if (idCardLast == "X" || idCardLast == "x") {   
+                	return this.optional(element) || true; 
+                } else {
+                    return this.optional(element) || false;  
+                }  
+            } else {  
+                //用计算出的验证码与最后一位身份证号码匹配，如果一致，说明通过，否则是无效的身份证号码  
+                if (idCardLast == idCardY[idCardMod]) {   
+                	return this.optional(element) || true;  
+                } else {
+                    return this.optional(element) || false; 
+                }  
+            }  
+        }  
+    } else {   
+        return this.optional(element) || false;  
+    }  
+}, "请正确填写身份证号码");
 $(function(){
 	$("select").each(function(){
 		$(this).append("<option value=''>---请选择---</option>");
@@ -155,56 +196,19 @@ function initPage(totalCounts,pageSize,currentPage){
 	    });
 	 }
 }
-
-
-function addFormSubmit(){
-	var submitData = $('#addForm').serialize();
-	var basePath = $("#basePath").val();
-	
-	$.ajax({
-		url: basePath + "medical_record/ajax_add_medical_record",
-		type: "POST",
-		dataType: "json",
-		data:submitData,
-		success: function( data ) {
-			var success = data['success'];
-			if(success){
-				var stateCode = data['stateCode'];
-				if("2" == stateCode){
-					layer.msg("该病案已存在！");
-					
-				}else{
-					layer.msg("添加成功！");
-					layer.close(addFormIndex);
-					$("#queryForm input[name='mrId']").val($("#addForm input[name='mrId']").val());
-					$('#queryBtn').click();
-				}
-			}else{
-				layer.msg("操作错误，请重试！");
-			}
-			console.log(data);
-			
-		},
-		error:function(XMLHttpRequest, textStatus, errorThrown){
-			layer.msg("未知错误，请联系管理员");
-		},
-		complete:function(XMLHttpRequest, textStatus){
-			layer.closeAll('loading');
-		}
-	});
-	/*layer.close(addFormIndex);*/
-}
-
-
 function pigeonholeSubmit(){
 	
 	var basePath = $("#basePath").val();
 	var visitGuid = $("#layerPigeonholeTable input[name='visitGuid']").val();
 	var pigeonholeDateTime = $("#layerPigeonholeTable input[name='pigeonholeDateTime']").val();
+	if(!pigeonholeDateTime){
+		layer.msg("归档日期不能为空！");
+		return;
+	}
 	var treatmentSignId = $("#layerPigeonholeTable input[name='treatmentSignId']").is(':checked');
 	var submitData="visitGuid="+visitGuid+ 
 					"&pigeonholeDateTime="+pigeonholeDateTime;
-					
+	layer.load(1);	
 	if(treatmentSignId){
 		submitData = submitData+"&treatmentSignId="+ 1;
 	}else{
@@ -239,7 +243,6 @@ function pigeonholeSubmit(){
 			layer.closeAll('loading');
 		}
 	});
-	/*layer.close(addFormIndex);*/
 }
 
 
@@ -256,14 +259,14 @@ function pigeonholeFormShow(obj){
 		  success: function(layero, index){
 			  var content = $(obj).parent().parent();
 			  $("#layerPigeonholeTable input[name='visitGuid']").val(content.attr("id"));
-			  $("#layerPigeonholeTable #patientName").val(content.find(".patient_name").html());
-			  $("#layerPigeonholeTable #idNumber").val(content.find(".id_number").html());
-			  $("#layerPigeonholeTable #mrId").val(content.find(".mr_id").html());
-			  $("#layerPigeonholeTable #visitNumber").val(content.find(".visit_number").html());
+			  $("#layerPigeonholeTable input[name='patientName']").val(content.find(".patient_name").html());
+			  $("#layerPigeonholeTable input[name='idNumber']").val(content.find(".id_number").html());
+			  $("#layerPigeonholeTable input[name='mrId']").val(content.find(".mr_id").html());
+			  $("#layerPigeonholeTable input[name='visitNumber']").val(content.find(".visit_number").html());
 			  
-			  $("#layerPigeonholeTable #outDeptName").val(content.find(".out_dept_name").html());
-			  $("#layerPigeonholeTable #outHospitalDateTime").val(content.find(".out_hospital_date").html());
-			  $("#layerPigeonholeTable #outHospitalTypeName").val(content.find(".out_hospital_type_name").html());
+			  $("#layerPigeonholeTable input[name='outDeptName']").val(content.find(".out_dept_name").html());
+			  $("#layerPigeonholeTable input[name='outHospitalDateTime']").val(content.find(".out_hospital_date").html());
+			  $("#layerPigeonholeTable input[name='outHospitalTypeName']").val(content.find(".out_hospital_type_name").html());
 			  var currentDate = new Date();
 			  var now =formatDate(currentDate);
 			  $("#layerPigeonholeTable input[name='pigeonholeDateTime']").val(now);
@@ -300,11 +303,9 @@ return s < 10 ? '0' + s : s;
 }
 
 function addFormShow(){
-	
 	//页面层
 	var add_content=$("#new_table").clone();
 	add_content.find("form").attr("id","addForm");
-	
 	addFormIndex = layer.open({
 	  type: 1,
 	  title:'新增病案',
@@ -326,7 +327,94 @@ function addFormShow(){
 		   		}
 			});
 		  });
-		 
+		  
+		  $("#addForm input,select").each(function() {
+			  $(this).attr("id",$(this).attr("name"));
+		  })
+		  
+		  var validator = $("#addForm").validate({
+				errorElement: "title",
+				ignoreTitle: true,
+				submitHandler : function(){
+					addFormSubmit();
+				},
+				rules:{
+					onlyId: {
+		                minlength: 6,
+		                maxlength: 20,
+		            },
+					patientName: {
+		                minlength: 2,
+		                maxlength: 8,
+		                required: true
+		            },
+		            idNumber: {
+		                idCard:true
+		            },
+					mrId: {
+		                minlength: 6,
+		                maxlength: 20,
+		                required: true
+		            },
+		            visitNumber: {
+		            	range:[1,2000],
+		            	digits:true,
+		                required: true
+		            },
+		            outDeptCode: {
+		                required: true
+		            },
+		            outHospitalDateTime: {
+		                required: true,
+		                date:true
+		            },
+		            outHospitalTypeCode: {
+		                required: true
+		            }
+		            
+				},
+				
+			});
 	  }
+	});
+}
+function clickAddFormSubmitBtn(){
+	$('#addForm').submit();
+}
+
+function addFormSubmit(){
+	var submitData = $('#addForm').serialize();
+	var basePath = $("#basePath").val();
+	layer.load(1);
+	$.ajax({
+		url: basePath + "medical_record/ajax_add_medical_record",
+		type: "POST",
+		dataType: "json",
+		data:submitData,
+		success: function( data ) {
+			var success = data['success'];
+			if(success){
+				var stateCode = data['stateCode'];
+				if("2" == stateCode){
+					layer.msg("该病案已存在！");
+					
+				}else{
+					layer.msg("添加成功！");
+					layer.close(addFormIndex);
+					$("#queryForm input[name='mrId']").val($("#addForm input[name='mrId']").val());
+					$('#queryBtn').click();
+				}
+			}else{
+				layer.msg("操作错误，请重试！");
+			}
+			console.log(data);
+			
+		},
+		error:function(XMLHttpRequest, textStatus, errorThrown){
+			layer.msg("未知错误，请联系管理员");
+		},
+		complete:function(XMLHttpRequest, textStatus){
+			layer.closeAll('loading');
+		}
 	});
 }

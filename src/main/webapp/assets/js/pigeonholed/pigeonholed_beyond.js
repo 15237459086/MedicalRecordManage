@@ -6,6 +6,17 @@ $(function(){
 
 	var validator = $("#queryForm").validate({
 		errorElement: "title",
+		submitHandler:function(form){
+			var url = $(form).attr("action");
+			if(url){
+				return true;
+			}else{
+				queryFormSubmit();
+				return false;
+			}
+			
+			
+		},
 		messages: {
 			outHospitalStartDate: {
 				required: " (必需字段)"
@@ -53,8 +64,10 @@ function init(baseInfo){
 
 /*点击查询按钮*/
 function queryBtnClick(){
+	$("#queryForm").removeAttr("action",null);
 	$("input[name='currentPage']").val(1);
-	queryFormSubmit();
+	$("#queryForm").submit();
+	/*queryFormSubmit();*/
 }
 
 /*提交查询*/

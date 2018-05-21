@@ -13,6 +13,33 @@ $(function(){
 			
 		}
 	});
+	
+	var validator = $("#addForm").validate({
+		errorElement: "title",
+		ignoreTitle: true,
+		submitHandler : function(){
+			addQualityControlFormSubmit();
+		},
+		rules:{
+			firstLevelCode: {
+				required: true
+            },
+            secondLevelCode: {
+				required: true
+            },
+            thirdLevelCode: {
+            	required:true
+            },
+            deduction: {
+                required: true,
+                number:true,
+                range:[0,100],
+                maxlength:4
+            }
+            
+		},
+		
+	});
 });
 
 function init(datas){
@@ -141,7 +168,9 @@ function fillThirdLevel(upOneLevelCode){
 	
 }
 
-
+function addBtnClick(){
+	$('#addForm').submit();
+}
 
 /*提交新增质控*/
 function addQualityControlFormSubmit(){
@@ -386,6 +415,33 @@ function updateFormShow(obj){
 					$("#updateForm input[name='id']").val(qualityControlItemId);
 					var visitGuid = $("#visitGuid").val();
 					$("#updateForm input[name='visitGuid']").val(visitGuid);
+					
+					var validator = $("#updateForm").validate({
+						errorElement: "title",
+						ignoreTitle: true,
+						submitHandler : function(){
+							updateQualityControlFormSubmit();
+						},
+						rules:{
+							firstLevelCode: {
+								required: true
+				            },
+				            secondLevelCode: {
+								required: true
+				            },
+				            thirdLevelCode: {
+				            	required:true
+				            },
+				            deduction: {
+				                required: true,
+				                number:true,
+				                range:[0,100],
+				                maxlength:4
+				            }
+				            
+						},
+						
+					});
 				}else{
 					layer.msg("操作错误，请重试！");
 				}
@@ -481,6 +537,10 @@ function fillUpdateFormThirdLevel(upOneLevelCode){
 	
 }
 
+function updateBtnClick(){
+	$('#updateForm').submit();
+}
+
 /*提交修改质控*/
 function updateQualityControlFormSubmit(){
 	var submitData = $('#updateForm').serialize();
@@ -519,6 +579,10 @@ function updateQualityControlFormSubmit(){
 
 /*删除质控评价*/
 function deleteQualityControlSubmit(obj){
+	if(!confirm("确定要删除吗？"))
+	 {
+		return false;
+	 }
 	var qualityControlItemRow = $(obj).parent().parent();
 	
 	var qualityControlItemId =  qualityControlItemRow.attr("id");
