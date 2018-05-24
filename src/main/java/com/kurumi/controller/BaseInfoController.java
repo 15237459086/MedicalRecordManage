@@ -95,4 +95,25 @@ public class BaseInfoController {
 		return jsonStr;
 
 	}
+	
+	
+	@GetMapping("/ajax_print_base_data")
+	@ResponseBody
+	public String ajaxPrintBaseData(){
+		
+		Map<String, List<Map<String,Object>>> baseInfo = baseInfoService.getBaseInfoOfPrint();
+		String jsonStr = JsonUtil.objectToJson(baseInfo);
+		return jsonStr;
+
+	}
+	
+	@GetMapping("/ajax_borrow_base_data")
+	@ResponseBody
+	public String ajaxBorrowBaseData(){
+		
+		Map<String, List<Map<String,Object>>> baseInfo = baseInfoService.getBaseInfoOfBorrow();
+		String jsonStr = JsonUtil.objectToJson(baseInfo);
+		return jsonStr;
+
+	}
 }

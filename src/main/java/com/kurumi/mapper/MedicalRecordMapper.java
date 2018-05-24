@@ -266,7 +266,17 @@ public interface MedicalRecordMapper {
 	int getMedicalRecordCountOfScan(MedicalRecordQuery medicalRecordQuery);
 	
     
-	
+	/**
+	 * 获取用于打印的病案
+	 * @return
+	 */
+	List<Map<String,Object>> getMedicalRecordOfPrinter(MedicalRecordQuery params);
+
+	/**
+	 * 获取用于打印的病案数量
+	 * @return
+	 */
+	int getMedicalRecordCountOfPrinter(MedicalRecordQuery params);
 	
 	/*List<Map<String,Object>> getCollectionStatistics(MedicalRecordTraceQuery medicalRecordTraceQuery);
 
@@ -292,18 +302,8 @@ public interface MedicalRecordMapper {
 	 * 获取已发行用于借阅的病案数量
 	 * @return
 	 *//*
-	int getMeditalRecordCountOfBorrow(MedRecordQuery params);
+	int getMeditalRecordCountOfBorrow(MedRecordQuery params);*/
 	
 	
-	*//**
-	 * 获取用于打印的病案
-	 * @return
-	 *//*
-	List<Map<String,Object>> getMeditalRecordOfPrint(MedRecordQuery params);
-
-	*//**
-	 * 获取用于打印的病案数量
-	 * @return
-	 *//*
-	int getMeditalRecordCountOfPrint(MedRecordQuery params);*/
+	
 }

@@ -231,13 +231,13 @@ function imagePaginationFinish(){
 				$(checkedImage).attr("page-type-code",newPageTypeCode);
 				$(checkedImage).attr("sort-code",sortCode);
 	         	$(checkedImage).addClass("image_bined").removeClass("image_checked").removeAttr("checked");
-	         	
+	         	var paginationCount =  $("#container>div:not([page-type-code])").length;
+				var imageDivs =$("#container>div");
+				$("#paginationRateSpan").html((imageDivs.length-paginationCount)+"/"+imageDivs.length);
 	         
 	         	
 	         	$("#container>div").sort(sort_li).appendTo('#container');
 	         	
-	          }else{
-	          	alert(11);
 	          }
 	        });
 	    });

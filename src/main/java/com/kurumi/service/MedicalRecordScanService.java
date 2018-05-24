@@ -26,6 +26,8 @@ public interface MedicalRecordScanService {
 
 	List<Map<String,Object>> getImageFilesByVisitGuid(String visitGuid);
 	
+	List<Map<String,Object>> getImageFilesByVisitGuidAndPrinterTypeCode(String visitGuid,String printerTypeCode);
+	
 	List<Map<String,Object>> getImageFileByFileHash(String fileHash);
 	
 	int imagePagination(String visitGuid,String fileHash,String newPageTypeCode);

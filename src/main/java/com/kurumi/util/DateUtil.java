@@ -179,8 +179,12 @@ public class DateUtil {
 		return calendar.getTime();
 	}
 	
-	public static void main(String[] args) {
-		
+	
+	public static Date addDay(Date date,int day){
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(date);
+		calendar.add(Calendar.DATE, day);
+		return calendar.getTime();
 	}
 	
 }

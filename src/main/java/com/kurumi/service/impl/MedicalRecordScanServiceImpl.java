@@ -199,4 +199,11 @@ public class MedicalRecordScanServiceImpl implements MedicalRecordScanService {
 		return medicalRecordMapper.insertMedicalRecordTrace(medicalRecordTrace);
 	}
 
+	@Override
+	public List<Map<String, Object>> getImageFilesByVisitGuidAndPrinterTypeCode(String visitGuid,
+			String printerTypeCode) {
+		// TODO Auto-generated method stub
+		return medicalRecordImageMapper.getImageFilesByVisitGuidAndPrinterTypeCode(visitGuid, printerTypeCode);
+	}
+
 }

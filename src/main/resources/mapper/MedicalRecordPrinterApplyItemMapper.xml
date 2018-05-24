@@ -1,0 +1,349 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kurumi.mapper.MedicalRecordPrinterApplyItemMapper" >
+  <resultMap id="BaseResultMap" type="com.kurumi.pojo.MedicalRecordPrinterApplyItem" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="medical_record_printer_apply_id" property="medicalRecordPrinterApplyId" jdbcType="INTEGER" />
+    <result column="visit_guid" property="visitGuid" jdbcType="VARCHAR" />
+    <result column="only_id" property="onlyId" jdbcType="VARCHAR" />
+    <result column="mr_id" property="mrId" jdbcType="VARCHAR" />
+    <result column="visit_number" property="visitNumber" jdbcType="INTEGER" />
+    <result column="patient_name" property="patientName" jdbcType="VARCHAR" />
+    <result column="patient_code" property="patientCode" jdbcType="VARCHAR" />
+    <result column="out_hospital_date_time" property="outHospitalDateTime" jdbcType="TIMESTAMP" />
+    <result column="apply_printer_type_code" property="applyPrinterTypeCode" jdbcType="VARCHAR" />
+    <result column="apply_printer_type_name" property="applyPrinterTypeName" jdbcType="VARCHAR" />
+    <result column="apply_copies" property="applyCopies" jdbcType="INTEGER" />
+    <result column="auditor_name" property="auditorName" jdbcType="VARCHAR" />
+    <result column="auditor_code" property="auditorCode" jdbcType="VARCHAR" />
+    <result column="apply_date_time" property="applyDateTime" jdbcType="TIMESTAMP" />
+    <result column="approval_date_time" property="approvalDateTime" jdbcType="TIMESTAMP" />
+    <result column="approval_status_code" property="approvalStatusCode" jdbcType="VARCHAR" />
+    <result column="approval_status_name" property="approvalStatusName" jdbcType="VARCHAR" />
+    <result column="version" property="version" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, medical_record_printer_apply_id, visit_guid, only_id, mr_id, visit_number, patient_name, 
+    patient_code, out_hospital_date_time, apply_printer_type_code, apply_printer_type_name, 
+    apply_copies, auditor_name, auditor_code, apply_date_time, approval_date_time, approval_status_code, 
+    approval_status_name, version
+  </sql>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from medical_record_printer_apply_item
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from medical_record_printer_apply_item
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+ 
+  <insert id="insert" parameterType="com.kurumi.pojo.MedicalRecordPrinterApplyItem" 
+  useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+    insert into medical_record_printer_apply_item (id, medical_record_printer_apply_id, 
+      visit_guid, only_id, mr_id, 
+      visit_number, patient_name, patient_code, 
+      out_hospital_date_time, apply_printer_type_code, 
+      apply_printer_type_name, apply_copies, auditor_name, 
+      auditor_code, apply_date_time, approval_date_time, 
+      approval_status_code, approval_status_name, 
+      version)
+    values (#{id,jdbcType=INTEGER}, #{medicalRecordPrinterApplyId,jdbcType=INTEGER}, 
+      #{visitGuid,jdbcType=VARCHAR}, #{onlyId,jdbcType=VARCHAR}, #{mrId,jdbcType=VARCHAR}, 
+      #{visitNumber,jdbcType=INTEGER}, #{patientName,jdbcType=VARCHAR}, #{patientCode,jdbcType=VARCHAR}, 
+      #{outHospitalDateTime,jdbcType=TIMESTAMP}, #{applyPrinterTypeCode,jdbcType=VARCHAR}, 
+      #{applyPrinterTypeName,jdbcType=VARCHAR}, #{applyCopies,jdbcType=INTEGER}, #{auditorName,jdbcType=VARCHAR}, 
+      #{auditorCode,jdbcType=VARCHAR}, #{applyDateTime,jdbcType=TIMESTAMP}, #{approvalDateTime,jdbcType=TIMESTAMP}, 
+      #{approvalStatusCode,jdbcType=VARCHAR}, #{approvalStatusName,jdbcType=VARCHAR}, 
+      #{version,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.kurumi.pojo.MedicalRecordPrinterApplyItem" >
+    insert into medical_record_printer_apply_item
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="medicalRecordPrinterApplyId != null" >
+        medical_record_printer_apply_id,
+      </if>
+      <if test="visitGuid != null" >
+        visit_guid,
+      </if>
+      <if test="onlyId != null" >
+        only_id,
+      </if>
+      <if test="mrId != null" >
+        mr_id,
+      </if>
+      <if test="visitNumber != null" >
+        visit_number,
+      </if>
+      <if test="patientName != null" >
+        patient_name,
+      </if>
+      <if test="patientCode != null" >
+        patient_code,
+      </if>
+      <if test="outHospitalDateTime != null" >
+        out_hospital_date_time,
+      </if>
+      <if test="applyPrinterTypeCode != null" >
+        apply_printer_type_code,
+      </if>
+      <if test="applyPrinterTypeName != null" >
+        apply_printer_type_name,
+      </if>
+      <if test="applyCopies != null" >
+        apply_copies,
+      </if>
+      <if test="auditorName != null" >
+        auditor_name,
+      </if>
+      <if test="auditorCode != null" >
+        auditor_code,
+      </if>
+      <if test="applyDateTime != null" >
+        apply_date_time,
+      </if>
+      <if test="approvalDateTime != null" >
+        approval_date_time,
+      </if>
+      <if test="approvalStatusCode != null" >
+        approval_status_code,
+      </if>
+      <if test="approvalStatusName != null" >
+        approval_status_name,
+      </if>
+      <if test="version != null" >
+        version,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="medicalRecordPrinterApplyId != null" >
+        #{medicalRecordPrinterApplyId,jdbcType=INTEGER},
+      </if>
+      <if test="visitGuid != null" >
+        #{visitGuid,jdbcType=VARCHAR},
+      </if>
+      <if test="onlyId != null" >
+        #{onlyId,jdbcType=VARCHAR},
+      </if>
+      <if test="mrId != null" >
+        #{mrId,jdbcType=VARCHAR},
+      </if>
+      <if test="visitNumber != null" >
+        #{visitNumber,jdbcType=INTEGER},
+      </if>
+      <if test="patientName != null" >
+        #{patientName,jdbcType=VARCHAR},
+      </if>
+      <if test="patientCode != null" >
+        #{patientCode,jdbcType=VARCHAR},
+      </if>
+      <if test="outHospitalDateTime != null" >
+        #{outHospitalDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="applyPrinterTypeCode != null" >
+        #{applyPrinterTypeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="applyPrinterTypeName != null" >
+        #{applyPrinterTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="applyCopies != null" >
+        #{applyCopies,jdbcType=INTEGER},
+      </if>
+      <if test="auditorName != null" >
+        #{auditorName,jdbcType=VARCHAR},
+      </if>
+      <if test="auditorCode != null" >
+        #{auditorCode,jdbcType=VARCHAR},
+      </if>
+      <if test="applyDateTime != null" >
+        #{applyDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="approvalDateTime != null" >
+        #{approvalDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="approvalStatusCode != null" >
+        #{approvalStatusCode,jdbcType=VARCHAR},
+      </if>
+      <if test="approvalStatusName != null" >
+        #{approvalStatusName,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null" >
+        #{version,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.kurumi.pojo.MedicalRecordPrinterApplyItem" >
+    update medical_record_printer_apply_item
+    <set >
+      <if test="medicalRecordPrinterApplyId != null" >
+        medical_record_printer_apply_id = #{medicalRecordPrinterApplyId,jdbcType=INTEGER},
+      </if>
+      <if test="visitGuid != null" >
+        visit_guid = #{visitGuid,jdbcType=VARCHAR},
+      </if>
+      <if test="onlyId != null" >
+        only_id = #{onlyId,jdbcType=VARCHAR},
+      </if>
+      <if test="mrId != null" >
+        mr_id = #{mrId,jdbcType=VARCHAR},
+      </if>
+      <if test="visitNumber != null" >
+        visit_number = #{visitNumber,jdbcType=INTEGER},
+      </if>
+      <if test="patientName != null" >
+        patient_name = #{patientName,jdbcType=VARCHAR},
+      </if>
+      <if test="patientCode != null" >
+        patient_code = #{patientCode,jdbcType=VARCHAR},
+      </if>
+      <if test="outHospitalDateTime != null" >
+        out_hospital_date_time = #{outHospitalDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="applyPrinterTypeCode != null" >
+        apply_printer_type_code = #{applyPrinterTypeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="applyPrinterTypeName != null" >
+        apply_printer_type_name = #{applyPrinterTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="applyCopies != null" >
+        apply_copies = #{applyCopies,jdbcType=INTEGER},
+      </if>
+      <if test="auditorName != null" >
+        auditor_name = #{auditorName,jdbcType=VARCHAR},
+      </if>
+      <if test="auditorCode != null" >
+        auditor_code = #{auditorCode,jdbcType=VARCHAR},
+      </if>
+      <if test="applyDateTime != null" >
+        apply_date_time = #{applyDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="approvalDateTime != null" >
+        approval_date_time = #{approvalDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="approvalStatusCode != null" >
+        approval_status_code = #{approvalStatusCode,jdbcType=VARCHAR},
+      </if>
+      <if test="approvalStatusName != null" >
+        approval_status_name = #{approvalStatusName,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null" >
+        version = #{version,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.kurumi.pojo.MedicalRecordPrinterApplyItem" >
+    update medical_record_printer_apply_item
+    set medical_record_printer_apply_id = #{medicalRecordPrinterApplyId,jdbcType=INTEGER},
+      visit_guid = #{visitGuid,jdbcType=VARCHAR},
+      only_id = #{onlyId,jdbcType=VARCHAR},
+      mr_id = #{mrId,jdbcType=VARCHAR},
+      visit_number = #{visitNumber,jdbcType=INTEGER},
+      patient_name = #{patientName,jdbcType=VARCHAR},
+      patient_code = #{patientCode,jdbcType=VARCHAR},
+      out_hospital_date_time = #{outHospitalDateTime,jdbcType=TIMESTAMP},
+      apply_printer_type_code = #{applyPrinterTypeCode,jdbcType=VARCHAR},
+      apply_printer_type_name = #{applyPrinterTypeName,jdbcType=VARCHAR},
+      apply_copies = #{applyCopies,jdbcType=INTEGER},
+      auditor_name = #{auditorName,jdbcType=VARCHAR},
+      auditor_code = #{auditorCode,jdbcType=VARCHAR},
+      apply_date_time = #{applyDateTime,jdbcType=TIMESTAMP},
+      approval_date_time = #{approvalDateTime,jdbcType=TIMESTAMP},
+      approval_status_code = #{approvalStatusCode,jdbcType=VARCHAR},
+      approval_status_name = #{approvalStatusName,jdbcType=VARCHAR},
+      version = #{version,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  
+  <select id="getPrinterApplyItemById" resultType="map" parameterType="java.lang.Integer" >
+	select item.id,item.visit_guid,only_id, item.mr_id, item.visit_number, item.patient_name, 
+    	item.patient_code, item.out_hospital_date_time, item.apply_printer_type_code, item.apply_printer_type_name,
+    	item.apply_copies,apply.claimer_name,apply.claimer_code,apply.claimer_phone
+    from medical_record_printer_apply_item item
+    inner join medical_record_printer_apply apply
+    on apply.id = item.medical_record_printer_apply_id
+    where item.id = #{printerApplyItemId}
+  </select>
+  
+  
+  <select id="getPrinterApplyItemByApplyId" resultType="map" parameterType="java.lang.Integer" >
+	select item.id,item.visit_guid,only_id, item.mr_id, item.visit_number, item.patient_name, 
+    	item.patient_code, 
+    	item.out_hospital_date_time, 
+    	date_format(item.out_hospital_date_time,'%Y-%m-%d') as out_hospital_date_format,
+    	item.apply_printer_type_code, item.apply_printer_type_name,
+    	item.apply_copies,apply.claimer_name,apply.claimer_code,apply.claimer_phone
+    from medical_record_printer_apply_item item
+    inner join medical_record_printer_apply apply
+    on apply.id = item.medical_record_printer_apply_id
+    where apply.id = #{printerApplyId}
+  </select>
+</mapper>

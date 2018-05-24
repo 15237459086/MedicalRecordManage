@@ -299,4 +299,10 @@ public interface BaseInfoMapper {
 	 * @return
 	 */
 	List<Map<String,Object>> getMrPageTypes();
+	
+	/**
+	 * 获取标签类型
+	 * @return
+	 */
+	List<Map<String,Object>> getPrinterTypes();
 }

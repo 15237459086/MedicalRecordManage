@@ -36,6 +36,10 @@ public interface BaseInfoService {
 	
 	
 	Map<String, List<Map<String,Object>>> getBaseInfoOfUnPigeonhole();
+	
+	Map<String, List<Map<String,Object>>> getBaseInfoOfPrint();
+	
+	Map<String, List<Map<String,Object>>> getBaseInfoOfBorrow();
 	/**
 	 * 模糊搜索疾病
 	 * @return

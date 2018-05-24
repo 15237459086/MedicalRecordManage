@@ -255,6 +255,23 @@
   	 where file.visit_guid=#{visitGuid}
   </select>
   
+  <select id="getImageFilesByVisitGuidAndPrinterTypeCode" resultType="map">
+  	select 
+  		file.mr_page_type_code,scan_image.file_hash,scan_image.file_name,scan_image.file_type,page_type.sort_code,page_type.name as page_type_name
+  	 from 
+  	 	medical_record_image file
+  	 inner join scan_image
+  	 on file.file_hash = scan_image.file_hash
+  	 left join mr_page_type page_type
+  	 on file.mr_page_type_code = page_type.code
+  	 inner join medical_printer_range printer_range
+  	 on printer_range.mr_page_type_id = page_type.id
+  	 inner join mr_printer_type printer_type
+  	 on printer_range.mr_printer_type_id = printer_type.id
+  	 where file.visit_guid=#{visitGuid} and printer_type.code=${printerTypeCode} 
+  	 order by page_type.sort_code
+  </select>
+  
    <select id="getImageFileByFileHash" resultType="map">
   	select 
   		file.mr_page_type_code,scan_image.file_hash,scan_image.file_name,scan_image.file_type

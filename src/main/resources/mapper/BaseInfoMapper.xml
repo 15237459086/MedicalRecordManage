@@ -259,6 +259,12 @@
    	where code = #{code}
   </select>
   
+  
+  <!-- 获取打印类型 -->
+ <select id="getPrinterTypes" resultType="map">
+  	select id,name as label,code as uniq_code from mr_printer_type
+ </select>
+  
    <!-- 获取第一级指控标准-->
  <select id="getQualityControlOfFirstLevel" resultType="map" >
    select t.code,t.project,t.score from quality_control_standard t where code like '_';

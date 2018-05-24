@@ -49,17 +49,17 @@ request.setAttribute("basePath", basePath);
   <shiro:hasAnyRoles name="role_version_2">
   	<li><a href="#" id="demoBtn3">病案编码</a></li>
   </shiro:hasAnyRoles>
-  <shiro:hasAnyRoles name="role_version_1.1">
+  <shiro:hasAnyRoles name="role_version_2">
   	<li><a href="#" id="demoBtn4">病案管理</a></li>
   </shiro:hasAnyRoles>
   <shiro:hasAnyRoles name="role_version_1.1">
-  	<li><a href="#" id="demoBtn5">窗口服务</a></li>
-  </shiro:hasAnyRoles>
-  <shiro:hasAnyRoles name="role_version_1.1">
-  	<li><a href="#" id="demoBtn6">借阅记录</a></li>
+  	<li><a href="${basePath }medical_record/windows_index" id="demoBtn5">窗口服务</a></li>
   </shiro:hasAnyRoles>
   <shiro:hasAnyRoles name="role_version_1,role_version_1.1">
   	<li><a href="${basePath }medical_record/trace_index" id="demoBtn7">病案示踪</a></li>
+  </shiro:hasAnyRoles>
+   <shiro:hasAnyRoles name="role_version_1.1">
+  	<li><a href="${basePath }medical_record/borrow_index" id="demoBtn6">病案借阅</a></li>
   </shiro:hasAnyRoles>
   <shiro:hasAnyRoles name="role_version_2">
   	<li><a href="#" id="demoBtn8">环节质控</a></li>

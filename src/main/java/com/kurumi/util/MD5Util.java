@@ -39,7 +39,4 @@ public class MD5Util {
 		return md5;
 	}
 	
-	public static void main(String[] args) {
-		System.out.print(getMD5("adming"));
-	}
 }

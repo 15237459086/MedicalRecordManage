@@ -1,6 +1,7 @@
 package com.kurumi.controller;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -25,13 +26,18 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.kurumi.config.MyConfig;
 import com.kurumi.pojo.RespondResult;
+import com.kurumi.pojo.pdf.MedicalRecordResource;
 import com.kurumi.query.MedicalRecordQuery;
 import com.kurumi.service.BaseInfoService;
 import com.kurumi.service.MedicalRecordScanService;
 import com.kurumi.service.MedicalRecordService;
+import com.kurumi.thread.MedicalRecordPDFThread;
+import com.kurumi.util.FileUtil;
 import com.kurumi.util.GuidUtil;
 import com.kurumi.util.JsonUtil;
 import com.kurumi.util.PDFUtil;
+import com.kurumi.util.StringUtil;
+import com.kurumi.util.WaterMarkUtil;
 
 @Controller
 @RequestMapping("/medical_record_scan")
@@ -198,11 +204,37 @@ public class MedicalRecordScanController {
 			int result = medicalRecordScanService.imagePaginationFinish(visitGuid);
 			if(result == -2){
 				return new RespondResult(true, RespondResult.lackCode, "编页完成失败", "基础资源缺失或存在未完成编页的图片");
-			}else if(result == 1){
+			}else{
+				try {
+					List<Map<String,Object>> sourceFiles = medicalRecordScanService.getImageFilesByVisitGuid(visitGuid);
+					
+					MedicalRecordResource medicalRecordResource = new MedicalRecordResource();
+					medicalRecordResource.getSourceFiles().addAll(sourceFiles);
+					medicalRecordResource.getSourceBasicPaths().put("imageBasicPath", myConfig.getImageRecourcePath());
+					String newPDFPath = myConfig.getPdfRecourcePath()+StringUtil.getLocalPath(visitGuid)+ visitGuid+"\\"+"show.pdf";
+					File newPDFFile = new File(newPDFPath);
+					if(newPDFFile.exists()){
+						newPDFFile.delete();
+					}
+					
+					String publishPdfDir = myConfig.getPdfRecourcePath()+StringUtil.getLocalPath(visitGuid)+ visitGuid+"\\"+"publisih\\";
+					List<String> publishPdfPaths = FileUtil.getChileFilePaths(publishPdfDir);
+					for (String publishPdfPath : publishPdfPaths) {
+						File publishPdfFile = new File(publishPdfPath);
+						if(publishPdfFile.exists()){
+							publishPdfFile.delete();
+						}
+					}
+					
+					medicalRecordResource.setNewPDFPath(newPDFPath);
+					MedicalRecordPDFThread medicalRecordPDFThread = new MedicalRecordPDFThread(medicalRecordResource);
+					medicalRecordPDFThread.start();
+				} catch (Exception e) {
+					// TODO: handle exception
+					e.printStackTrace();
+				}
+				
 				return new RespondResult(true, RespondResult.successCode, "编页完成", "编页完成");
-			}
-			else{
-				return new RespondResult(true, RespondResult.repeatCode, "编页完成失败", "编页已完成");
 			}
 		}catch (Exception e) {
 			e.printStackTrace();
@@ -217,9 +249,9 @@ public class MedicalRecordScanController {
 		
 		ByteArrayOutputStream baos = null;
 		try {
-			List<Map<String,Object>> scanFiles = medicalRecordScanService.getImageFilesByVisitGuid(visitGuid);
+			String pdfPath = myConfig.getPdfRecourcePath()+StringUtil.getLocalPath(visitGuid)+ visitGuid+"\\"+"show.pdf";
 			
-			baos = PDFUtil.getPDFStream(scanFiles,myConfig.getImageRecourcePath());
+			baos = WaterMarkUtil.getOutputStreamOfWaterMarkByText(pdfPath, "仅可用于预览");
 			response.setContentLength(baos.size());
 			response.setContentType("application/pdf");
 			response.addHeader("Content-Disposition", "inline;FileName=printer.pdf");

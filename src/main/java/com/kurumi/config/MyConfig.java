@@ -20,8 +20,14 @@ public class MyConfig {
 	@Value("${config.image.resource.path}")
 	private String imageRecourcePath;
 	
+	@Value("${config.pdf.resource.path}")
+	private String pdfRecourcePath;
+	
 	@Value("${config.current.version}")
 	private String currentVersion;
+	
+	@Value("${config.borrow.limit.day}")
+	private String borrowLimitDay;
 
 	public String getRemoteLoginUrl() {
 		return remoteLoginUrl;
@@ -46,8 +52,27 @@ public class MyConfig {
 	public void setImageRecourcePath(String imageRecourcePath) {
 		this.imageRecourcePath = imageRecourcePath;
 	}
+
+	public String getPdfRecourcePath() {
+		return pdfRecourcePath;
+	}
+
+	public void setPdfRecourcePath(String pdfRecourcePath) {
+		this.pdfRecourcePath = pdfRecourcePath;
+	}
 	
-	
+	public int getBorrowLimitDay(){
+		int defaultLimitDay = 7;
+		if(this.borrowLimitDay != null){
+			try {
+				return Integer.parseInt(borrowLimitDay);
+			} catch (Exception e) {
+				// TODO: handle exception
+				e.printStackTrace();
+			}
+		}
+		return defaultLimitDay;
+	}
 	
 	
 }

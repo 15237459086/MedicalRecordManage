@@ -301,4 +301,46 @@ public class BaseInfoServiceImpl implements BaseInfoService {
 		// TODO Auto-generated method stub
 		return baseInfoMapper.getMrPageTypes();
 	}
+
+	@Override
+	public Map<String, List<Map<String, Object>>> getBaseInfoOfPrint() {
+		// TODO Auto-generated method stub
+		Map<String, List<Map<String, Object>>> baseInfo = new HashMap<String, List<Map<String,Object>>>();
+		List<Map<String, Object>> hospitals = baseInfoMapper.getHospitalByCode(this.hospitalCode);
+		List<Map<String, Object>> medicalDepts = new ArrayList<Map<String,Object>>();
+		if(!hospitals.isEmpty()){
+			medicalDepts = baseInfoMapper.getMedicalDeptByHospitalId(((Integer)hospitals.get(0).get("id")));
+		}
+		
+		baseInfo.put("hospitals", hospitals);
+		baseInfo.put("medicalDepts", medicalDepts);
+		List<Map<String, Object>> outHospitalTypes = baseInfoMapper.getOutHospitalTypes();
+		baseInfo.put("outHospitalTypes", outHospitalTypes);
+		List<Map<String, Object>> relativeRelations = baseInfoMapper.getRelativeRelations();
+		baseInfo.put("relativeRelations", relativeRelations);
+		List<Map<String, Object>> printerTypes = baseInfoMapper.getPrinterTypes();
+		baseInfo.put("printerTypes", printerTypes);
+		return baseInfo;
+	}
+
+	@Override
+	public Map<String, List<Map<String, Object>>> getBaseInfoOfBorrow() {
+		// TODO Auto-generated method stub
+		Map<String, List<Map<String, Object>>> baseInfo = new HashMap<String, List<Map<String,Object>>>();
+		List<Map<String, Object>> hospitals = baseInfoMapper.getHospitalByCode(this.hospitalCode);
+		List<Map<String, Object>> medicalDepts = new ArrayList<Map<String,Object>>();
+		if(!hospitals.isEmpty()){
+			medicalDepts = baseInfoMapper.getMedicalDeptByHospitalId(((Integer)hospitals.get(0).get("id")));
+		}
+		
+		baseInfo.put("hospitals", hospitals);
+		baseInfo.put("medicalDepts", medicalDepts);
+		List<Map<String, Object>> outHospitalTypes = baseInfoMapper.getOutHospitalTypes();
+		baseInfo.put("outHospitalTypes", outHospitalTypes);
+		List<Map<String, Object>> relativeRelations = baseInfoMapper.getRelativeRelations();
+		baseInfo.put("relativeRelations", relativeRelations);
+		List<Map<String, Object>> printerTypes = baseInfoMapper.getPrinterTypes();
+		baseInfo.put("printerTypes", printerTypes);
+		return baseInfo;
+	}
 }

@@ -61,12 +61,25 @@ public class MedicalRecordController {
 		return "scan_index.default";
 	}
 	
+	@GetMapping("/windows_index")
+	public String windowsIndex(){
+		return "windows_index.default";
+	}
+	
 	@GetMapping("/trace_index")
 	public String traceIndex(){
 		
 		
 		return "trace_index.default";
 	}
+	
+	@GetMapping("/borrow_index")
+	public String borrowIndex(){
+		
+		
+		return "borrow_index.default";
+	}
+	
 	
 	@GetMapping("/un_pigeonhole")
 	public String unPigeonhole(){

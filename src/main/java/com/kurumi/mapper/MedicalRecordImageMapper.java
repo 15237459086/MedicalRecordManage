@@ -34,6 +34,12 @@ public interface MedicalRecordImageMapper {
 	 * 获取病案图片
 	 * @return
 	 */
+	List<Map<String,Object>> getImageFilesByVisitGuidAndPrinterTypeCode(@Param("visitGuid") String visitGuid,@Param("printerTypeCode") String printerTypeCode);
+	
+	/**
+	 * 获取病案图片
+	 * @return
+	 */
 	List<Map<String,Object>> getImageFileByFileHash(@Param("fileHash") String fileHash);
 	
 	MedicalRecordImage selectByVisitGuidAndFileHash(@Param("visitGuid") String visitGuid,@Param("fileHash") String fileHash);
