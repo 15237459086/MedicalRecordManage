@@ -1,0 +1,174 @@
+
+#div_TC{
+    max-width:1366px;min-width:1024px;height:auto; background:#FFF; border-radius:5px; margin:0 auto; overflow:hidden;
+}
+.TC_title{
+    width:100%; height:50px; background:#009388;
+}
+.TC_title h3{
+    font-family:"微软雅黑"; font-size:14px; color:#fff; font-weight:bold; line-height:50px; text-indent:32px; float:left;
+}
+.TC_title ul{
+    width:180px; height:32px; float:right; margin-top:9px;
+}
+.TC_title ul li{
+    width:76px; height:32px; font-family:"微软雅黑"; font-size:14px; color:#030000; line-height:32px; text-align:center; border:0; background:url(../../images/but.png) no-repeat; float:left; margin-right:14px;
+}
+li.active{
+    color:#626262; font-weight:bold; font-size:16px; background:#FEC99C;
+}
+.TC_title ul li input{
+    cursor:pointer; display: block;width:100%;height:100%;font-size:14px;
+}
+.TC_menu{
+    min-width:200px; width:15%; height:auto; float:left; margin-top:8px; margin-left:6px;
+}
+.TC_menu h3{
+    min-width:200px; width:15%; height:40px; background:url(../../images/sidebar.png) no-repeat; color:#fff; line-height:40px; font-size:16px; font-weight:bold;
+    float:left; margin-bottom:4px; text-align:center;
+}
+.TC_menu ul{
+    min-width:186px; width:14%; height:auto; margin:0px auto 50px;padding-top:50px;
+}
+.TC_menu ul li{
+    min-width:186px; width:14%; height:30px; text-align:center; line-height:36px; color:#555555; font-size:14px; margin-bottom:4px;
+}
+.TC_menu ul li:hover{
+    color:#6c6f6f; background:#FEC99C;
+}
+.TC_menu a{
+    cursor:pointer; color:#555555; display:block;
+}
+.TC_menu a:hover {
+    cursor:pointer; color:#6c6f6f;
+}
+.TC_li{
+    background:url(../../images/sidebar2-2.png) no-repeat; margin-bottom:4px;
+}
+.content_list{
+    max-width:1160px;min-width:820px; width:83%; margin:8px auto 30px 8px; float:left; border:1px solid #ccc;box-shadow: 1px 1px 2px #ccc;
+}
+.content_title{
+    height:40px;width:100%;background:#f5f5f5
+}
+.btn{
+    float:right;font-size:14px;height:30px;margin:5px 15px 5px 0;width:60px;background-color: #009186;color:#fff
+}
+#div_TC tr:nth-of-type(2n+1){
+    background-color: #F5F5F5;
+}
+#div_TC tr td{
+    border:1px solid #D5DDDD;
+    padding:2px;
+}
+
+.tdLabel_7 {
+    text-align:left; width:150px; height:30px; line-height:30px; font-family:"微软雅黑"; font-size:14px; color:#010000; background:#e3e5e4; border:#eee 1px solid;
+}
+.tdLabel_4 {
+    text-align: center;
+    height: 28px;
+    line-height: 28px;
+    font-family:"微软雅黑";
+    font-weight: 700;
+    text-align: center;
+    font-size: 14px;
+    color: #010000;
+    background: #fec99c;
+    border: #d5d5d5 1px solid;
+}
+
+.tdLabel_8 {
+    text-align:left; width:240px; height:30px; line-height:30px; padding:2px 0 3px 5px;font-family:"微软雅黑"; font-size:14px; color:#020202; border:#e5e5e5 1px solid;
+}
+.tdLabel_8 input[type="text"]{
+    height:30px;
+    background-color: #fff;
+    border:none;
+    border-bottom: 1px solid #FFC99D;
+    text-indent: 5px;
+}
+.tdLabel_8 input[type="radio"]{
+    height:30px;
+    width:16px;
+    vertical-align: middle;
+}
+.tdLabel_8 select{
+    height:30px;
+    width:160px;
+    font-size:14px;
+    border-color:#ccc;
+    color:rgba(0,0,0,.8);
+}
+.redColor{
+    color:red;
+}
+
+.int{
+    background: #07a396;
+    color: #FFF;
+    border-radius: 4px;
+    cursor: pointer;
+    padding:4px;
+}
+select{
+    width: 100px;
+    height: 28px;
+    text-align: left;
+    text-indent: 5px;
+    line-height: 28px;
+    border: #e3e5e4 solid 1px;
+}
+.input_box{
+    width: 95%;
+    height: 20px;
+    text-align: left;
+    text-indent: 5px;
+    line-height: 20px;
+    border-bottom: #fec99c solid 1px;
+    border-top: #FFF solid 1px;
+    border-left: #FFF solid 1px;
+    border-right: #FFF solid 1px;
+}
+
+/*手术操作*/
+.bg_danlanColor{
+    background-color: #EAF4F6;
+}
+.bg_danlanColor li{
+    float: left;
+    margin-right: 10px;
+    height: 25px;
+    line-height: 25px;
+    border-top: 1px solid #77bfb0;
+    border-left: 1px solid #77bfb0;
+    border-right: 1px solid #77bfb0;
+    width:180px;
+    text-align: center;
+}
+li.menuli{
+    float: left;
+    width:120px;
+    height:30px;
+    line-height:30px;
+    font-size:14px;
+    margin:0;
+    padding: 5px 0 5px -1px;
+    border:none;
+    border-left: 1px solid #999;
+    text-align: center;
+    cursor: pointer;
+}
+li.selected{
+    background: #fff;
+    border-top: 1px solid #77bfb0;
+    border-left: 1px solid #77bfb0;
+    border-right: 1px solid #77bfb0;
+}
+.margin0{
+    margin:0;
+}
+.dark{
+    background: #f6f6f6;
+}
+
