@@ -186,7 +186,6 @@ public class MedicalRecordScanServiceImpl implements MedicalRecordScanService {
 			return 2;
 		}
 		MedicalRecordTrace medicalRecordTrace = new MedicalRecordTrace();
-		
 		medicalRecordTrace.setVisitGuid(visitGuid);
 		Subject subject=SecurityUtils.getSubject();
 		Session session = subject.getSession();

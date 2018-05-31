@@ -1,14 +1,23 @@
 package com.kurumi.controller;
 
 import java.io.OutputStream;
+import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
+import org.apache.poi.ss.util.CellReference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +26,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.kurumi.pojo.MedicalRecord;
 import com.kurumi.pojo.MedicalRecordQualityControlItem;
@@ -60,7 +71,10 @@ public class MedicalRecordController {
 		
 		return "scan_index.default";
 	}
-	
+	@GetMapping("/coding_index")
+	public String codingIndex(){
+		return "coding_index.default";
+	}
 	@GetMapping("/windows_index")
 	public String windowsIndex(){
 		return "windows_index.default";
@@ -99,6 +113,11 @@ public class MedicalRecordController {
 	@GetMapping("/pigeonhole_rate")
 	public String pigeonholeRate(){
 		return "pigeonholed/pigeonhole_rate";
+	}
+	
+	@GetMapping("/import_medical_record_form")
+	public String importMedicalRecordForm(){
+		return "pigeonholed/import_medical_record";
 	}
 	
 	
@@ -583,8 +602,98 @@ public class MedicalRecordController {
 			
 		}
 		
-		
-		
+	}
+	
+	@PostMapping(value = "/import_medical_record")
+	public String importMedicalRecord(@RequestParam("uploadFiles")MultipartFile[] uploadFiles,HttpServletRequest request) {
+		try{
+			if(uploadFiles!=null && uploadFiles.length>0){
+				MultipartFile uploadFile = uploadFiles[0];
+				Workbook workbook = WorkbookFactory.create(uploadFile.getInputStream());
+				Sheet sheet = workbook.getSheetAt(0);
+				List<MedicalRecord> medicalRecords = new ArrayList<MedicalRecord>();
+				int rowIndex = 0;
+				for (Row row : sheet) {
+					rowIndex ++;
+					if(rowIndex ==1){
+						continue;
+					}
+					MedicalRecord medicalRecord = new MedicalRecord();
+					int colIndex = 0;
+					for (Cell cell : row) {
+						colIndex ++;
+						String value =null;
+						CellReference cellRef = new CellReference(row.getRowNum(), cell.getColumnIndex());
+						switch (cell.getCellType()) {
+							case Cell.CELL_TYPE_STRING:// 字符串型
+								value = cell.getRichStringCellValue().getString();
+								System.out.print(value+",");
+								break;
+							case Cell.CELL_TYPE_NUMERIC:// 数值型
+								if (org.apache.poi.ss.usermodel.DateUtil.isCellDateFormatted(cell)) { // 如果是date类型则 ，获取该cell的date值
+									value = cell.getDateCellValue().toString();
+									System.out.print(value+",");
+								} else {// 纯数字
+									value = ""+cell.getNumericCellValue();
+									System.out.print(value+",");
+								}
+								break;
+							case Cell.CELL_TYPE_BOOLEAN:// 布尔
+								value = ""+cell.getBooleanCellValue();
+								System.out.print(value+",");
+								break;
+							case Cell.CELL_TYPE_FORMULA:// 公式型
+								System.out.print(cell.getCellFormula()+",");
+								break;
+							case Cell.CELL_TYPE_BLANK:// 空值
+								System.out.print(",");
+								break;
+							case Cell.CELL_TYPE_ERROR: // 故障
+								System.out.print(",");
+								break;
+							default:
+								System.out.print(",");
+						}
+						if(value != null && colIndex ==1){
+							medicalRecord.setOnlyId(value);
+						}else if(value != null && colIndex ==2){
+							medicalRecord.setMrId(value);
+						}else if(value != null && colIndex ==3){
+							BigDecimal visitNumber = new BigDecimal(value);
+							medicalRecord.setVisitNumber(visitNumber.intValue());
+						}else if(value != null && colIndex ==4){
+							medicalRecord.setPatientName(value);
+						}else if(value != null && colIndex ==5){
+							medicalRecord.setIdNumber(value);
+						}else if(value != null && colIndex ==6){
+							medicalRecord.setOutDeptCode(value);
+						}else if(value != null && colIndex ==7){
+							medicalRecord.setOutDeptName(value);
+						}else if(value != null && colIndex ==8){
+							Date outHospitalDateTime = DateUtil.dateParse(DateUtil.DATE_TIME_FORMATE, value);
+							medicalRecord.setOutHospitalDateTime(outHospitalDateTime);
+						}else if(value != null && colIndex ==9){
+							medicalRecord.setOutHospitalTypeCode(value);
+						}else if(value != null && colIndex ==10){
+							medicalRecord.setOutHospitalTypeName(value);
+						}
+						
+						
+					}
+					System.out.println();
+					medicalRecords.add(medicalRecord);
+				}
+				
+				int count = medicalRecordService.importMedicalRecord(medicalRecords);
+				return "redirect:/medical_record/import_medical_record_form?resultCode="+count;
+			}else{
+				return "redirect:/medical_record/import_medical_record_form?resultCode=0";
+			}
+		}catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			return "redirect:/medical_record/import_medical_record_form?resultCode=-1";
+		}
 		
 	}
 }

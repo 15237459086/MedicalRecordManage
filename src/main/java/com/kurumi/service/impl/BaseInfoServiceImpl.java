@@ -26,7 +26,7 @@ public class BaseInfoServiceImpl implements BaseInfoService {
 	}
 
 	@Override
-	public Map<String, List<Map<String, Object>>> getBaseInfoOfHomePageBasic() {
+	public Map<String, List<Map<String, Object>>> getBaseDataOfBasicInfo() {
 		// TODO Auto-generated method stub
 		Map<String, List<Map<String, Object>>> baseInfo = new HashMap<String, List<Map<String,Object>>>();
 		
@@ -95,7 +95,7 @@ public class BaseInfoServiceImpl implements BaseInfoService {
 	}
 
 	@Override
-	public Map<String, List<Map<String, Object>>> getBaseInfoOfHomePageDiag() {
+	public Map<String, List<Map<String, Object>>> getBaseDataOfDiagInfo() {
 		// TODO Auto-generated method stub
 		Map<String, List<Map<String, Object>>> baseInfo = new HashMap<String, List<Map<String,Object>>>();
 		List<Map<String, Object>> diagTypes = baseInfoMapper.getDiagTypes();
@@ -107,7 +107,7 @@ public class BaseInfoServiceImpl implements BaseInfoService {
 	}
 
 	@Override
-	public Map<String, List<Map<String, Object>>> getBaseInfoOfHomePageCure() {
+	public Map<String, List<Map<String, Object>>> getBaseDataOfCureInfo() {
 		// TODO Auto-generated method stub
 		Map<String, List<Map<String, Object>>> baseInfo = new HashMap<String, List<Map<String,Object>>>();
 		List<Map<String, Object>> bloodTypes = baseInfoMapper.getBloodTypes();
@@ -122,7 +122,7 @@ public class BaseInfoServiceImpl implements BaseInfoService {
 	}
 
 	@Override
-	public Map<String, List<Map<String, Object>>> getBaseInfoOfHomePageOperate() {
+	public Map<String, List<Map<String, Object>>> getBaseDataOfOperateInfo() {
 		// TODO Auto-generated method stub
 		Map<String, List<Map<String, Object>>> baseInfo = new HashMap<String, List<Map<String,Object>>>();
 		List<Map<String, Object>> incisionLevels = baseInfoMapper.getIncisionLevels();

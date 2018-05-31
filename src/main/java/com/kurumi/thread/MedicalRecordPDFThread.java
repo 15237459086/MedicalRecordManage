@@ -4,7 +4,7 @@ import java.io.IOException;
 
 
 import com.itextpdf.text.DocumentException;
-import com.kurumi.pojo.pdf.MedicalRecordResource;
+import com.kurumi.pojo.resource.MedicalRecordResource;
 import com.kurumi.util.PDFUtil;
 
 
@@ -25,7 +25,7 @@ public class MedicalRecordPDFThread extends Thread {
 		// TODO Auto-generated method stub
 		if(medicalRecordResource != null){
 			try {
-				PDFUtil.createPdf(medicalRecordResource.getSourceFiles(), medicalRecordResource.getSourceBasicPaths(), medicalRecordResource.getNewPDFPath());
+				PDFUtil.createPdf(medicalRecordResource.getImageRecources(),medicalRecordResource.getImageBasicPath(), medicalRecordResource.getNewPDFPath());
 			} catch (DocumentException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

@@ -3,9 +3,13 @@ package com.kurumi.service.impl;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
@@ -13,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.kurumi.mapper.BaseInfoMapper;
 import com.kurumi.mapper.MedicalRecordMapper;
@@ -23,6 +28,7 @@ import com.kurumi.pojo.MedicalRecordTrace;
 import com.kurumi.query.MedicalRecordQuery;
 import com.kurumi.service.MedicalRecordService;
 import com.kurumi.util.DateUtil;
+import com.kurumi.util.JsonUtil;
 import com.kurumi.util.StringUtil;
 
 
@@ -276,11 +282,34 @@ public class MedicalRecordServiceImpl implements MedicalRecordService {
 		Session session = subject.getSession();
 		@SuppressWarnings("unchecked")
 		Map<String, Object> currentUser = (Map<String, Object>)session.getAttribute("currentUser");
-		
-		medicalRecordTrace.setCreateUserId((String)currentUser.get("user_code"));
-		medicalRecordTrace.setCreateUserName((String)currentUser.get("user_name"));
+		String userCode = (String)currentUser.get("user_code");
+		String userName = (String)currentUser.get("user_name");
+		medicalRecordTrace.setCreateUserId(userCode);
+		medicalRecordTrace.setCreateUserName(userName);
 		medicalRecordTrace.setTraceTypeCode((String)treatmentTraceTypes.get(0).get("code"));
 		medicalRecordTrace.setTraceTypeName((String)treatmentTraceTypes.get(0).get("name"));
+		List<String> jsonDatas = medicalRecordMapper.getMedicalRecordJsonByVisitGuid(StringUtil.handleJsonParam(visitGuid));
+		Map<String, Object> jsonMap = new HashMap<String, Object>();
+		if(!jsonDatas.isEmpty()){
+			
+			jsonMap = JsonUtil.jsonToPojo(jsonDatas.get(0), Map.class);
+			if(jsonMap != null){
+				Map<String, Object> cureInfo = (Map<String, Object>)jsonMap.get("cureInfo");
+				cureInfo.put("qualityControlDateTime", DateUtil.dateFormat(DateUtil.DATE_TIME_FORMATE, new Date()));
+				List<Map<String,Object>> cureWorkers = (List<Map<String,Object>>)cureInfo.get("cureWorkers");
+				for (Map<String, Object> cureWorker : cureWorkers) {
+					String professionTitleCode = StringUtil.meaningStr((String)cureWorker.get("professionTitleCode"));
+					if(professionTitleCode != null && professionTitleCode.equalsIgnoreCase("ZKYS")){
+						cureWorker.put("medicalWorkerCode", userCode);
+						cureWorker.put("medicalWorkerName", userName);
+						break;
+					}
+				}
+				medicalRecordMapper.deleteMedicalRecordJsonByVisitGuid(StringUtil.handleJsonParam(visitGuid));
+				String jsonMapJson = JsonUtil.objectToJson(jsonMap);
+				medicalRecordMapper.insertMedicalRecordJson(jsonMapJson);
+			}
+		}
 		count = medicalRecordMapper.insertMedicalRecordTrace(medicalRecordTrace);
 		return count;
 	}
@@ -377,6 +406,57 @@ public class MedicalRecordServiceImpl implements MedicalRecordService {
 	public List<Map<String, Object>> getMeditalRecordTraceByVisitGuid(String visitGuid) {
 		// TODO Auto-generated method stub
 		return medicalRecordMapper.getMeditalRecordTraceByVisitGuid(visitGuid);
+	}
+
+	@Override
+	public List<Map<String, Object>> getMedicalRecordOfHomePage(MedicalRecordQuery medicalRecordQuery) {
+		// TODO Auto-generated method stub
+		return medicalRecordMapper.getMedicalRecordOfHomePage(medicalRecordQuery);
+	}
+
+	@Override
+	public int getMedicalRecordCountOfHomePage(MedicalRecordQuery medicalRecordQuery) {
+		// TODO Auto-generated method stub
+		return medicalRecordMapper.getMedicalRecordCountOfHomePage(medicalRecordQuery);
+	}
+
+	@Transactional(propagation=Propagation.REQUIRED)
+	@Override
+	public int importMedicalRecord(List<MedicalRecord> medicalRecords) {
+		// TODO Auto-generated method stub
+		int total = 0;
+		for (MedicalRecord medicalRecord : medicalRecords) {
+			int count = 0;
+			MedicalRecordQuery medicalRecordQuery = new MedicalRecordQuery();
+			medicalRecordQuery.setOnlyId(medicalRecord.getOnlyId());
+			if(medicalRecordMapper.getMedicalRecordCount(medicalRecordQuery) > 0){
+				continue;
+			}
+			
+			medicalRecord.setVisitGuid(StringUtil.getId());
+			count = medicalRecordMapper.insert(medicalRecord);
+			if(count < 0){
+				continue;
+			}
+			List<Map<String,Object>> treatmentTraceTypes = baseInfoMapper.getTraceTypeByCode(MedicalRecordTrace.VISIT_INIT);
+			if(treatmentTraceTypes.size() == 0){
+				continue;
+			}
+			
+			MedicalRecordTrace medicalRecordTrace = new MedicalRecordTrace();
+			
+			medicalRecordTrace.setVisitGuid(medicalRecord.getVisitGuid());
+			Subject subject=SecurityUtils.getSubject();
+			Session session = subject.getSession();
+			Map<String, Object> currentUser = (Map<String, Object>)session.getAttribute("currentUser");
+			medicalRecordTrace.setCreateUserId((String)currentUser.get("user_code"));
+			medicalRecordTrace.setCreateUserName((String)currentUser.get("user_name"));
+			medicalRecordTrace.setTraceTypeCode((String)treatmentTraceTypes.get(0).get("code"));
+			medicalRecordTrace.setTraceTypeName((String)treatmentTraceTypes.get(0).get("name"));
+			count = medicalRecordMapper.insertMedicalRecordTrace(medicalRecordTrace);
+			total++;
+		}
+		return total;
 	}
 	
 	

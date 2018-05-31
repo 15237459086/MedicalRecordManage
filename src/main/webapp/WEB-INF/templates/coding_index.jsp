@@ -15,7 +15,7 @@ request.setAttribute("basePath", basePath);
 	<div id="list_DH">
 	  <div class="list_menu2">
 	   <h3>病案编码</h3>
-	   <h4 class="li_t"><a onclick="loadContent('${basePath }medical_record/un_pigeonhole')">病案编码</a></h4>
+	   <h4 class="li_t"><a onclick="loadContent('${basePath }medical_record_coding/query_home_page')">首页编码</a></h4>
 	  
 	  </div>
 	 </div>

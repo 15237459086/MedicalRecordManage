@@ -119,6 +119,46 @@ public class CureInfo {
     private String rehospitalAimOf31Description;
     
     /**
+   	 * 入院前颅脑损伤昏迷时间描述
+   	 */
+    private String beforeInHospitalComaTimeDesc;
+    
+    /**
+     * 入院前颅脑损伤昏迷时间(天)
+     */
+    private BigDecimal dayOfBeforeInHospitalComa;
+    
+    /**
+     * 入院前颅脑损伤昏迷时间(时)
+     */
+    private BigDecimal hourOfBeforeInHospitalComa;
+    
+    /**
+     * 入院前颅脑损伤昏迷时间(分)
+     */
+    private BigDecimal minuteOfBeforeInHospitalComa;
+    
+    /**
+   	 * 入院后颅脑损伤昏迷时间描述
+   	 */
+    private String afterInHospitalComaTimeDesc;
+    
+    /**
+   	 * 入院后颅脑损伤昏迷时间(天)
+   	 */
+    private BigDecimal dayOfAfterInHospitalComa;
+    
+    /**
+   	 * 入院后颅脑损伤昏迷时间(时)
+   	 */
+    private BigDecimal hourOfAfterInHospitalComa;
+    
+    /**
+   	 * 入院后颅脑损伤昏迷时间(分)
+   	 */
+    private BigDecimal minuteOfAfterInHospitalComa;
+    
+    /**
      * 恶性肿瘤入院确诊日期
      */
     @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
@@ -232,7 +272,7 @@ public class CureInfo {
     /**
      * 新生儿入院体重（g）
      */
-    private BigDecimal batyInHospitalWeight;
+    private BigDecimal babyInHospitalWeight;
     
     /**
      * 编目完成日期
@@ -475,12 +515,14 @@ public class CureInfo {
 		this.babyBirthWeight = babyBirthWeight;
 	}
 
-	public BigDecimal getBatyInHospitalWeight() {
-		return batyInHospitalWeight;
+	
+
+	public BigDecimal getBabyInHospitalWeight() {
+		return babyInHospitalWeight;
 	}
 
-	public void setBatyInHospitalWeight(BigDecimal batyInHospitalWeight) {
-		this.batyInHospitalWeight = batyInHospitalWeight;
+	public void setBabyInHospitalWeight(BigDecimal babyInHospitalWeight) {
+		this.babyInHospitalWeight = babyInHospitalWeight;
 	}
 
 	public Date getFinishCatalogDateTime() {
@@ -590,6 +632,70 @@ public class CureInfo {
 	public void setMalignantTumorHighestDiagBasisName(
 			String malignantTumorHighestDiagBasisName) {
 		this.malignantTumorHighestDiagBasisName = malignantTumorHighestDiagBasisName;
+	}
+
+	public String getBeforeInHospitalComaTimeDesc() {
+		return beforeInHospitalComaTimeDesc;
+	}
+
+	public void setBeforeInHospitalComaTimeDesc(String beforeInHospitalComaTimeDesc) {
+		this.beforeInHospitalComaTimeDesc = beforeInHospitalComaTimeDesc;
+	}
+
+	public BigDecimal getDayOfBeforeInHospitalComa() {
+		return dayOfBeforeInHospitalComa;
+	}
+
+	public void setDayOfBeforeInHospitalComa(BigDecimal dayOfBeforeInHospitalComa) {
+		this.dayOfBeforeInHospitalComa = dayOfBeforeInHospitalComa;
+	}
+
+	public BigDecimal getHourOfBeforeInHospitalComa() {
+		return hourOfBeforeInHospitalComa;
+	}
+
+	public void setHourOfBeforeInHospitalComa(BigDecimal hourOfBeforeInHospitalComa) {
+		this.hourOfBeforeInHospitalComa = hourOfBeforeInHospitalComa;
+	}
+
+	public BigDecimal getMinuteOfBeforeInHospitalComa() {
+		return minuteOfBeforeInHospitalComa;
+	}
+
+	public void setMinuteOfBeforeInHospitalComa(BigDecimal minuteOfBeforeInHospitalComa) {
+		this.minuteOfBeforeInHospitalComa = minuteOfBeforeInHospitalComa;
+	}
+
+	public String getAfterInHospitalComaTimeDesc() {
+		return afterInHospitalComaTimeDesc;
+	}
+
+	public void setAfterInHospitalComaTimeDesc(String afterInHospitalComaTimeDesc) {
+		this.afterInHospitalComaTimeDesc = afterInHospitalComaTimeDesc;
+	}
+
+	public BigDecimal getDayOfAfterInHospitalComa() {
+		return dayOfAfterInHospitalComa;
+	}
+
+	public void setDayOfAfterInHospitalComa(BigDecimal dayOfAfterInHospitalComa) {
+		this.dayOfAfterInHospitalComa = dayOfAfterInHospitalComa;
+	}
+
+	public BigDecimal getHourOfAfterInHospitalComa() {
+		return hourOfAfterInHospitalComa;
+	}
+
+	public void setHourOfAfterInHospitalComa(BigDecimal hourOfAfterInHospitalComa) {
+		this.hourOfAfterInHospitalComa = hourOfAfterInHospitalComa;
+	}
+
+	public BigDecimal getMinuteOfAfterInHospitalComa() {
+		return minuteOfAfterInHospitalComa;
+	}
+
+	public void setMinuteOfAfterInHospitalComa(BigDecimal minuteOfAfterInHospitalComa) {
+		this.minuteOfAfterInHospitalComa = minuteOfAfterInHospitalComa;
 	}
 	
 	

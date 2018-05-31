@@ -18,6 +18,21 @@ public class DiseaseDiagInfo {
 	private String visitGuid;
 	
 	/**
+	 * 门诊诊断
+	 */
+	private DiseaseDiagRecord outpatientDiagRecord = new DiseaseDiagRecord();
+	
+	/**
+	 * 主要诊断
+	 */
+	private DiseaseDiagRecord mainDiagRecord = new DiseaseDiagRecord();
+	
+	/**
+	 * 损失和中毒原因
+	 */
+	private DiseaseDiagRecord damageAndVenenationDiagRecord = new DiseaseDiagRecord();
+	
+	/**
 	 * 疾病诊断明细集合
 	 */
 	private List<DiseaseDiagRecord> diseaseDiagRecords = new ArrayList<DiseaseDiagRecord>();
@@ -38,6 +53,33 @@ public class DiseaseDiagInfo {
 
 	public void setVisitGuid(String visitGuid) {
 		this.visitGuid = visitGuid;
+	}
+
+	
+	
+	
+	public DiseaseDiagRecord getOutpatientDiagRecord() {
+		return outpatientDiagRecord;
+	}
+
+	public void setOutpatientDiagRecord(DiseaseDiagRecord outpatientDiagRecord) {
+		this.outpatientDiagRecord = outpatientDiagRecord;
+	}
+
+	public DiseaseDiagRecord getMainDiagRecord() {
+		return mainDiagRecord;
+	}
+
+	public void setMainDiagRecord(DiseaseDiagRecord mainDiagRecord) {
+		this.mainDiagRecord = mainDiagRecord;
+	}
+
+	public DiseaseDiagRecord getDamageAndVenenationDiagRecord() {
+		return damageAndVenenationDiagRecord;
+	}
+
+	public void setDamageAndVenenationDiagRecord(DiseaseDiagRecord damageAndVenenationDiagRecord) {
+		this.damageAndVenenationDiagRecord = damageAndVenenationDiagRecord;
 	}
 
 	public List<DiseaseDiagRecord> getDiseaseDiagRecords() {

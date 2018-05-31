@@ -51,16 +51,6 @@ public class DiseaseDiagRecord {
 	 * 疾病诊断版本
 	 */
 	private String diseaseDiagVersion;
-	
-	public String getDiseaseDiagVersion() {
-		return diseaseDiagVersion;
-	}
-
-	public void setDiseaseDiagVersion(String diseaseDiagVersion) {
-		this.diseaseDiagVersion = diseaseDiagVersion;
-	}
-
-
 
 
 	/**
@@ -87,6 +77,16 @@ public class DiseaseDiagRecord {
     
     
     /**
+	 * 入院病情编号
+	 */
+	private String inHospitalDiseaseStateCode;
+	
+	/**
+	 * 入院病情名称
+	 */
+	private String inHospitalDiseaseStateName;
+    
+    /**
    	 * 手术标志编号
    	 */
    	private String operateMarkCode;
@@ -102,18 +102,50 @@ public class DiseaseDiagRecord {
     private Integer diagSortIndex;
     
     /**
-	 * 是否可删除标志 0:true;1:false;
+	 * 数据来源编号
 	 */
-    private Integer operatingLevel = 0;
+	private String dataSourcesCode;
+	
+	/**
+	 * 数据来源名称
+	 */
+	private String dataSourcesName;
+	
+	/**
+	 * 是否页面显示（原始诊断若页面删除时，不能真正删除，不显示）
+	 */
+	private String pageShow;
     
     @JsonIgnore
     public boolean isEmpty(){
-    	if(this.getDiseaseDiagName() == null
+    	if(this.getDiseaseDiagCode() == null
     			&& this.getConfirmedDateTime() == null && this.getTreatResultName() == null
     			&& this.getDiseaseDiagOriginalDesc() == null){
     		return true;
     	}
     	return false;
+    }
+    
+    @SuppressWarnings("rawtypes")
+	public static class DiseaseDiagRecordComparator implements Comparator{
+
+		@Override
+		public int compare(Object o1, Object o2) {
+			// TODO Auto-generated method stub
+			DiseaseDiagRecord  diseaseDiag1 = (DiseaseDiagRecord)o1;
+			DiseaseDiagRecord  diseaseDiag2 = (DiseaseDiagRecord)o2;
+			if(diseaseDiag1.getDiagSortIndex() != null && diseaseDiag2.getDiagSortIndex() != null){
+				return diseaseDiag1.getDiagSortIndex().compareTo(diseaseDiag2.getDiagSortIndex());
+			}else if(diseaseDiag1.getDiagSortIndex() == null && diseaseDiag2.getDiagSortIndex() != null){
+				return 1;
+			}else if(diseaseDiag1.getDiagSortIndex() != null && diseaseDiag2.getDiagSortIndex() == null){
+				return -1;
+			}else{
+				return 0;
+			}
+			
+		}
+    	
     }
 
 	public String getDiagTypeCode() {
@@ -214,22 +246,22 @@ public class DiseaseDiagRecord {
 	public void setOperateMarkName(String operateMarkName) {
 		this.operateMarkName = operateMarkName;
 	}
-	
-	
 
-
-
-	public Integer getOperatingLevel() {
-		return operatingLevel;
+	public String getInHospitalDiseaseStateCode() {
+		return inHospitalDiseaseStateCode;
 	}
 
-	public void setOperatingLevel(Integer operatingLevel) {
-		this.operatingLevel = operatingLevel;
+	public void setInHospitalDiseaseStateCode(String inHospitalDiseaseStateCode) {
+		this.inHospitalDiseaseStateCode = inHospitalDiseaseStateCode;
 	}
 
+	public String getInHospitalDiseaseStateName() {
+		return inHospitalDiseaseStateName;
+	}
 
-
-
+	public void setInHospitalDiseaseStateName(String inHospitalDiseaseStateName) {
+		this.inHospitalDiseaseStateName = inHospitalDiseaseStateName;
+	}
 
 	public String getDiseaseDiagOriginalCode() {
 		return diseaseDiagOriginalCode;
@@ -243,39 +275,38 @@ public class DiseaseDiagRecord {
 
 
 
-	@SuppressWarnings("rawtypes")
-	public static class DiseaseDiagRecordComparator implements Comparator{
+	
+	
+	public String getDiseaseDiagVersion() {
+		return diseaseDiagVersion;
+	}
 
-		@Override
-		public int compare(Object o1, Object o2) {
-			// TODO Auto-generated method stub
-			DiseaseDiagRecord  diseaseDiag1 = (DiseaseDiagRecord)o1;
-			DiseaseDiagRecord  diseaseDiag2 = (DiseaseDiagRecord)o2;
-			if(diseaseDiag1.getDiagSortIndex() != null && diseaseDiag2.getDiagSortIndex() != null){
-				return diseaseDiag1.getDiagSortIndex().compareTo(diseaseDiag2.getDiagSortIndex());
-			}else if(diseaseDiag1.getDiagSortIndex() == null && diseaseDiag2.getDiagSortIndex() != null){
-				return 1;
-			}else if(diseaseDiag1.getDiagSortIndex() != null && diseaseDiag2.getDiagSortIndex() == null){
-				return -1;
-			}else{
-				return 0;
-			}
-			
-		}
-    	
-    }
+	public void setDiseaseDiagVersion(String diseaseDiagVersion) {
+		this.diseaseDiagVersion = diseaseDiagVersion;
+	}
 
+	public String getDataSourcesCode() {
+		return dataSourcesCode;
+	}
 
+	public void setDataSourcesCode(String dataSourcesCode) {
+		this.dataSourcesCode = dataSourcesCode;
+	}
 
+	public String getDataSourcesName() {
+		return dataSourcesName;
+	}
 
-	@Override
-	public String toString() {
-		return "HospitalVisitDiseaseDiagRecord [diagTypeCode=" + diagTypeCode + ", diseaseDiagOriginalDesc="
-				+ diseaseDiagOriginalDesc + ", diagTypeName=" + diagTypeName + ", diseaseDiagCode=" + diseaseDiagCode
-				+ ", diseaseDiagName=" + diseaseDiagName + ", treatResultCode=" + treatResultCode + ", treatResultName="
-				+ treatResultName + ", confirmedDateTime=" + confirmedDateTime + ", treatDayNumber=" + treatDayNumber
-				+ ", operateMarkCode=" + operateMarkCode + ", operateMarkName=" + operateMarkName + ", diagSortIndex="
-				+ diagSortIndex + "]";
+	public void setDataSourcesName(String dataSourcesName) {
+		this.dataSourcesName = dataSourcesName;
+	}
+
+	public String getPageShow() {
+		return pageShow;
+	}
+
+	public void setPageShow(String pageShow) {
+		this.pageShow = pageShow;
 	}
 	
 	

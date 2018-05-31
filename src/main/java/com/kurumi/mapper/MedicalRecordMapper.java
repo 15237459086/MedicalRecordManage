@@ -177,6 +177,13 @@ public interface MedicalRecordMapper {
 	int updateQualityControlByPrimaryKey(MedicalRecordQualityControl record);
 	
 	/**
+	 * 获取病案质控等级
+	 * @param visitGuid
+	 * @return
+	 */
+	List<Map<String,Object>> getQualityControlGradeByVisitGuid(@Param("visitGuid") String visitGuid);
+	
+	/**
 	 * 获取病案质控数量
 	 * @param visitGuid
 	 * @return
@@ -277,6 +284,32 @@ public interface MedicalRecordMapper {
 	 * @return
 	 */
 	int getMedicalRecordCountOfPrinter(MedicalRecordQuery params);
+	
+	
+	
+	/**
+	 * 添加病案Json数据
+	 * @param medicalRecordJson
+	 * @return
+	 */
+	public int insertMedicalRecordJson(@Param("medicalRecordJson")String medicalRecordJson);
+	
+	
+	/**
+	 * 根visitGuid获取病案json数据
+	 * @param visitGuid
+	 * @return
+	 */
+	public List<String> getMedicalRecordJsonByVisitGuid(@Param("visitGuid")String visitGuid);
+	
+	
+	/**
+	 * 根据visitGuid删除病案json数据
+	 * @param visitGuid
+	 * @return
+	 */
+	int deleteMedicalRecordJsonByVisitGuid(@Param("visitGuid")String visitGuid);
+	
 	
 	/*List<Map<String,Object>> getCollectionStatistics(MedicalRecordTraceQuery medicalRecordTraceQuery);
 

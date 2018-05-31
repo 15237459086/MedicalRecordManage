@@ -12,19 +12,34 @@ public class MedicalRecordTrace {
 	//初始化信息
 	public static String VISIT_INIT="CSH";
 	
+	//初始化信息
+	public static String VISIT_INIT_NAME="初始化信息";
+	
 	//病案归档
 	public static final String VISIT_PIGEONHOLE = "BAGD";
+	
+	//病案归档
+	public static final String VISIT_PIGEONHOLE_NAME = "病案归档";
 	
 	//病案质控
 	public static final String VISIT_QUALITY = "BAZK";
 	
+	//病案质控
+	public static final String VISIT_QUALITY_NAME = "病案质控";
+	
 	//病案编页
 	public static final String VISIT_PAGINATION = "BABY";
 	
-	//病案编码
-	public static String VISIT_PAGE="BABM";
+	//病案编页
+	public static final String VISIT_PAGINATION_NAME = "病案编页";
 	
 	//病案编码
+	public static String VISIT_CODING="BABM";
+	
+	//病案编码
+	public static String VISIT_CODING_NAME="病案编码";
+	
+	//病案发行
 	public static String VISIT_PUBLISH="BNKFX";
 	
 	private Integer id;

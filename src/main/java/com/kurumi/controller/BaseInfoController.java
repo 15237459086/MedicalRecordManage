@@ -36,15 +36,6 @@ public class BaseInfoController {
 		return respondResult;
 	}
 	
-	@GetMapping("/ajax_base_datas")
-	@ResponseBody
-	public String ajaxHomePageData(){
-		
-		Map<String, List<Map<String,Object>>> datas = baseInfoService.getBaseInfoOfHomePageBasic();
-		String jsonStr = JsonUtil.objectToJson(datas);
-		return jsonStr;
-
-	}
 	
 	@GetMapping("/ajax_diseases_by_query_name")
 	@ResponseBody

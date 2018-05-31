@@ -23,12 +23,19 @@ public class MyConfig {
 	@Value("${config.pdf.resource.path}")
 	private String pdfRecourcePath;
 	
+	@Value("${config.json.resource.path}")
+	private String jsonRecourcePath;
+	
 	@Value("${config.current.version}")
 	private String currentVersion;
 	
 	@Value("${config.borrow.limit.day}")
 	private String borrowLimitDay;
 
+	@Value("${config.page.index.pdf.template.path}")
+	private String pageIndexpPdfTemplatePath;
+
+	
 	public String getRemoteLoginUrl() {
 		return remoteLoginUrl;
 	}
@@ -61,6 +68,17 @@ public class MyConfig {
 		this.pdfRecourcePath = pdfRecourcePath;
 	}
 	
+	
+	
+	
+	public String getJsonRecourcePath() {
+		return jsonRecourcePath;
+	}
+
+	public void setJsonRecourcePath(String jsonRecourcePath) {
+		this.jsonRecourcePath = jsonRecourcePath;
+	}
+
 	public int getBorrowLimitDay(){
 		int defaultLimitDay = 7;
 		if(this.borrowLimitDay != null){
@@ -73,6 +91,12 @@ public class MyConfig {
 		}
 		return defaultLimitDay;
 	}
+
+	public String getPageIndexpPdfTemplatePath() {
+		return pageIndexpPdfTemplatePath;
+	}
+
+
 	
 	
 }

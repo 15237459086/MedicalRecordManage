@@ -11,14 +11,15 @@ public interface BaseInfoService {
 	 */
 	List<Map<String,Object>> getHospitalByCode(String hospitalCode);
 	
-	Map<String, List<Map<String,Object>>> getBaseInfoOfHomePageBasic();
+	Map<String, List<Map<String,Object>>> getBaseDataOfBasicInfo();
+	
+	Map<String, List<Map<String,Object>>> getBaseDataOfCureInfo();
+	
+	Map<String, List<Map<String,Object>>> getBaseDataOfDiagInfo();
+	
+	Map<String, List<Map<String,Object>>> getBaseDataOfOperateInfo();
 	
 	
-	Map<String, List<Map<String,Object>>> getBaseInfoOfHomePageDiag();
-	
-	Map<String, List<Map<String,Object>>> getBaseInfoOfHomePageOperate();
-	
-	Map<String, List<Map<String,Object>>> getBaseInfoOfHomePageCure();
 	
 	Map<String, List<Map<String,Object>>> getBaseInfoOfHomePageTransferDept();
 	

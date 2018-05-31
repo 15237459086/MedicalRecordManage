@@ -120,7 +120,6 @@ public interface MedicalRecordService {
 	 */
 	int getMedicalRecordCountOfQualityControl(MedicalRecordQuery medicalRecordQuery);
 	
-	
 	/**
 	 * 添加质控评价项
 	 * @return
@@ -179,4 +178,18 @@ public interface MedicalRecordService {
 	 * @return
 	 */
 	List<Map<String,Object>> getMeditalRecordTraceByVisitGuid(String visitGuid);
+	
+	
+	/** 获首页编码质控病案
+	 * @return
+	 */
+	List<Map<String,Object>> getMedicalRecordOfHomePage(MedicalRecordQuery medicalRecordQuery);
+	
+	/**
+	 * 获取首页编码病案数量
+	 * @return
+	 */
+	int getMedicalRecordCountOfHomePage(MedicalRecordQuery medicalRecordQuery);
+	
+	int importMedicalRecord(List<MedicalRecord> medicalRecords);
 }

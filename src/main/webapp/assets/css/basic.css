@@ -2,7 +2,7 @@
 	margin: 0px; padding: 0px;
 }
 body {
-	width:100%; min-width:1200px; width:auto !important; font-size: 14px; font-family:Verdana, Arial, Helvetica, sans-serif; background:#FFF;
+	width:100%; min-width:1024px; width:auto !important; font-size: 14px; font-family:Verdana, Arial, Helvetica, sans-serif; background:#FFF;
 }
 a {
 	color: black; text-decoration: none;

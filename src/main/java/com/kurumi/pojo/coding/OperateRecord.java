@@ -152,9 +152,19 @@ public class OperateRecord {
 	private List<MedicalWorker> operateWorkers = new ArrayList<MedicalWorker>();
 
 	/**
-	 * 是否可删除标志 0:true;1:false;
+	 * 数据来源编号
 	 */
-	private Integer operatingLevel = 0;
+	private String dataSourcesCode;
+	
+	/**
+	 * 数据来源名称
+	 */
+	private String dataSourcesName;
+	
+	/**
+	 * 是否页面显示（原始诊断若页面删除时，不能真正删除，不显示）
+	 */
+	private String pageShow;
 	
 	@JsonIgnore
     public boolean isEmpty(){
@@ -347,14 +357,7 @@ public class OperateRecord {
 	public void setOperateSortIndex(Integer operateSortIndex) {
 		this.operateSortIndex = operateSortIndex;
 	}
-
-	public Integer getOperatingLevel() {
-		return operatingLevel;
-	}
-
-	public void setOperatingLevel(Integer operatingLevel) {
-		this.operatingLevel = operatingLevel;
-	}
+	
 
 	public String getOperateOriginalCode() {
 		return operateOriginalCode;
@@ -371,4 +374,30 @@ public class OperateRecord {
 	public void setOperateVersion(String operateVersion) {
 		this.operateVersion = operateVersion;
 	}
+
+	public String getDataSourcesCode() {
+		return dataSourcesCode;
+	}
+
+	public void setDataSourcesCode(String dataSourcesCode) {
+		this.dataSourcesCode = dataSourcesCode;
+	}
+
+	public String getDataSourcesName() {
+		return dataSourcesName;
+	}
+
+	public void setDataSourcesName(String dataSourcesName) {
+		this.dataSourcesName = dataSourcesName;
+	}
+
+	public String getPageShow() {
+		return pageShow;
+	}
+
+	public void setPageShow(String pageShow) {
+		this.pageShow = pageShow;
+	}
+	
+	
 }

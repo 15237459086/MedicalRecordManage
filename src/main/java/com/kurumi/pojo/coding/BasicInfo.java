@@ -48,17 +48,17 @@ public class BasicInfo {
 	/**
 	 * 年龄(月)
 	 */
-	private String monthOfAge;
+	private BigDecimal monthOfAge;
 	
 	/**
 	 * 年龄(周)
 	 */
-	private String weekOfAge;
+	private BigDecimal weekOfAge;
 	
 	/**
 	 * 年龄(天)
 	 */
-	private String dayOfAge;
+	private BigDecimal dayOfAge;
 	
 	/**
 	 * 年龄单位编号
@@ -197,13 +197,13 @@ public class BasicInfo {
 	 * 证件类型编号
 	 * 
 	 */
-	private String idDocumentTypeCode;
+	private String documentTypeCode;
 	
 	/**
 	 * 证件类型名称
 	 * 
 	 */
-	private String idDocumentTypeName;
+	private String documentTypeName;
 	
 	/**
 	 * 证件号
@@ -613,6 +613,11 @@ public class BasicInfo {
      * 转科描述
      */
     private String changeDeptDesc;
+    
+    /**
+     * 输血描述
+     */
+    private String infusionBloodDesc;
 
 	public String getVisitGuid() {
 		return visitGuid;
@@ -662,27 +667,29 @@ public class BasicInfo {
 		this.yearOfAge = yearOfAge;
 	}
 
-	public String getMonthOfAge() {
+	
+
+	public BigDecimal getMonthOfAge() {
 		return monthOfAge;
 	}
 
-	public void setMonthOfAge(String monthOfAge) {
+	public void setMonthOfAge(BigDecimal monthOfAge) {
 		this.monthOfAge = monthOfAge;
 	}
 
-	public String getWeekOfAge() {
+	public BigDecimal getWeekOfAge() {
 		return weekOfAge;
 	}
 
-	public void setWeekOfAge(String weekOfAge) {
+	public void setWeekOfAge(BigDecimal weekOfAge) {
 		this.weekOfAge = weekOfAge;
 	}
 
-	public String getDayOfAge() {
+	public BigDecimal getDayOfAge() {
 		return dayOfAge;
 	}
 
-	public void setDayOfAge(String dayOfAge) {
+	public void setDayOfAge(BigDecimal dayOfAge) {
 		this.dayOfAge = dayOfAge;
 	}
 
@@ -854,20 +861,21 @@ public class BasicInfo {
 		this.registeredAddressPostCode = registeredAddressPostCode;
 	}
 
-	public String getIdDocumentTypeCode() {
-		return idDocumentTypeCode;
+
+	public String getDocumentTypeCode() {
+		return documentTypeCode;
 	}
 
-	public void setIdDocumentTypeCode(String idDocumentTypeCode) {
-		this.idDocumentTypeCode = idDocumentTypeCode;
+	public void setDocumentTypeCode(String documentTypeCode) {
+		this.documentTypeCode = documentTypeCode;
 	}
 
-	public String getIdDocumentTypeName() {
-		return idDocumentTypeName;
+	public String getDocumentTypeName() {
+		return documentTypeName;
 	}
 
-	public void setIdDocumentTypeName(String idDocumentTypeName) {
-		this.idDocumentTypeName = idDocumentTypeName;
+	public void setDocumentTypeName(String documentTypeName) {
+		this.documentTypeName = documentTypeName;
 	}
 
 	public String getIdNumber() {
@@ -1500,6 +1508,14 @@ public class BasicInfo {
 
 	public void setChangeDeptDesc(String changeDeptDesc) {
 		this.changeDeptDesc = changeDeptDesc;
+	}
+
+	public String getInfusionBloodDesc() {
+		return infusionBloodDesc;
+	}
+
+	public void setInfusionBloodDesc(String infusionBloodDesc) {
+		this.infusionBloodDesc = infusionBloodDesc;
 	}
 
 	

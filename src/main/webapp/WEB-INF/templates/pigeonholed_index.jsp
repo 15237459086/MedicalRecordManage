@@ -15,12 +15,12 @@ request.setAttribute("basePath", basePath);
 	<div id="list_DH">
 	  <div class="list_menu2">
 	   <h3>病案归档</h3>
-	   <h4 class="li_t"><a onclick="loadContent('${basePath }medical_record/un_pigeonhole')">未归病案</a></h4>
+	   	<h4 class="li_t"><a onclick="loadContent('${basePath }medical_record/un_pigeonhole')">未归病案</a></h4>
 	  
-	   <h4 class="li_t"><a onclick="loadContent('${basePath }medical_record/pigeonholed')">已归病案</a></h4>
+	   	<h4 class="li_t"><a onclick="loadContent('${basePath }medical_record/pigeonholed')">已归病案</a></h4>
 	  	<h4 class="li_t"><a onclick="loadContent('${basePath }medical_record/pigeonholed_beyond')">迟送统计</a></h4>
-	  <h4 class="li_t"><a onclick="loadContent('${basePath }medical_record/pigeonhole_rate')">归档统计</a></h4>
-	  
+	  	<h4 class="li_t"><a onclick="loadContent('${basePath }medical_record/pigeonhole_rate')">归档统计</a></h4>
+	  	<h4 class="li_t"><a onclick="loadContent('${basePath }medical_record/import_medical_record_form')">病案导入</a></h4>
 	  
 	  </div>
 	 </div>

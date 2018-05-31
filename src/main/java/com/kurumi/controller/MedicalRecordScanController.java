@@ -26,7 +26,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.kurumi.config.MyConfig;
 import com.kurumi.pojo.RespondResult;
-import com.kurumi.pojo.pdf.MedicalRecordResource;
+import com.kurumi.pojo.resource.MedicalRecordResource;
 import com.kurumi.query.MedicalRecordQuery;
 import com.kurumi.service.BaseInfoService;
 import com.kurumi.service.MedicalRecordScanService;
@@ -35,7 +35,6 @@ import com.kurumi.thread.MedicalRecordPDFThread;
 import com.kurumi.util.FileUtil;
 import com.kurumi.util.GuidUtil;
 import com.kurumi.util.JsonUtil;
-import com.kurumi.util.PDFUtil;
 import com.kurumi.util.StringUtil;
 import com.kurumi.util.WaterMarkUtil;
 
@@ -209,8 +208,8 @@ public class MedicalRecordScanController {
 					List<Map<String,Object>> sourceFiles = medicalRecordScanService.getImageFilesByVisitGuid(visitGuid);
 					
 					MedicalRecordResource medicalRecordResource = new MedicalRecordResource();
-					medicalRecordResource.getSourceFiles().addAll(sourceFiles);
-					medicalRecordResource.getSourceBasicPaths().put("imageBasicPath", myConfig.getImageRecourcePath());
+					medicalRecordResource.getImageRecources().addAll(sourceFiles);
+					medicalRecordResource.setImageBasicPath( myConfig.getImageRecourcePath());
 					String newPDFPath = myConfig.getPdfRecourcePath()+StringUtil.getLocalPath(visitGuid)+ visitGuid+"\\"+"show.pdf";
 					File newPDFFile = new File(newPDFPath);
 					if(newPDFFile.exists()){
