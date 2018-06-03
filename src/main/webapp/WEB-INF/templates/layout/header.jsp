@@ -67,8 +67,8 @@ request.setAttribute("basePath", basePath);
   <shiro:hasAnyRoles name="role_version_2.1">
   	<li><a href="#" id="demoBtn9">工作质控</a></li>
   </shiro:hasAnyRoles>
-  <shiro:hasAnyRoles name="role_version_2.1">
-  	<li><a href="#" id="demoBtn10">数据管理</a></li>
+  <shiro:hasAnyRoles name="role_version_2">
+  	<li><a href="${basePath }medical_record/data_manage_index" id="demoBtn10">数据管理</a></li>
   </shiro:hasAnyRoles>
  </ul>
 </div>

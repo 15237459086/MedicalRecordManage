@@ -688,7 +688,107 @@ public class MedicalRecordCodingController {
 			e.printStackTrace();
 		}
 		
+	}
+	
+	@GetMapping("/main_disease_diag_check_page")
+	public String mainDiseaseDiagCheck(Model model){
+		return "check/main_disease_diag_check_page";
+	}
+	
+	
+	@GetMapping("/ajax_main_disease_diag_check")
+	@ResponseBody
+	public RespondResult ajaxMainDiseaseDiagCheck(MedicalRecordQuery params){
+		RespondResult respondResult = null;
 		
+		try{
+			List<Map<String,Object>> medicalRecords = new ArrayList<Map<String,Object>>();
+			if(!params.queryUnEncodingEmpty()){
+				medicalRecords = medicalRecordCodingService.mainDiseaseDiagCheck(params);
+			}
+			
+			respondResult = new RespondResult(true, RespondResult.successCode, null, medicalRecords);
+		}catch (Exception e) {
+			// TODO: handle exception
+			respondResult = new RespondResult(false, RespondResult.errorCode, e.getMessage(), "");
+		}
 		
+		return respondResult;
+	}
+	
+	@GetMapping("/in_hospital_day_number_check_page")
+	public String inHospitalDayNumberCheck(Model model){
+		return "check/in_hospital_day_number_check_page";
+	}
+	
+	@GetMapping("/in_hospital_day_number_check")
+	@ResponseBody
+	public RespondResult ajaxInHospitalDayNumberCheck(MedicalRecordQuery params){
+		RespondResult respondResult = null;
+		
+		try{
+			List<Map<String,Object>> medicalRecords = new ArrayList<Map<String,Object>>();
+			if(!params.queryUnEncodingEmpty()){
+				medicalRecords = medicalRecordCodingService.inHospitalDayNumberCheck(params);
+			}
+			
+			respondResult = new RespondResult(true, RespondResult.successCode, null, medicalRecords);
+		}catch (Exception e) {
+			// TODO: handle exception
+			respondResult = new RespondResult(false, RespondResult.errorCode, e.getMessage(), "");
+		}
+		
+		return respondResult;
+	}
+	
+	@GetMapping("/repeat_coding_check_page")
+	public String repeatCodingCheckCheck(Model model){
+		return "check/repeat_coding_check_page";
+	}
+	
+	@GetMapping("/ajax_repeat_coding_check")
+	@ResponseBody
+	public RespondResult ajaxRepeatCodingCheckCheck(MedicalRecordQuery params){
+		RespondResult respondResult = null;
+		
+		try{
+			List<Map<String,Object>> medicalRecords = new ArrayList<Map<String,Object>>();
+			if(!params.queryUnEncodingEmpty()){
+				medicalRecords = medicalRecordCodingService.repeatCodingCheck(params);
+			}
+			
+			respondResult = new RespondResult(true, RespondResult.successCode, null, medicalRecords);
+		}catch (Exception e) {
+			// TODO: handle exception
+			respondResult = new RespondResult(false, RespondResult.errorCode, e.getMessage(), "");
+		}
+		
+		return respondResult;
+	}
+	
+	@GetMapping("/date_time_check_page")
+	public String dateTimeCheckCheck(Model model){
+		return "check/date_time_check_page";
+	}
+	
+	
+	@GetMapping("/ajax_date_time_check")
+	@ResponseBody
+	public RespondResult ajaxDateTimeCheckCheck(MedicalRecordQuery params){
+		RespondResult respondResult = null;
+		
+		try{
+			List<Map<String,Object>> medicalRecords = new ArrayList<Map<String,Object>>();
+			if(!params.queryUnEncodingEmpty()){
+				medicalRecords = medicalRecordCodingService.dateTimeCheck(params);
+			}
+			
+			respondResult = new RespondResult(true, RespondResult.successCode, null, medicalRecords);
+		}catch (Exception e) {
+			// TODO: handle exception
+			respondResult = new RespondResult(false, RespondResult.errorCode, e.getMessage(), "");
+		}
+		
+		return respondResult;
 	}
 }

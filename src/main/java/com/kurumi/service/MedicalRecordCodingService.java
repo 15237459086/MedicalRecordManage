@@ -10,6 +10,7 @@ import com.kurumi.pojo.coding.CureInfo;
 import com.kurumi.pojo.coding.DiseaseDiagInfo;
 import com.kurumi.pojo.coding.NurseInfo;
 import com.kurumi.pojo.coding.OperateInfo;
+import com.kurumi.query.MedicalRecordQuery;
 
 public interface MedicalRecordCodingService {
 
@@ -33,4 +34,25 @@ public interface MedicalRecordCodingService {
 	
 	
 	String codingFinish(String visitGuid);
+	
+	/** 主要诊断审核
+	 * @return
+	 */
+	List<Map<String,Object>> mainDiseaseDiagCheck(MedicalRecordQuery medicalRecordQuery);
+	
+	/** 住院天数审核
+	 * @return
+	 */
+	List<Map<String,Object>> inHospitalDayNumberCheck(MedicalRecordQuery medicalRecordQuery);
+	
+	/** 重复编码审核
+	 * @return
+	 */
+	List<Map<String,Object>> repeatCodingCheck(MedicalRecordQuery medicalRecordQuery);
+	
+	
+	/** 日期审核
+	 * @return
+	 */
+	List<Map<String,Object>> dateTimeCheck(MedicalRecordQuery medicalRecordQuery);
 }

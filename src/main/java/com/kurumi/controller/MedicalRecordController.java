@@ -94,6 +94,11 @@ public class MedicalRecordController {
 		return "borrow_index.default";
 	}
 	
+	@GetMapping("/data_manage_index")
+	public String dataManageIndex(){
+		return "data_manage_index.default";
+	}
+	
 	
 	@GetMapping("/un_pigeonhole")
 	public String unPigeonhole(){

@@ -14,12 +14,8 @@ request.setAttribute("basePath", basePath);
 <div id="list_main">
 	<div id="list_DH">
 	  <div class="list_menu2">
-	   <h3>病案编码</h3>
-	   <h4 class="li_t"><a onclick="loadContent('${basePath }medical_record_coding/query_home_page')">首页编码</a></h4>
-	   <h4 class="li_t"><a onclick="loadContent('${basePath }medical_record_coding/main_disease_diag_check_page')">主要诊断审核</a></h4>
-	   <h4 class="li_t"><a onclick="loadContent('${basePath }medical_record_coding/in_hospital_day_number_check_page')">住院天数审核</a></h4>
-	   <h4 class="li_t"><a onclick="loadContent('${basePath }medical_record_coding/repeat_coding_check_page')">重复编码审核</a></h4>
-	   <h4 class="li_t"><a onclick="loadContent('${basePath }medical_record_coding/date_time_check_page')">日期审核</a></h4>
+	   <h3>数据管理</h3>
+	   <h4 class="li_t"><a onclick="loadContent('${basePath }data_manage/page_index_export')">首页导出</a></h4>
 	  </div>
 	 </div>
 	<div id="list_NR">

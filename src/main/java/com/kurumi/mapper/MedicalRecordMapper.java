@@ -311,6 +311,21 @@ public interface MedicalRecordMapper {
 	int deleteMedicalRecordJsonByVisitGuid(@Param("visitGuid")String visitGuid);
 	
 	
+	/**
+	 * 获取首页导出病案
+	 * @param medicalRecordQuery
+	 * @return
+	 */
+	List<Map<String,Object>> getMedicalRecordOfExport(MedicalRecordQuery medicalRecordQuery);
+	
+	/**
+	 * 获取审核病案
+	 * @param medicalRecordQuery
+	 * @return
+	 */
+	List<Map<String,Object>> getMedicalRecordOfCheck(MedicalRecordQuery medicalRecordQuery);
+	
+	
 	/*List<Map<String,Object>> getCollectionStatistics(MedicalRecordTraceQuery medicalRecordTraceQuery);
 
 	*//**

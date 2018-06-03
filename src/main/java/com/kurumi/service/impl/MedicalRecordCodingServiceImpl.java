@@ -1,10 +1,14 @@
 package com.kurumi.service.impl;
 
 import java.math.BigDecimal;
+import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
@@ -25,6 +29,7 @@ import com.kurumi.pojo.coding.DiseaseDiagInfo;
 import com.kurumi.pojo.coding.NurseInfo;
 import com.kurumi.pojo.coding.OperateInfo;
 import com.kurumi.pojo.resource.MedicalRecordResource;
+import com.kurumi.query.MedicalRecordQuery;
 import com.kurumi.service.MedicalRecordCodingService;
 import com.kurumi.thread.PageIndexPDFThread;
 import com.kurumi.util.DateUtil;
@@ -243,6 +248,190 @@ public class MedicalRecordCodingServiceImpl implements MedicalRecordCodingServic
 			medicalRecordMapper.insertMedicalRecordJson(jsonMapJson);
 		}
 		return 1;
+	}
+
+	@Override
+	public List<Map<String, Object>> mainDiseaseDiagCheck(MedicalRecordQuery medicalRecordQuery) {
+		// TODO Auto-generated method stub
+		List<Map<String, Object>> errorMedicalRecords = new ArrayList<Map<String, Object>>();
+		List<Map<String, Object>> medicalRecords = medicalRecordMapper.getMedicalRecordOfCheck(medicalRecordQuery);
+		for (Map<String, Object> medicalRecord : medicalRecords) {
+			String visitGuid = (String)medicalRecord.get("visit_guid");
+			List<String> jsonDatas = medicalRecordMapper.getMedicalRecordJsonByVisitGuid(StringUtil.handleJsonParam(visitGuid));
+			if(!jsonDatas.isEmpty()){
+				Map<String, Object> jsonMap = JsonUtil.jsonToPojo(jsonDatas.get(0), Map.class);
+				Map<String, Object> diseaseDiagInfo = (Map<String, Object>)jsonMap.get("diseaseDiagInfo");
+				if(diseaseDiagInfo == null){
+					medicalRecord.put("check_desc", "主要诊断未填写");
+					errorMedicalRecords.add(medicalRecord);
+				}else{
+					Map<String, Object> mainDiagRecord = (Map<String, Object>)diseaseDiagInfo.get("mainDiagRecord");
+					if(mainDiagRecord == null){
+						medicalRecord.put("check_desc", "主要诊断未填写");
+						errorMedicalRecords.add(medicalRecord);
+					}else{
+						String diseaseDiagCode = (String)mainDiagRecord.get("diseaseDiagCode");
+						if(diseaseDiagCode == null){
+							medicalRecord.put("check_desc", "主要诊断未填写");
+							errorMedicalRecords.add(medicalRecord);
+						}
+						continue;
+					}
+				}
+			}else{
+				medicalRecord.put("check_desc", "主要诊断未填写");
+				errorMedicalRecords.add(medicalRecord);
+			}
+		}
+		return errorMedicalRecords;
+	}
+
+	@Override
+	public List<Map<String, Object>> inHospitalDayNumberCheck(MedicalRecordQuery medicalRecordQuery) {
+		// TODO Auto-generated method stub
+
+		// TODO Auto-generated method stub
+		List<Map<String, Object>> errorMedicalRecords = new ArrayList<Map<String, Object>>();
+		List<Map<String, Object>> medicalRecords = medicalRecordMapper.getMedicalRecordOfCheck(medicalRecordQuery);
+		for (Map<String, Object> medicalRecord : medicalRecords) {
+			String visitGuid = (String)medicalRecord.get("visit_guid");
+			List<String> jsonDatas = medicalRecordMapper.getMedicalRecordJsonByVisitGuid(StringUtil.handleJsonParam(visitGuid));
+			if(!jsonDatas.isEmpty()){
+				Map<String, Object> jsonMap = JsonUtil.jsonToPojo(jsonDatas.get(0), Map.class);
+				Map<String, Object> basicInfo = (Map<String, Object>)jsonMap.get("basicInfo");
+				if(basicInfo == null){
+					medicalRecord.put("check_desc", "入院日期，出院日期，住院天数未填写");
+					errorMedicalRecords.add(medicalRecord);
+				}else{
+					StringBuilder errorMessage = new StringBuilder();
+					Object inHospitalDateTime = (Object)basicInfo.get("inHospitalDateTime");
+					if(inHospitalDateTime == null){
+						errorMessage.append("入院日期，");
+					}
+					Object outHospitalDateTime = (Object)basicInfo.get("outHospitalDateTime");
+					if(outHospitalDateTime == null){
+						errorMessage.append("出院日期，");
+					}
+					Object inHospitalDayNumber = (Object)basicInfo.get("inHospitalDayNumber");
+					if(inHospitalDayNumber == null){
+						errorMessage.append("住院天数");
+					}
+					if(errorMessage.toString().length()>0){
+						errorMessage.append("未填写");
+						medicalRecord.put("check_desc", errorMessage.toString());
+						errorMedicalRecords.add(medicalRecord);
+					}else{
+						try {
+							Date inHospitalDate = DateUtil.dateParse(DateUtil.DATE_TIME_FORMATE, inHospitalDateTime.toString());
+							Date outHospitalDate = DateUtil.dateParse(DateUtil.DATE_TIME_FORMATE, outHospitalDateTime.toString());
+							int diffDay = DateUtil.getDaysBetween(outHospitalDate,inHospitalDate);
+							BigDecimal inHospitalDay = new BigDecimal(inHospitalDayNumber.toString());
+							if(inHospitalDay.doubleValue() > diffDay+1 || inHospitalDay.doubleValue() < diffDay-1){
+								medicalRecord.put("check_desc","住院天数与入院日期和出院日期天数差不一致");
+								errorMedicalRecords.add(medicalRecord);
+							}
+							
+						} catch (ParseException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+				}
+			}else{
+				medicalRecord.put("check_desc", "入院日期，出院日期，住院天数未填写");
+				errorMedicalRecords.add(medicalRecord);
+			}
+		}
+		return errorMedicalRecords;
+	
+	}
+
+	@Override
+	public List<Map<String, Object>> repeatCodingCheck(MedicalRecordQuery medicalRecordQuery) {
+		// TODO Auto-generated method stub
+		List<Map<String, Object>> errorMedicalRecords = new ArrayList<Map<String, Object>>();
+		List<Map<String, Object>> medicalRecords = medicalRecordMapper.getMedicalRecordOfCheck(medicalRecordQuery);
+		for (Map<String, Object> medicalRecord : medicalRecords) {
+			String visitGuid = (String)medicalRecord.get("visit_guid");
+			List<String> jsonDatas = medicalRecordMapper.getMedicalRecordJsonByVisitGuid(StringUtil.handleJsonParam(visitGuid));
+			if(!jsonDatas.isEmpty()){
+				Map<String, Object> jsonMap = JsonUtil.jsonToPojo(jsonDatas.get(0), Map.class);
+				Map<String, Object> diseaseDiagInfo = (Map<String, Object>)jsonMap.get("diseaseDiagInfo");
+				if(diseaseDiagInfo != null){
+					List<Map<String, Object>> diseaseDiagRecords = (List<Map<String, Object>>)diseaseDiagInfo.get("diseaseDiagRecords");
+					if(diseaseDiagRecords != null){
+						Set<String> diseaseDiagCodes = new HashSet<String>();
+						for (Map<String, Object> diseaseDiagRecord : diseaseDiagRecords) {
+							String diseaseDiagCode = (String)diseaseDiagRecord.get("diseaseDiagCode");
+							if(diseaseDiagCode != null){
+								if(diseaseDiagCodes.contains(diseaseDiagCode)){
+									medicalRecord.put("check_desc", "诊断码"+diseaseDiagCode +"重复");
+									errorMedicalRecords.add(medicalRecord);
+									break;
+								}else{
+									diseaseDiagCodes.add(diseaseDiagCode);
+								}
+								
+							}
+						}
+					}
+				}
+			}
+		}
+		return errorMedicalRecords;
+	}
+
+	@Override
+	public List<Map<String, Object>> dateTimeCheck(MedicalRecordQuery medicalRecordQuery) {
+		// TODO Auto-generated method stub
+		List<Map<String, Object>> errorMedicalRecords = new ArrayList<Map<String, Object>>();
+		List<Map<String, Object>> medicalRecords = medicalRecordMapper.getMedicalRecordOfCheck(medicalRecordQuery);
+		for (Map<String, Object> medicalRecord : medicalRecords) {
+			String visitGuid = (String)medicalRecord.get("visit_guid");
+			List<String> jsonDatas = medicalRecordMapper.getMedicalRecordJsonByVisitGuid(StringUtil.handleJsonParam(visitGuid));
+			if(!jsonDatas.isEmpty()){
+				Map<String, Object> jsonMap = JsonUtil.jsonToPojo(jsonDatas.get(0), Map.class);
+				Map<String, Object> basicInfo = (Map<String, Object>)jsonMap.get("basicInfo");
+				if(basicInfo != null){
+					Object birthdayOjb = (Object)basicInfo.get("birthday");
+					if(birthdayOjb == null){
+						continue;
+					}
+					
+					/*String idNumber = StringUtil.meaningStr((String)basicInfo.get("idNumber"));
+					if(idNumber == null){
+						continue;
+					}*/
+					
+					Object inHospitalDateTime = (Object)basicInfo.get("inHospitalDateTime");
+					if(inHospitalDateTime == null){
+						continue;
+					}
+					Object outHospitalDateTime = (Object)basicInfo.get("outHospitalDateTime");
+					if(outHospitalDateTime == null){
+						continue;
+					}
+					try {
+						Date birthday = DateUtil.dateParse(birthdayOjb.toString());
+						Date inHospitalDate = DateUtil.dateParse(DateUtil.DATE_TIME_FORMATE, inHospitalDateTime.toString());
+						Date outHospitalDate = DateUtil.dateParse(DateUtil.DATE_TIME_FORMATE, outHospitalDateTime.toString());
+						if(inHospitalDate.compareTo(outHospitalDate)>0){
+							medicalRecord.put("check_desc", "入院日期大于出院日期");
+							errorMedicalRecords.add(medicalRecord);
+						}else if(inHospitalDate.compareTo(birthday) <=0){
+							medicalRecord.put("check_desc", "出生日期大于入院日期");
+							errorMedicalRecords.add(medicalRecord);
+						}
+					} catch (ParseException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
+					
+				}
+			}
+		}
+		return errorMedicalRecords;
 	}
 
 }
