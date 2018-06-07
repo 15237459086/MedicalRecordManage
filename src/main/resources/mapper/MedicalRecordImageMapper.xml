@@ -264,7 +264,7 @@
   	 on file.file_hash = scan_image.file_hash
   	 left join mr_page_type page_type
   	 on file.mr_page_type_code = page_type.code
-  	 inner join medical_printer_range printer_range
+  	 inner join mr_printer_range printer_range
   	 on printer_range.mr_page_type_id = page_type.id
   	 inner join mr_printer_type printer_type
   	 on printer_range.mr_printer_type_id = printer_type.id

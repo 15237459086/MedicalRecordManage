@@ -10,9 +10,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
 import com.itextpdf.text.Image;
 import com.itextpdf.text.PageSize;
 import com.itextpdf.text.pdf.AcroFields;
@@ -20,6 +22,7 @@ import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.PdfAction;
 import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfCopy;
+import com.itextpdf.text.pdf.PdfGState;
 import com.itextpdf.text.pdf.PdfImportedPage;
 import com.itextpdf.text.pdf.PdfOutline;
 import com.itextpdf.text.pdf.PdfReader;
@@ -165,6 +168,126 @@ public class PDFUtil {
 			     PdfOutline oline1 = new PdfOutline(root, PdfAction.gotoLocalPage(pageTypeCode, false),pageTypes.get(pageTypeCode));
 			        
 			}
+        	
+			
+		} catch (DocumentException de) {
+			de.printStackTrace();
+			throw de;
+		} catch (IOException ioe) {
+			ioe.printStackTrace();
+			throw ioe;
+		}finally{
+			try {
+				if(out!= null){
+					out.flush();
+				}
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+			
+			try{
+				if(document != null){
+					document.close();
+				}
+			}catch (Exception e) {
+				// TODO: handle exception
+			}
+			try {
+				if(out!= null){
+					out.flush();
+				}
+			} catch (Exception e) {
+				// TODO: handle exception
+				out.close();
+			}
+		}
+    }
+	
+	
+	public static synchronized void createPdf(List<Map<String,Object>> imageFiles,String imageBasicPath,String pageIndexPDFPath,String newPDFPath) throws DocumentException, IOException{
+    	Document document = new Document();
+    	document.setPageSize(PageSize.A4);
+    	FileOutputStream out = null;
+    	
+		try {
+			File newFile = new File(newPDFPath);
+			if(!newFile.exists()){
+				File parentFile = new File(newFile.getParent());
+				if(!parentFile.exists()){
+					parentFile.mkdirs();
+				}
+			}else{
+				return;
+			}
+			out = new FileOutputStream(newPDFPath);
+			PdfWriter writer = PdfWriter.getInstance(document, out);
+			// 打开文档
+			document.open();
+			PdfReader pdfReader = new PdfReader(pageIndexPDFPath);
+			// 打开文档
+			document.open();
+			PdfContentByte cb = writer.getDirectContent();  
+			int pageOfCurrentReaderPDF = 0;
+			while (pageOfCurrentReaderPDF < pdfReader.getNumberOfPages()) {  
+    	        document.newPage();
+    	        pageOfCurrentReaderPDF++;  
+                PdfImportedPage page = writer.getImportedPage(pdfReader, pageOfCurrentReaderPDF);
+                cb.addTemplate(page, 0, 0);
+                
+    	    }
+			
+			// 读取一个图片
+			Map<String, String> pageTypes = new HashMap<String, String>();
+			List<String> pageTypeCodes = new ArrayList<String>();
+			for (Map<String, Object> sourceFile : imageFiles) {
+				String fileType = (String)sourceFile.get("file_type");
+				if(fileType.equalsIgnoreCase("PNG")|| fileType.equalsIgnoreCase("JPG")||fileType.equalsIgnoreCase("JPEG")){
+					
+					String imagePath = imageBasicPath + GuidUtil.getLocalPath((String)sourceFile.get("file_hash"))+"\\"
+		 					+(String)sourceFile.get("file_name")+"."+fileType;
+		        	String pageTypeCode = (String)(String)sourceFile.get("mr_page_type_code");
+		        	String pageTypeName = (String)(String)sourceFile.get("page_type_name");
+		        	if(pageTypeCode == null){
+		        		pageTypeCode = "-01";
+		        		pageTypeName = "未编页";
+		        	}
+		        	
+					Image image = Image.getInstance(imagePath);
+			        // 获取操作的页面
+			        // 根据域的大小缩放图片
+			        //image.scaleToFit(signRect.getWidth(), signRect.getHeight());
+			        // 添加图片
+					float imageHeight=image.getScaledHeight();
+					float imageWidth=image.getScaledWidth();
+					int i=0;
+					while(imageHeight>PageSize.A4.getHeight()||imageWidth>PageSize.A4.getWidth()){
+						image.scalePercent(100-i);
+						i++;
+						imageHeight=image.getScaledHeight();
+						imageWidth=image.getScaledWidth();
+					}
+					/*image.scalePercent(100);*/
+					image.setAlignment(Image.ALIGN_CENTER);
+					document.newPage();
+					/*if(!pageTypes.containsKey(pageTypeCode)){
+						document.add(new Chunk(pageTypeName).setLocalDestination(pageTypeCode));
+						pageTypes.put(pageTypeCode, pageTypeName);
+						pageTypeCodes.add(pageTypeCode);
+					}*/
+					
+					document.add(image);
+				}
+				/*Image image = Image.getInstance(BarCodeUtil.generate("123456789"));*/
+				
+				
+			}
+			/*PdfContentByte cb = writer.getDirectContent();
+			PdfOutline root = cb.getRootOutline();
+			for (String pageTypeCode : pageTypeCodes) {
+				 @SuppressWarnings("unused")
+			     PdfOutline oline1 = new PdfOutline(root, PdfAction.gotoLocalPage(pageTypeCode, false),pageTypes.get(pageTypeCode));
+			        
+			}*/
         	
 			
 		} catch (DocumentException de) {
@@ -1047,4 +1170,55 @@ public class PDFUtil {
   
     }
 	
+	
+	public static ByteArrayOutputStream getPDFStream(String pageIndexPDFPath,String imagePDFPath) throws DocumentException, IOException{
+		Document document = new Document();
+    	document.setPageSize(PageSize.A4);
+		ByteArrayOutputStream bos = null;
+		try {
+			PdfReader pdfReader = new PdfReader(pageIndexPDFPath);
+			bos = new ByteArrayOutputStream();
+			PdfWriter writer = PdfWriter.getInstance(document, bos);
+			// 打开文档
+			document.open();
+			PdfContentByte cb = writer.getDirectContent();  
+			int pageOfCurrentReaderPDF = 0;
+			while (pageOfCurrentReaderPDF < pdfReader.getNumberOfPages()) {  
+    	        document.newPage();
+    	        pageOfCurrentReaderPDF++;  
+                PdfImportedPage page = writer.getImportedPage(pdfReader, pageOfCurrentReaderPDF);
+                cb.addTemplate(page, 0, 0);
+                
+    	    }
+			PdfReader pdfReader1= new PdfReader(imagePDFPath);
+			
+			int pageOfCurrentReaderPDF1 = 0;
+			while (pageOfCurrentReaderPDF1 < pdfReader1.getNumberOfPages()) {  
+    	        document.newPage(); 
+    	        
+    	        pageOfCurrentReaderPDF1++;  
+                PdfImportedPage page = writer.getImportedPage(pdfReader1, pageOfCurrentReaderPDF1);
+                
+                cb.addTemplate(page, 0, 0);
+                
+    	    }
+		} catch (DocumentException de) {
+			de.printStackTrace();
+			throw de;
+		} catch (IOException ioe) {
+			ioe.printStackTrace();
+			throw ioe;
+		}finally{
+
+			try{
+				if(document != null){
+					document.close();
+				}
+			}catch (Exception e) {
+				// TODO: handle exception
+			}
+			
+		}
+		return bos;
+    }
 }

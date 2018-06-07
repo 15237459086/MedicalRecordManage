@@ -210,7 +210,7 @@ public class MedicalRecordScanController {
 					MedicalRecordResource medicalRecordResource = new MedicalRecordResource();
 					medicalRecordResource.getImageRecources().addAll(sourceFiles);
 					medicalRecordResource.setImageBasicPath( myConfig.getImageRecourcePath());
-					String newPDFPath = myConfig.getPdfRecourcePath()+StringUtil.getLocalPath(visitGuid)+ visitGuid+"\\"+"show.pdf";
+					String newPDFPath = myConfig.getPdfRecourcePath()+StringUtil.getLocalPath(visitGuid)+ visitGuid+"\\"+"pagination_image.pdf";
 					File newPDFFile = new File(newPDFPath);
 					if(newPDFFile.exists()){
 						newPDFFile.delete();
@@ -248,7 +248,7 @@ public class MedicalRecordScanController {
 		
 		ByteArrayOutputStream baos = null;
 		try {
-			String pdfPath = myConfig.getPdfRecourcePath()+StringUtil.getLocalPath(visitGuid)+ visitGuid+"\\"+"show.pdf";
+			String pdfPath = myConfig.getPdfRecourcePath()+StringUtil.getLocalPath(visitGuid)+ visitGuid+"\\"+"pagination_image.pdf";
 			
 			baos = WaterMarkUtil.getOutputStreamOfWaterMarkByText(pdfPath, "仅可用于预览");
 			response.setContentLength(baos.size());

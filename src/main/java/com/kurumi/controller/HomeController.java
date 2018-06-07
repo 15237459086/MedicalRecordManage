@@ -3,6 +3,7 @@ package com.kurumi.controller;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.session.Session;
@@ -85,6 +86,8 @@ public class HomeController {
 			// TODO: handle exception
 			if(e instanceof UnknownAccountException){
 				respondResult = new RespondResult(true, RespondResult.errorCode, "用户名或密码错误", "用户名或密码错误");
+			}else if(e instanceof AuthenticationException){
+				respondResult = new RespondResult(true, RespondResult.errorCode, "登陆失败！远程认证连接失败", "登陆失败！远程认证连接失败");
 			}else{
 				respondResult = new RespondResult(false, RespondResult.errorCode, e.getMessage(),e.getMessage());
 			}

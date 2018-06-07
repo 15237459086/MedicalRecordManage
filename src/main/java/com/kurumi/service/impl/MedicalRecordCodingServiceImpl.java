@@ -1,5 +1,6 @@
 package com.kurumi.service.impl;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -33,6 +34,7 @@ import com.kurumi.query.MedicalRecordQuery;
 import com.kurumi.service.MedicalRecordCodingService;
 import com.kurumi.thread.PageIndexPDFThread;
 import com.kurumi.util.DateUtil;
+import com.kurumi.util.FileUtil;
 import com.kurumi.util.JsonUtil;
 import com.kurumi.util.StringUtil;
 
@@ -176,6 +178,17 @@ public class MedicalRecordCodingServiceImpl implements MedicalRecordCodingServic
 		medicalRecordMapper.deleteMedicalRecordJsonByVisitGuid(StringUtil.handleJsonParam(visitGuid));
 		String jsonMapJson = JsonUtil.objectToJson(jsonMap);
 		medicalRecordMapper.insertMedicalRecordJson(jsonMapJson);
+		String filePath = myConfig.getJsonRecourcePath() + StringUtil.getLocalPath(visitGuid);
+		String versionFilePath = myConfig.getJsonRecourcePath()+ StringUtil.getLocalPath(visitGuid)+"version\\";
+		String fileName = visitGuid + ".json";
+		String versionFileName = visitGuid+"-" + DateUtil.dateFormat("yyyyMMddHHmmssssss", new Date()) + ".json";
+		try {
+			FileUtil.createOrEditFile(jsonMapJson, filePath, fileName);
+			FileUtil.createOrEditFile(jsonMapJson, versionFilePath, versionFileName);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		MedicalRecordResource medicalRecordResource = new MedicalRecordResource();
 		medicalRecordResource.setDataMap(jsonMap);
 		medicalRecordResource.setPageIndexTemplatePDFPath(myConfig.getPageIndexpPdfTemplatePath());

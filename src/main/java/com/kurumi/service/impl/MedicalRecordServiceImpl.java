@@ -1,5 +1,6 @@
 package com.kurumi.service.impl;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.util.Date;
@@ -19,6 +20,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.kurumi.config.MyConfig;
 import com.kurumi.mapper.BaseInfoMapper;
 import com.kurumi.mapper.MedicalRecordMapper;
 import com.kurumi.pojo.MedicalRecord;
@@ -28,6 +30,7 @@ import com.kurumi.pojo.MedicalRecordTrace;
 import com.kurumi.query.MedicalRecordQuery;
 import com.kurumi.service.MedicalRecordService;
 import com.kurumi.util.DateUtil;
+import com.kurumi.util.FileUtil;
 import com.kurumi.util.JsonUtil;
 import com.kurumi.util.StringUtil;
 
@@ -35,6 +38,8 @@ import com.kurumi.util.StringUtil;
 @Service
 public class MedicalRecordServiceImpl implements MedicalRecordService {
 	
+	@Autowired
+	private MyConfig myConfig;
 	
 	@Autowired
 	private MedicalRecordMapper medicalRecordMapper;
@@ -266,11 +271,11 @@ public class MedicalRecordServiceImpl implements MedicalRecordService {
 	@Override
 	public int finishQualityControl(String visitGuid) {
 		// TODO Auto-generated method stub
-		int count = medicalRecordMapper.getMeditalRecordTraceCount(visitGuid, MedicalRecordTrace.VISIT_QUALITY);
+		/*int count = medicalRecordMapper.getMeditalRecordTraceCount(visitGuid, MedicalRecordTrace.VISIT_QUALITY);
 		if(count > 0){
 			return 2; //此前质控已完成
-		}
-		
+		}*/
+		int count = 0;
 		List<Map<String,Object>> treatmentTraceTypes = baseInfoMapper.getTraceTypeByCode(MedicalRecordTrace.VISIT_QUALITY);
 		if(treatmentTraceTypes.size() == 0){
 			return -2; //质控示踪类型不存在
@@ -288,6 +293,18 @@ public class MedicalRecordServiceImpl implements MedicalRecordService {
 		medicalRecordTrace.setCreateUserName(userName);
 		medicalRecordTrace.setTraceTypeCode((String)treatmentTraceTypes.get(0).get("code"));
 		medicalRecordTrace.setTraceTypeName((String)treatmentTraceTypes.get(0).get("name"));
+		
+		MedicalRecordQualityControl qualityControl = new MedicalRecordQualityControl();
+		qualityControl = medicalRecordMapper.selectQualityControlByPrimaryKey(visitGuid);
+		if(qualityControl == null){
+			qualityControl = new MedicalRecordQualityControl();
+			qualityControl.setVisitGuid(visitGuid);
+			
+			qualityControl.setCreateUserId(userCode);
+			qualityControl.setCreateUserName(userName);
+			qualityControl.setScore(new BigDecimal(100));
+			count = medicalRecordMapper.insertQualityControl(qualityControl);
+		}
 		List<String> jsonDatas = medicalRecordMapper.getMedicalRecordJsonByVisitGuid(StringUtil.handleJsonParam(visitGuid));
 		Map<String, Object> jsonMap = new HashMap<String, Object>();
 		if(!jsonDatas.isEmpty()){
@@ -305,10 +322,34 @@ public class MedicalRecordServiceImpl implements MedicalRecordService {
 						break;
 					}
 				}
+				if(new BigDecimal("90").compareTo(qualityControl.getScore())<=0){
+					cureInfo.put("medicalRecordQualityCode","1");
+					cureInfo.put("medicalRecordQualityName","甲级");
+				}else if(new BigDecimal("90").compareTo(qualityControl.getScore())>0 && new BigDecimal("75").compareTo(qualityControl.getScore())<=0){
+					cureInfo.put("medicalRecordQualityCode","2");
+					cureInfo.put("medicalRecordQualityName","乙级");
+				}else{
+					cureInfo.put("medicalRecordQualityCode","3");
+					cureInfo.put("medicalRecordQualityName","丙级");
+				}
 				medicalRecordMapper.deleteMedicalRecordJsonByVisitGuid(StringUtil.handleJsonParam(visitGuid));
 				String jsonMapJson = JsonUtil.objectToJson(jsonMap);
 				medicalRecordMapper.insertMedicalRecordJson(jsonMapJson);
+				String filePath = myConfig.getJsonRecourcePath() + StringUtil.getLocalPath(visitGuid);
+				String versionFilePath = myConfig.getJsonRecourcePath()+ StringUtil.getLocalPath(visitGuid)+"version\\";
+				String fileName = visitGuid + ".json";
+				String versionFileName = visitGuid+"-" + DateUtil.dateFormat("yyyyMMddHHmmssssss", new Date()) + ".json";
+				try {
+					FileUtil.createOrEditFile(jsonMapJson, filePath, fileName);
+					FileUtil.createOrEditFile(jsonMapJson, versionFilePath, versionFileName);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
 			}
+			
+			
 		}
 		count = medicalRecordMapper.insertMedicalRecordTrace(medicalRecordTrace);
 		return count;

@@ -40,6 +40,7 @@ import com.kurumi.util.FileUtil;
 import com.kurumi.util.JsonUtil;
 import com.kurumi.util.PDFUtil;
 import com.kurumi.util.StringUtil;
+import com.kurumi.util.WaterMarkUtil;
 
 @Controller
 @RequestMapping("/medical_record_coding")
@@ -551,6 +552,7 @@ public class MedicalRecordCodingController {
 			String jsonMapJson = JsonUtil.objectToJson(jsonMap);
 			FileUtil.createOrEditFile(jsonMapJson, filePath, fileName);
 			FileUtil.createOrEditFile(jsonMapJson, versionFilePath, versionFileName);
+			medicalRecordCodingService.editNurseInfo(nurseInfo.getVisitGuid(), nurseInfo, jsonMap);
 			jsonMap = JsonUtil.jsonToPojo(jsonMapJson, Map.class);
 			model.addAttribute("visitGuid", nurseInfo.getVisitGuid());
 			
@@ -596,7 +598,9 @@ public class MedicalRecordCodingController {
 	
 	@GetMapping("/show_home_page_index")
 	public void homePagePrint(String visitGuid, Model model, HttpServletRequest request,HttpServletResponse response) {
-		
+		Subject subject=SecurityUtils.getSubject();
+		Session session = subject.getSession();
+		Map<String, Object> currentUser = (Map<String, Object>)session.getAttribute("currentUser");
 		ByteArrayOutputStream baos = null;
 		try {
 			List<String> jsonDatas = medicalRecordCodingService.getMedicalRecordJsonByVisitGuid(visitGuid);
@@ -675,12 +679,14 @@ public class MedicalRecordCodingController {
 			}
 			
 			baos = PDFUtil.getPDFStreamByTemplate(jsonMap, myConfig.getPageIndexpPdfTemplatePath(),new HashMap<String, Object>());
-			response.setContentLength(baos.size());
+			ByteArrayOutputStream out = WaterMarkUtil.getOutputStreamOfWterMarkByText(baos, (String)currentUser.get("user_code"));
+			/*ByteArrayOutputStream out = WaterMarkUtil.getOutputStreamOfWterMarkByIcon(baos, "D:\\publics\\medical_record\\water_icon\\305logo.jpg");*/
+			response.setContentLength(out.size());
 			response.setContentType("application/pdf");
 			response.addHeader("Content-Disposition", "inline;FileName=out.pdf");
 			
 			OutputStream outStream = response.getOutputStream();  
-	        outStream.write(baos.toByteArray(), 0, baos.size());  
+	        outStream.write(out.toByteArray(), 0, out.size());  
 	        outStream.flush(); 
 	        outStream.close(); 
 		} catch (Exception e) {

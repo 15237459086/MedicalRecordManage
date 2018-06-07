@@ -85,10 +85,14 @@ public class MedicalRecordPrintController {
 			int result = medicalRecordPrinterService.addMedicalRecordPrinterApply(printerApply, printerApplyItem);
 			if(result > 0){
 				String visitGuid = printerApplyItem.getVisitGuid();
+				String pageIndexPDFPath = myConfig.getPdfRecourcePath()+StringUtil.getLocalPath(visitGuid)+ visitGuid+"\\"+"page_index.pdf";
+				
 				List<Map<String,Object>> sourceFiles = medicalRecordScanService.getImageFilesByVisitGuidAndPrinterTypeCode(visitGuid, printerApplyItem.getApplyPrinterTypeCode());
 				MedicalRecordResource medicalRecordResource = new MedicalRecordResource();
+				medicalRecordResource.setCurrentVersion(myConfig.getCurrentVersion());
 				medicalRecordResource.getImageRecources().addAll(sourceFiles);
 				medicalRecordResource.setImageBasicPath(myConfig.getImageRecourcePath());
+				medicalRecordResource.setPageIndexPDFPath(pageIndexPDFPath);
 				String newPDFPath = myConfig.getPdfRecourcePath()+StringUtil.getLocalPath(visitGuid)+ visitGuid+"\\"+"publisih\\"+printerApplyItem.getApplyPrinterTypeCode()+".pdf";
 				medicalRecordResource.setNewPDFPath(newPDFPath);
 				MedicalRecordPDFThread medicalRecordPDFThread = new MedicalRecordPDFThread(medicalRecordResource);

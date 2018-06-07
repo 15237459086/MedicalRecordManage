@@ -23,6 +23,7 @@ import com.kurumi.config.MyConfig;
 import com.kurumi.pojo.RespondResult;
 import com.kurumi.query.MedicalRecordBorrowQuery;
 import com.kurumi.service.MedicalRecordBorrowService;
+import com.kurumi.util.PDFUtil;
 import com.kurumi.util.StringUtil;
 import com.kurumi.util.WaterMarkUtil;
 
@@ -174,18 +175,25 @@ public class MedicalRecordBorrowController {
 	
 	@RequestMapping("/show_pdf_to_borrow")
 	public void showImagePagination(String visitGuid, HttpServletResponse response) {
-		
-		ByteArrayOutputStream baos = null;
+		String waterMarkText =  "仅可用于借阅";
+		ByteArrayOutputStream out = new ByteArrayOutputStream();
 		try {
-			String pdfPath = myConfig.getPdfRecourcePath()+StringUtil.getLocalPath(visitGuid)+ visitGuid+"\\"+"show.pdf";
+			String imagePDFPath = myConfig.getPdfRecourcePath()+StringUtil.getLocalPath(visitGuid)+ visitGuid+"\\"+"pagination_image.pdf";
+			String pageIndexPDFPath = myConfig.getPdfRecourcePath()+StringUtil.getLocalPath(visitGuid)+ visitGuid+"\\"+"page_index.pdf";
+			if(myConfig.getCurrentVersion().equalsIgnoreCase("role_version_1.1")){
+				out = WaterMarkUtil.getOutputStreamOfWaterMarkByText(imagePDFPath,waterMarkText);
+			}else if(myConfig.getCurrentVersion().equalsIgnoreCase("role_version_2.1")){
+				ByteArrayOutputStream bos = PDFUtil.getPDFStream(pageIndexPDFPath, imagePDFPath);
+				out = WaterMarkUtil.getOutputStreamOfWterMarkByText(bos, waterMarkText);
+			}
 			
-			baos = WaterMarkUtil.getOutputStreamOfWaterMarkByText(pdfPath, "仅可用于借阅");
-			response.setContentLength(baos.size());
+			
+			response.setContentLength(out.size());
 			response.setContentType("application/pdf");
-			response.addHeader("Content-Disposition", "inline;FileName=printer.pdf");
+			response.addHeader("Content-Disposition", "inline;FileName=borrow.pdf");
 			
 			OutputStream outStream = response.getOutputStream();  
-	        outStream.write(baos.toByteArray(), 0, baos.size());  
+	        outStream.write(out.toByteArray(), 0, out.size());  
 	        outStream.flush(); 
 	        outStream.close(); 
 		} catch (Exception e) {

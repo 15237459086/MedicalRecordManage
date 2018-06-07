@@ -9,6 +9,8 @@ public class MedicalRecordResource {
 
 	private String newPDFPath;
 	
+	private String pageIndexPDFPath;
+	
 	private Map<String, Object> dataMap = new HashMap<String, Object>();
 	
 	private String pageIndexTemplatePDFPath;
@@ -20,6 +22,8 @@ public class MedicalRecordResource {
 	private String pdfBasicPath;
 	
 	private List<Map<String,Object>> pdfRecources = new ArrayList<Map<String,Object>>();
+	
+	private String currentVersion;
 
 	public String getNewPDFPath() {
 		return newPDFPath;
@@ -75,6 +79,22 @@ public class MedicalRecordResource {
 
 	public void setPageIndexTemplatePDFPath(String pageIndexTemplatePDFPath) {
 		this.pageIndexTemplatePDFPath = pageIndexTemplatePDFPath;
+	}
+
+	public String getCurrentVersion() {
+		return currentVersion;
+	}
+
+	public void setCurrentVersion(String currentVersion) {
+		this.currentVersion = currentVersion;
+	}
+
+	public String getPageIndexPDFPath() {
+		return pageIndexPDFPath;
+	}
+
+	public void setPageIndexPDFPath(String pageIndexPDFPath) {
+		this.pageIndexPDFPath = pageIndexPDFPath;
 	}
 	
 	
