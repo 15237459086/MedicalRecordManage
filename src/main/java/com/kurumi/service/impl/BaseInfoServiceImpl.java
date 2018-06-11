@@ -100,6 +100,9 @@ public class BaseInfoServiceImpl implements BaseInfoService {
 		Map<String, List<Map<String, Object>>> baseInfo = new HashMap<String, List<Map<String,Object>>>();
 		List<Map<String, Object>> diagTypes = baseInfoMapper.getDiagTypes();
 		baseInfo.put("diagTypes", diagTypes);
+		List<Map<String, Object>> inHospitalizationDiseaseStates = baseInfoMapper.getInHospitalizationDiseaseState();
+		baseInfo.put("inHospitalizationDiseaseStates", inHospitalizationDiseaseStates);
+		
 		
 		List<Map<String, Object>> treatmentResults = baseInfoMapper.getTreatmentResults();
 		baseInfo.put("treatmentResults", treatmentResults);

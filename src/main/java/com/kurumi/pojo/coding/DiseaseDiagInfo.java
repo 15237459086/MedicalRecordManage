@@ -28,9 +28,14 @@ public class DiseaseDiagInfo {
 	private DiseaseDiagRecord mainDiagRecord = new DiseaseDiagRecord();
 	
 	/**
-	 * 损失和中毒原因
+	 * 损伤、中毒外部原因
 	 */
 	private DiseaseDiagRecord damageAndVenenationDiagRecord = new DiseaseDiagRecord();
+	
+	/**
+	 * 病理诊断
+	 */
+	private DiseaseDiagRecord pathologyDiagRecord = new DiseaseDiagRecord();
 	
 	/**
 	 * 疾病诊断明细集合
@@ -81,6 +86,16 @@ public class DiseaseDiagInfo {
 	public void setDamageAndVenenationDiagRecord(DiseaseDiagRecord damageAndVenenationDiagRecord) {
 		this.damageAndVenenationDiagRecord = damageAndVenenationDiagRecord;
 	}
+	
+	
+
+	public DiseaseDiagRecord getPathologyDiagRecord() {
+		return pathologyDiagRecord;
+	}
+
+	public void setPathologyDiagRecord(DiseaseDiagRecord pathologyDiagRecord) {
+		this.pathologyDiagRecord = pathologyDiagRecord;
+	}
 
 	public List<DiseaseDiagRecord> getDiseaseDiagRecords() {
 		return diseaseDiagRecords;
@@ -91,11 +106,6 @@ public class DiseaseDiagInfo {
 		this.diseaseDiagRecords = diseaseDiagRecords;
 	}
 
-	@Override
-	public String toString() {
-		return "HospitalVisitDiseaseDiagInfo [visitGuid=" + visitGuid + ", diseaseDiagRecords=" + diseaseDiagRecords
-				+ "]";
-	}
 	
 	
 	

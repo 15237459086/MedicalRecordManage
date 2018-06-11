@@ -326,16 +326,16 @@ String respondResultJson= (String)request.getAttribute("respondResultJson");
 			<tr>
 				<td class="tdLabel_7 redColor">入院科室</td>
 				<td class="tdLabel_8">
-					<select name="inDeptCode" id="inDeptCode" title=''>
+					<select name="inDeptCode" id="inDeptCode">
 						
 					</select>
-					<input type="hidden" name="inDeptName"  value=""/>
+					<input type="hidden" name="inDeptName"/>
 				</td>
 				<td class="tdLabel_7 redColor">入院时间</td>
 				<td class="tdLabel_8">
 					<input type="text" name="inHospitalDateTime"
 					onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})"
-					value="${basicInfo.inHospitalDateTime}" title=''></td>
+					value="${basicInfo.inHospitalDateTime}"></td>
 
 				<td class="tdLabel_7">诊疗科目</td>
 				<td class="tdLabel_8">
@@ -368,10 +368,10 @@ String respondResultJson= (String)request.getAttribute("respondResultJson");
 				</td>
 				<td class="tdLabel_7">再住院计划</td>
 				<td class="tdLabel_8">
-					<select style="width: 120px" name="rehospitalAimCode" id="rehospitalAimCode">
+					<select name="rehospitalAimCode">
 						
 					</select>
-					<input type="hidden" name="rehospitalAimName"  value=""/> 间隔 
+					<input type="hidden" name="rehospitalAimName"/> 间隔 
 					<input type="text" style="width:30px"
 					name="rehospitalIntervalDayNumber"
 					value="${basicInfo.rehospitalIntervalDayNumber }"> 天</td>
@@ -416,10 +416,10 @@ String respondResultJson= (String)request.getAttribute("respondResultJson");
 					value="${basicInfo.dealthDateTime}"></td>
 				<td class="tdLabel_7">死亡原因</td>
 				<td class="tdLabel_8">
-					<select name="dealthReasonCode" id="dealthReasonCode">
+					<select name="dealthReasonCode">
 						
 					</select>
-					<input type="hidden" name="dealthReasonName"  value=""/>
+					<input type="hidden" name="dealthReasonName"/>
 				</td>
 				<td class="tdLabel_7">尸检</td>
 				<td class="tdLabel_8" colspan="3">

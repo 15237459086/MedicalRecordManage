@@ -142,6 +142,98 @@ public class OperateRecord {
 	private String anaesthesiaTypeName;
 	
 	/**
+	 * 手术标识代码
+	 */
+	private String operatMarkCode;
+	
+	/**
+	 * 手术标识代码
+	 */
+	private String operatMarkName;
+	
+	/**
+	 * 手术部位代码
+	 */
+	private String operateBodyPartCode;
+	
+	/**
+	 * 手术部位代码
+	 */
+	private String operateBodyPartName;
+	
+	/**
+	 * 切口感染部位代码
+	 */
+	private String surgicalSiteInfectionCode;
+	
+	/**
+	 * 切口感染部位名称
+	 */
+	private String surgicalSiteInfectionName;
+	
+	/**
+	 * 患者来源代码
+	 */
+	private String patientSourceCode;
+	
+	/**
+	 * 患者来源名称
+	 */
+	private String patientSourceName;
+	
+	/**
+	 * 术后并发症代码
+	 */
+	private String operatedComplicationCode;
+	
+	/**
+	 * 术后并发症名称
+	 */
+	private String operatedComplicationName;
+	
+	/**
+	 * 是否重返手术室计划代码
+	 */
+	private String haveReoperateRoomPlanCode;
+	
+	
+	/**
+	 * 是否重返手术室计划名称
+	 */
+	private String haveReoperateRoomPlanName;
+	
+	/**
+	 * 重返手术室目的代码
+	 */
+	private String reoperateRoomAimCode;
+	
+	/**
+	 * 重返手术室目的名称
+	 */
+	private String reoperateRoomAimName;
+	
+	
+	/**
+	 * 手术风险等级代码
+	 */
+	private String operateRiskLevelCode;
+	
+	/**
+	 * 手术风险等级名称
+	 */
+	private String operateRiskLevelName;
+	
+	
+	/**
+	 * 麻醉非预期事件代码
+	 */
+	private String anaesthesiaUnintendedCode;
+	
+	/**
+	 * 麻醉非预期事件名称
+	 */
+	private String anaesthesiaUnintendedName;
+	/**
 	 * 诊断排序
 	 */
     private Integer operateSortIndex;
@@ -397,6 +489,150 @@ public class OperateRecord {
 
 	public void setPageShow(String pageShow) {
 		this.pageShow = pageShow;
+	}
+
+	public String getOperatMarkCode() {
+		return operatMarkCode;
+	}
+
+	public void setOperatMarkCode(String operatMarkCode) {
+		this.operatMarkCode = operatMarkCode;
+	}
+
+	public String getOperatMarkName() {
+		return operatMarkName;
+	}
+
+	public void setOperatMarkName(String operatMarkName) {
+		this.operatMarkName = operatMarkName;
+	}
+
+	public String getOperateBodyPartCode() {
+		return operateBodyPartCode;
+	}
+
+	public void setOperateBodyPartCode(String operateBodyPartCode) {
+		this.operateBodyPartCode = operateBodyPartCode;
+	}
+
+	public String getOperateBodyPartName() {
+		return operateBodyPartName;
+	}
+
+	public void setOperateBodyPartName(String operateBodyPartName) {
+		this.operateBodyPartName = operateBodyPartName;
+	}
+
+	public String getSurgicalSiteInfectionCode() {
+		return surgicalSiteInfectionCode;
+	}
+
+	public void setSurgicalSiteInfectionCode(String surgicalSiteInfectionCode) {
+		this.surgicalSiteInfectionCode = surgicalSiteInfectionCode;
+	}
+
+	public String getSurgicalSiteInfectionName() {
+		return surgicalSiteInfectionName;
+	}
+
+	public void setSurgicalSiteInfectionName(String surgicalSiteInfectionName) {
+		this.surgicalSiteInfectionName = surgicalSiteInfectionName;
+	}
+
+	public String getPatientSourceCode() {
+		return patientSourceCode;
+	}
+
+	public void setPatientSourceCode(String patientSourceCode) {
+		this.patientSourceCode = patientSourceCode;
+	}
+
+	public String getPatientSourceName() {
+		return patientSourceName;
+	}
+
+	public void setPatientSourceName(String patientSourceName) {
+		this.patientSourceName = patientSourceName;
+	}
+
+	public String getOperatedComplicationCode() {
+		return operatedComplicationCode;
+	}
+
+	public void setOperatedComplicationCode(String operatedComplicationCode) {
+		this.operatedComplicationCode = operatedComplicationCode;
+	}
+
+	public String getOperatedComplicationName() {
+		return operatedComplicationName;
+	}
+
+	public void setOperatedComplicationName(String operatedComplicationName) {
+		this.operatedComplicationName = operatedComplicationName;
+	}
+
+	public String getHaveReoperateRoomPlanCode() {
+		return haveReoperateRoomPlanCode;
+	}
+
+	public void setHaveReoperateRoomPlanCode(String haveReoperateRoomPlanCode) {
+		this.haveReoperateRoomPlanCode = haveReoperateRoomPlanCode;
+	}
+
+	public String getHaveReoperateRoomPlanName() {
+		return haveReoperateRoomPlanName;
+	}
+
+	public void setHaveReoperateRoomPlanName(String haveReoperateRoomPlanName) {
+		this.haveReoperateRoomPlanName = haveReoperateRoomPlanName;
+	}
+
+	public String getReoperateRoomAimCode() {
+		return reoperateRoomAimCode;
+	}
+
+	public void setReoperateRoomAimCode(String reoperateRoomAimCode) {
+		this.reoperateRoomAimCode = reoperateRoomAimCode;
+	}
+
+	public String getReoperateRoomAimName() {
+		return reoperateRoomAimName;
+	}
+
+	public void setReoperateRoomAimName(String reoperateRoomAimName) {
+		this.reoperateRoomAimName = reoperateRoomAimName;
+	}
+
+	public String getOperateRiskLevelCode() {
+		return operateRiskLevelCode;
+	}
+
+	public void setOperateRiskLevelCode(String operateRiskLevelCode) {
+		this.operateRiskLevelCode = operateRiskLevelCode;
+	}
+
+	public String getOperateRiskLevelName() {
+		return operateRiskLevelName;
+	}
+
+	public void setOperateRiskLevelName(String operateRiskLevelName) {
+		this.operateRiskLevelName = operateRiskLevelName;
+	}
+
+	public String getAnaesthesiaUnintendedCode() {
+		return anaesthesiaUnintendedCode;
+	}
+
+	public void setAnaesthesiaUnintendedCode(String anaesthesiaUnintendedCode) {
+		this.anaesthesiaUnintendedCode = anaesthesiaUnintendedCode;
+	}
+
+	public String getAnaesthesiaUnintendedName() {
+		return anaesthesiaUnintendedName;
+	}
+
+	public void setAnaesthesiaUnintendedName(String anaesthesiaUnintendedName) {
+		this.anaesthesiaUnintendedName = anaesthesiaUnintendedName;
 	}
 	
 	

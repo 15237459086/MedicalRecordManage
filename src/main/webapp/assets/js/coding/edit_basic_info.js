@@ -481,12 +481,73 @@ function initPage(baseInfoJson,basicInfo){
 	});
 	
 	
-	
-	
 	var rehospitalAims=baseInfoJson['rehospitalAims'];//在住院目的
 	
+	$("select[name='rehospitalAimCode']").each(function(){
+		var options = "";
+		for(var index in rehospitalAims){
+			var rehospitalAim = rehospitalAims[index];
+	    	options+="<option value='"+rehospitalAim.uniq_code+"'>"+rehospitalAim.label+"</option>"
+	    } 
+       $(this).append(options);
+       $(this).change(function(){
+	   		var eventObj = $(this);
+	   		var nameObjName = eventObj.attr("name").replace("Code", "Name");
+	   		
+	   		if(eventObj.val()!=""){
+	   			var name=eventObj.find("option:selected").text();
+	   			eventObj.next("input[name='"+nameObjName+"']").val(name);
+	   		}else{
+	   			eventObj.next("input[name='"+nameObjName+"']").val("");
+	   		}
+	   	});
+       
+       var eventObj = $(this);
+	   var nameObjName = eventObj.attr("name").replace("Code", "Name");
+       if(basicInfo.rehospitalAimCode){
+    	   var selectOption = eventObj.find("option[value='"+basicInfo.rehospitalAimCode+"']")
+			if(selectOption.length > 0){
+				selectOption.attr("selected",true);
+			}else{
+				eventObj.append("<option selected='selected' value='"+basicInfo.rehospitalAimCode+"'>"+basicInfo.rehospitalAimName+"</option>");
+			}
+       }
+       eventObj.next("input[name='"+nameObjName+"']").val(basicInfo.rehospitalAimName);
+	});
+	
 	var hospitalDealthReasons=baseInfoJson['hospitalDealthReasons'];//死亡原因
-
+	
+	$("select[name='dealthReasonCode']").each(function(){
+		var options = "";
+		for(var index in hospitalDealthReasons){
+			var hospitalDealthReason = hospitalDealthReasons[index];
+	    	options+="<option value='"+hospitalDealthReason.uniq_code+"'>"+hospitalDealthReason.label+"</option>"
+	    } 
+       $(this).append(options);
+       $(this).change(function(){
+	   		var eventObj = $(this);
+	   		var nameObjName = eventObj.attr("name").replace("Code", "Name");
+	   		
+	   		if(eventObj.val()!=""){
+	   			var name=eventObj.find("option:selected").text();
+	   			eventObj.next("input[name='"+nameObjName+"']").val(name);
+	   		}else{
+	   			eventObj.next("input[name='"+nameObjName+"']").val("");
+	   		}
+	   	});
+       
+       var eventObj = $(this);
+	   var nameObjName = eventObj.attr("name").replace("Code", "Name");
+       if(basicInfo.dealthReasonCode){
+    	   var selectOption = eventObj.find("option[value='"+basicInfo.dealthReasonCode+"']")
+			if(selectOption.length > 0){
+				selectOption.attr("selected",true);
+			}else{
+				eventObj.append("<option selected='selected' value='"+basicInfo.dealthReasonCode+"'>"+basicInfo.dealthReasonName+"</option>");
+			}
+       }
+       eventObj.next("input[name='"+nameObjName+"']").val(basicInfo.dealthReasonName);
+	});
 	
 	$("input[data-type='medicalWorker']" ).autocomplete({
 		source: function( request, response ) {

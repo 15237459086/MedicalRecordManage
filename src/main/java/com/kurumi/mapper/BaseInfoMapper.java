@@ -135,6 +135,12 @@ public interface BaseInfoMapper {
 	List<Map<String,Object>> getDiagTypes();
 	
 	/**
+	 * 获取入院基本状况
+	 * @return
+	 */
+	List<Map<String,Object>> getInHospitalizationDiseaseState();
+	
+	/**
 	 * 获取治疗结果
 	 * @return
 	 */

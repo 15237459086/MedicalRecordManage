@@ -43,9 +43,9 @@ String respondResultJson= (String)request.getAttribute("respondResultJson");
 					<td class="tdLabel_4" style="width: 12%" >诊断类型</td>
 					<td class="tdLabel_4" style="width: 20%">原始描述</td>
 					<td class="tdLabel_4" style="width: 24%">疾病编码</td>
-					<td class="tdLabel_4" style="width: 13%">治疗结果</td>
-					<td class="tdLabel_4" style="width: 20%">确诊日期</td>
-					<td class="tdLabel_4" style="width: 7%">治疗天数</td>
+					<td class="tdLabel_4" style="width: 15%">入院病情</td>
+					<td class="tdLabel_4" style="width: 15%">治疗结果</td>
+					<td class="tdLabel_4" style="width: 10%">治疗天数</td>
 					<td class="tdLabel_4" style="width: 13%">位序</td>
 					<td class="tdLabel_4" style="width: 7%">操作</td>
 				</tr>
@@ -95,25 +95,45 @@ String respondResultJson= (String)request.getAttribute("respondResultJson");
 				
 				<tfoot>
 					<tr>
-					<td class="tdLabel_8">
-						<input type="text" readonly="readonly" name="damageAndVenenationDiagRecord.diagTypeName" value="损伤和中毒的外部原因"/>
-						<input type="hidden" name="damageAndVenenationDiagRecord.diagTypeCode" value="7"/>
-					</td>
-					<td class="tdLabel_8">
-						<input type="text" name="damageAndVenenationDiagRecord.diseaseDiagOriginalDesc" style="width: 100%" readonly="readonly">
-						<input type="hidden" name="damageAndVenenationDiagRecord.diseaseDiagOriginalCode">
-					</td>
-					<td class="tdLabel_8">
-						<c:if test="${(not empty diseaseDiagInfo.damageAndVenenationDiagRecord.diseaseDiagName) and (not empty diseaseDiagInfo.damageAndVenenationDiagRecord.diseaseDiagCode)  }">
-							<c:set scope="page" var="damageAndVenenationDiagShow" value="${diseaseDiagInfo.damageAndVenenationDiagRecord.diseaseDiagCode }[${diseaseDiagInfo.damageAndVenenationDiagRecord.diseaseDiagName }]"></c:set>
-						</c:if>
-						<input class="input_box" data-type="diseaseDiag" type="text" name="damageAndVenenationDiagRecord.diseaseDiagShow" value="${damageAndVenenationDiagShow}">
-						<input type="hidden" name="damageAndVenenationDiagRecord.diseaseDiagName" value="${diseaseDiagInfo.damageAndVenenationDiagRecord.diseaseDiagName }">
-						<input type="hidden" name="damageAndVenenationDiagRecord.diseaseDiagCode" value="${diseaseDiagInfo.damageAndVenenationDiagRecord.diseaseDiagCode}">
-					</td>
-					<td class="tdLabel_8" colspan="5">
-					</td>
-				</tr>
+						<td class="tdLabel_8">
+							<input type="text" readonly="readonly" name="damageAndVenenationDiagRecord.diagTypeName" value="损伤和中毒的外部原因"/>
+							<input type="hidden" name="damageAndVenenationDiagRecord.diagTypeCode" value="7"/>
+						</td>
+						<td class="tdLabel_8">
+							<input type="text" name="damageAndVenenationDiagRecord.diseaseDiagOriginalDesc" style="width: 100%" readonly="readonly">
+							<input type="hidden" name="damageAndVenenationDiagRecord.diseaseDiagOriginalCode">
+						</td>
+						<td class="tdLabel_8">
+							<c:if test="${(not empty diseaseDiagInfo.damageAndVenenationDiagRecord.diseaseDiagName) and (not empty diseaseDiagInfo.damageAndVenenationDiagRecord.diseaseDiagCode)  }">
+								<c:set scope="page" var="damageAndVenenationDiagShow" value="${diseaseDiagInfo.damageAndVenenationDiagRecord.diseaseDiagCode }[${diseaseDiagInfo.damageAndVenenationDiagRecord.diseaseDiagName }]"></c:set>
+							</c:if>
+							<input class="input_box" data-type="diseaseDiag" type="text" name="damageAndVenenationDiagRecord.diseaseDiagShow" value="${damageAndVenenationDiagShow}">
+							<input type="hidden" name="damageAndVenenationDiagRecord.diseaseDiagName" value="${diseaseDiagInfo.damageAndVenenationDiagRecord.diseaseDiagName }">
+							<input type="hidden" name="damageAndVenenationDiagRecord.diseaseDiagCode" value="${diseaseDiagInfo.damageAndVenenationDiagRecord.diseaseDiagCode}">
+						</td>
+						<td class="tdLabel_8" colspan="5">
+						</td>
+					</tr>
+					<tr>
+						<td class="tdLabel_8">
+							<input type="text" readonly="readonly" name="pathologyDiagRecord.diagTypeName" value="病理学诊断"/>
+							<input type="hidden" name="pathologyDiagRecord.diagTypeCode" value="8"/>
+						</td>
+						<td class="tdLabel_8">
+							<input type="text" name="pathologyDiagRecord.diseaseDiagOriginalDesc" style="width: 100%" readonly="readonly">
+							<input type="hidden" name="pathologyDiagRecord.diseaseDiagOriginalCode">
+						</td>
+						<td class="tdLabel_8">
+							<c:if test="${(not empty diseaseDiagInfo.pathologyDiagRecord.diseaseDiagName) and (not empty diseaseDiagInfo.pathologyDiagRecord.diseaseDiagCode)  }">
+								<c:set scope="page" var="pathologyDiagShow" value="${diseaseDiagInfo.pathologyDiagRecord.diseaseDiagCode }[${diseaseDiagInfo.pathologyDiagRecord.diseaseDiagName }]"></c:set>
+							</c:if>
+							<input class="input_box" data-type="diseaseDiag" type="text" name="pathologyDiagRecord.diseaseDiagShow" value="${pathologyDiagShow}">
+							<input type="hidden" name="pathologyDiagRecord.diseaseDiagName" value="${diseaseDiagInfo.pathologyDiagRecord.diseaseDiagName }">
+							<input type="hidden" name="pathologyDiagRecord.diseaseDiagCode" value="${diseaseDiagInfo.pathologyDiagRecord.diseaseDiagCode}">
+						</td>
+						<td class="tdLabel_8" colspan="5">
+						</td>
+					</tr>
 					<tr>
 						<td class="tdLabel_8" colspan="9"></td>
 					</tr>
@@ -141,13 +161,16 @@ String respondResultJson= (String)request.getAttribute("respondResultJson");
 			<input type="hidden" name="diseaseDiagRecords[0].diseaseDiagCode">
 		</td>
 		<td class="tdLabel_8">
+			<select name="diseaseDiagRecords[0].inHospitalDiseaseStateCode" style="width: 100%">
+			</select>
+			<input type="hidden" name="diseaseDiagRecords[0].inHospitalDiseaseStateName">
+		</td>
+		<td class="tdLabel_8">
 			<select name="diseaseDiagRecords[0].treatResultCode" style="width: 100%">
 			</select>
 			<input type="hidden" name="diseaseDiagRecords[0].treatResultName">
 		</td>
-		<td class="tdLabel_8">
-			<input class="input_box" name="diseaseDiagRecords[0].confirmedDateTime" type="text" onFocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})">
-		</td>
+		
 		<td class="tdLabel_8">
 			<input class="input_box" type="text" name="diseaseDiagRecords[0].treatDayNumber">
 		</td>

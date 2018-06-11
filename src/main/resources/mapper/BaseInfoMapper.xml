@@ -125,6 +125,11 @@
   	select name as label,code as uniq_code from diagnose_type
  </select>
  
+ <!-- 入院疾病状况 -->
+ <select id="getInHospitalizationDiseaseState" resultType="map">
+  	select name as label,code as uniq_code from in_hospitalization_disease_state
+ </select>
+ 
  <!-- 疾病治疗结果 -->
  <select id="getTreatmentResults" resultType="map">
   	select name as label,code as uniq_code from treatment_result

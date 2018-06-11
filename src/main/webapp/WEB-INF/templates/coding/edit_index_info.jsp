@@ -86,9 +86,9 @@
 				<li class="TC_li"><a onclick="loadContent('${basePath}medical_record/edit_home_page_doctor_advice_temporary_form?visitGuid=${visitGuid}')" aria-controls="doctorAdviceTemporaryMentInfo" role="tab" data-toggle="tab">临时医嘱</a>
 				</li>
 				<li class="TC_li"><a onclick="loadContent('${basePath}medical_record/edit_home_page_doctor_advice_standing_form?visitGuid=${visitGuid}')" aria-controls="doctorAdviceStandingMentInfo" role="tab" data-toggle="tab">长期医嘱</a>
-				</li>
-				<li class="TC_li"><a onclick="loadContent('${basePath}medical_record/edit_home_page_visit_cost_form?visitGuid=${visitGuid}')" aria-controls="visitCostMentInfo" role="tab" data-toggle="tab">住院费用</a>
-				</li> --%>
+				</li>--%>
+				<li class="TC_li"><a onclick="loadContent('${basePath}medical_record_coding/edit_cost_info_form?visitGuid=${visitGuid}')" aria-controls="visitCostMentInfo" role="tab" data-toggle="tab">住院费用</a>
+				</li> 
 			</ul>
 		</div>
 		<div class="content_list">

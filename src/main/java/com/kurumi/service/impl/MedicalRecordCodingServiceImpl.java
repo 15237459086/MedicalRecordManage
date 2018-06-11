@@ -25,6 +25,7 @@ import com.kurumi.mapper.MedicalRecordMapper;
 import com.kurumi.pojo.MedicalRecord;
 import com.kurumi.pojo.MedicalRecordTrace;
 import com.kurumi.pojo.coding.BasicInfo;
+import com.kurumi.pojo.coding.CostInfo;
 import com.kurumi.pojo.coding.CureInfo;
 import com.kurumi.pojo.coding.DiseaseDiagInfo;
 import com.kurumi.pojo.coding.NurseInfo;
@@ -445,6 +446,22 @@ public class MedicalRecordCodingServiceImpl implements MedicalRecordCodingServic
 			}
 		}
 		return errorMedicalRecords;
+	}
+
+	@Transactional(propagation=Propagation.REQUIRED)
+	@Override
+	public int editCostInfo(String visitGuid, CostInfo costInfo, Map<String, Object> jsonMap) {
+		// TODO Auto-generated method stub
+		List<String> medicalRecordJsons = medicalRecordMapper.getMedicalRecordJsonByVisitGuid(StringUtil.handleJsonParam(visitGuid));
+		jsonMap.put("visitGuid", visitGuid);
+		String jsonMapJson = JsonUtil.objectToJson(jsonMap);
+		if(medicalRecordJsons.isEmpty()){
+			medicalRecordMapper.insertMedicalRecordJson(jsonMapJson);
+		}else{
+			medicalRecordMapper.deleteMedicalRecordJsonByVisitGuid(StringUtil.handleJsonParam(visitGuid));
+			medicalRecordMapper.insertMedicalRecordJson(jsonMapJson);
+		}
+		return 1;
 	}
 
 }
