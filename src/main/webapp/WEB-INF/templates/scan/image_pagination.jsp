@@ -216,7 +216,7 @@ function imagePaginationFinish(){
 									oldPageTypeCodeDeal = true;
 								}
 							}
-							if(oldPageTypeCode && !oldPageTypeCodeDeal){
+							if( oldPageTypeCode && newPageTypeCode != oldPageTypeCode && !oldPageTypeCodeDeal){
 								$("#menulist li[page-type-code='"+oldPageTypeCode+"'] a span").html("0");
 							}
 							var paginationCount =  $("#container>div:not([page-type-code])").length;

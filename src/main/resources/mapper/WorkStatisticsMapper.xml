@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kurumi.mapper.WorkStatisticsMapper">
+	<select id="getMedicalRecordCountOfShouldPigeonholed" resultType="int">
+		select count(distinct(image.visit_guid)) 
+		from medical_record_image image
+		where 1 = 1
+		<if test="startDate and endDate!=null">
+	   	  <![CDATA[and (CAST(image.create_date_time AS date) >= #{startDate} and CAST(image.create_date_time AS date) <= #{endDate})]]>
+		</if>
+	</select>
+	
+	
+	<select id="getImageCountOfShouldPigeonholed" resultType="int">
+		select count(image.file_hash) 
+		from medical_record_image image
+		where 1 = 1
+		<if test="startDate and endDate!=null">
+	   	  <![CDATA[and (CAST(image.create_date_time AS date) >= #{startDate} and CAST(image.create_date_time AS date) <= #{endDate})]]>
+		</if>
+	</select>
+	
+	<select id="getImageCountOfPigeonholed" resultType="int">
+		select count(image.file_hash) 
+		from medical_record_image image
+		where image.mr_page_type_code is not null
+		<if test="startDate and endDate!=null">
+	   	  <![CDATA[and (CAST(image.create_date_time AS date) >= #{startDate} and CAST(image.create_date_time AS date) <= #{endDate})]]>
+		</if>
+	</select>
+	
+	<select id="getGroupImageCountOfPigeonholer" resultType="map">
+		select image.create_user_id,image.create_user_name,count(image.file_hash) as count from medical_record_image image
+		where image.mr_page_type_code is not null
+		<if test="startDate and endDate!=null">
+	   	  <![CDATA[and (CAST(image.create_date_time AS date) >= #{startDate} and CAST(image.create_date_time AS date) <= #{endDate})]]>
+		</if>
+		group by image.create_user_id,image.create_user_name
+	</select>
+	
+	
+	<select id="getMedicalRecordCountOfCodinged" resultType="int">
+		select count(t.visit_guid) from
+		(select distinct trace.visit_guid 
+		from medical_record_trace trace
+		where trace.trace_type_code = 'BABM'
+		<if test="startDate and endDate!=null">
+	   	  <![CDATA[and (CAST(trace.create_date_time AS date) >= #{startDate} and CAST(trace.create_date_time AS date) <= #{endDate})]]>
+		</if>
+		group by trace.visit_guid,trace.trace_type_code) t
+	</select>
+	
+	
+	<select id="getGroupMedicalRecordCountOfCodinged" resultType="map">
+		select trace1.create_user_id,trace1.create_user_name,count(trace1.id) count
+		from medical_record_trace trace1
+		inner join (
+			select min(id) id from medical_record_trace trace
+			where trace.trace_type_code = 'BABM'
+			<if test="startDate and endDate!=null">
+		   	  <![CDATA[and (CAST(trace.create_date_time AS date) >= #{startDate} and CAST(trace.create_date_time AS date) <= #{endDate})]]>
+			</if>
+			group by trace.visit_guid,trace.trace_type_code) trace2
+		on trace1.id = trace2.id
+		group by trace1.create_user_id,trace1.create_user_name
+	</select>
+</mapper>

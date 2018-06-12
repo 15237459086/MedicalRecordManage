@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Param;
 
 import com.kurumi.pojo.MedicalRecordImage;
+import com.kurumi.pojo.ScanImage;
 
 public interface MedicalRecordImageMapper {
     
@@ -20,6 +21,8 @@ public interface MedicalRecordImageMapper {
     int updateByPrimaryKeySelective(MedicalRecordImage record);
 
     int updateByPrimaryKey(MedicalRecordImage record);
+    
+    int imagePaginationByPrimaryKey(MedicalRecordImage record);
     
     int getCountByFileHashAndVisitGuid(@Param("fileHash") String fileHash,@Param("visitGuid") String visitGuid);
     

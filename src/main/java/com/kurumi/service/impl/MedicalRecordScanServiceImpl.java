@@ -153,7 +153,7 @@ public class MedicalRecordScanServiceImpl implements MedicalRecordScanService {
 			medicalRecordImage.setLastUserId(userCode);
 			medicalRecordImage.setLastUserName(userName);
 			medicalRecordImage.setLastDateTime(new Date());
-			return medicalRecordImageMapper.updateByPrimaryKey(medicalRecordImage);
+			return medicalRecordImageMapper.imagePaginationByPrimaryKey(medicalRecordImage);
 		}
 		return 0;
 	}

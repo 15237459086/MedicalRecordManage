@@ -226,6 +226,22 @@
   </update>
   
   
+  <update id="imagePaginationByPrimaryKey" parameterType="com.kurumi.pojo.MedicalRecordImage" >
+    update medical_record_image
+    set file_hash = #{fileHash,jdbcType=VARCHAR},
+      visit_guid = #{visitGuid,jdbcType=VARCHAR},
+      mr_page_type_code = #{mrPageTypeCode,jdbcType=VARCHAR},
+      create_user_id = #{createUserId,jdbcType=VARCHAR},
+      create_user_name = #{createUserName,jdbcType=VARCHAR},
+      create_date_time = #{createDateTime,jdbcType=TIMESTAMP},
+      last_user_id = #{lastUserId,jdbcType=VARCHAR},
+      last_user_name = #{lastUserName,jdbcType=VARCHAR},
+      last_date_time = #{lastDateTime,jdbcType=TIMESTAMP},
+      version = #{version,jdbcType=INTEGER},
+      first_pigeonholed_date_time = case when (first_pigeonholed_date_time is null) then #{firsPigeonholedDateTime,jdbcType=TIMESTAMP} else first_pigeonholed_date_time end
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
   <select id="getCountByFileHashAndVisitGuid" resultType="int" >
     select 
     	count(id)

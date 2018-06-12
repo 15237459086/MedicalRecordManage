@@ -94,6 +94,13 @@ public class MedicalRecordController {
 		return "borrow_index.default";
 	}
 	
+	@GetMapping("/work_statistics_index")
+	public String workStatisticsIndex(){
+		
+		
+		return "work_statistics_index.default";
+	}
+	
 	@GetMapping("/data_manage_index")
 	public String dataManageIndex(){
 		return "data_manage_index.default";

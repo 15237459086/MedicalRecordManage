@@ -16,6 +16,8 @@ public class MedicalRecordImage {
     private String createUserName;
 
     private Date createDateTime = new Date();
+    
+    private Date firsPigeonholedDateTime = new Date();
 
     private String lastUserId;
 
@@ -81,7 +83,17 @@ public class MedicalRecordImage {
         this.createDateTime = createDateTime;
     }
 
-    public String getLastUserId() {
+    
+    
+    public Date getFirsPigeonholedDateTime() {
+		return firsPigeonholedDateTime;
+	}
+
+	public void setFirsPigeonholedDateTime(Date firsPigeonholedDateTime) {
+		this.firsPigeonholedDateTime = firsPigeonholedDateTime;
+	}
+
+	public String getLastUserId() {
         return lastUserId;
     }
 
