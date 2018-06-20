@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kurumi.mapper.MedicalRecordCodingMapper">
+	<insert id="insertMedicalRecordDiseaseDiag" parameterType="com.kurumi.pojo.MedicalRecordDiseaseDiag">
+		insert into medical_record_disease_diag (visit_guid,diag_type_code,diag_type_name,
+		original_disease_diag_code,original_disease_diag_name,disease_diag_code,disease_diag_name)
+		values (#{visitGuid,jdbcType=VARCHAR}, #{diagTypeCode,jdbcType=VARCHAR},#{diagTypeName,jdbcType=VARCHAR},
+		#{originalDiseaseDiagCode,jdbcType=VARCHAR}, #{originalDiseaseDiagCode,jdbcType=VARCHAR},
+		#{diseaseDiagCode,jdbcType=VARCHAR}, #{diseaseDiagName,jdbcType=VARCHAR})
+	</insert>
+
+	<delete id="deleteDiseaseDiagByVisitGuid" parameterType="java.lang.String">
+		delete from medical_record_disease_diag
+		where visit_guid = #{visitGuid,jdbcType=VARCHAR}
+	</delete>
+	
+	<select id="getDiseaseMedicalRecord" resultType="map"
+		parameterType="com.kurumi.query.MedicalRecordSearchingQuery">
+		select distinct note.visit_guid,
+			note.patient_name,
+			note.sex_code,
+			note.sex_name,
+			date_format(note.birthday,'%Y-%m-%d') as birthday,
+			note.document_type_code,
+			note.document_type_name,
+			note.id_number,
+			note.only_id,
+			note.mr_id,
+			note.visit_number,
+			date_format(note.in_hospital_date_time,'%Y-%m-%d') as in_hospital_date,
+			date_format(note.in_hospital_date_time,'%Y-%m-%d %H:%i:%S') as in_hospital_date_time,
+			note.in_dept_code,
+			note.in_dept_name,
+			date_format(note.out_hospital_date_time,'%Y-%m-%d') as out_hospital_date,
+			date_format(note.out_hospital_date_time,'%Y-%m-%d %H:%i:%S') as
+			out_hospital_date_time,
+			note.out_dept_code,
+			note.out_dept_name,
+			note.out_hospital_type_code,
+			note.out_hospital_type_name,
+			note.treatment_sign_code,
+			note.treatment_sign_name
+		from medical_record note
+		inner join medical_record_disease_diag diag
+		on diag.visit_guid = note.visit_guid
+		where
+			<![CDATA[(CAST(note.out_hospital_date_time AS date) >= #{outHospitalStartDate} and CAST(note.out_hospital_date_time AS date) <= #{outHospitalEndDate})]]>
+			and (diag.original_disease_diag_name like #{diseaseDiagName} 
+				 or diag.disease_diag_code like #{diseaseDiagName} 
+				 or diag.disease_diag_name like #{diseaseDiagName})
+		<if test="currentStartNum != null and pageSize != null">
+			limit #{currentStartNum},#{pageSize}
+		</if>
+	</select>
+	
+	
+	<select id="getDiseaseMedicalRecordCount" resultType="int"
+		parameterType="com.kurumi.query.MedicalRecordSearchingQuery">
+		select count(distinct note.visit_guid)
+		from medical_record note
+		inner join medical_record_disease_diag diag
+		on diag.visit_guid = note.visit_guid
+		where
+			<![CDATA[(CAST(note.out_hospital_date_time AS date) >= #{outHospitalStartDate} and CAST(note.out_hospital_date_time AS date) <= #{outHospitalEndDate})]]>
+			and (diag.original_disease_diag_name like #{diseaseDiagName} 
+				 or diag.disease_diag_code like #{diseaseDiagName} 
+				 or diag.disease_diag_name like #{diseaseDiagName})
+	</select>
+	
+	
+	<insert id="insertMedicalRecordCodingError" parameterType="com.kurumi.pojo.MedicalRecordCodingError">
+		insert into medical_record_coding_error (visit_guid,coding_error_code,coding_error_name,
+		create_date_time,create_error_coder_code,create_error_coder_name,
+		last_date_time,last_error_coder_code,last_error_coder_name,
+		error_status_code,error_status_name)
+		values (#{visitGuid,jdbcType=VARCHAR}, #{codingErrorCode,jdbcType=VARCHAR},#{codingErrorName,jdbcType=VARCHAR},
+		#{createDateTime,jdbcType=TIMESTAMP}, #{createErrorCoderCode,jdbcType=VARCHAR},#{createErrorCoderName,jdbcType=VARCHAR},
+		#{lastDateTime,jdbcType=TIMESTAMP}, #{lastErrorCoderCode,jdbcType=VARCHAR}, #{lastErrorCoderName,jdbcType=VARCHAR},
+		#{errorStatusCode,jdbcType=VARCHAR},#{errorStatusName,jdbcType=VARCHAR})
+	</insert>
+	
+	<select id="getMedicalRecordCodingErrorByVisitGuid" resultType="map">
+		select * from medical_record_coding_error
+		where visit_guid = #{visitGuid}
+	</select>
+	
+	<update id="updateMedicalRecordCodingError" parameterType="com.kurumi.pojo.MedicalRecordCodingError">
+		update medical_record_coding_error 
+		<set >
+			last_date_time = #{lastDateTime,jdbcType=TIMESTAMP}, 
+			last_error_coder_code = #{lastErrorCoderCode,jdbcType=VARCHAR}, 
+			last_error_coder_name = #{lastErrorCoderName,jdbcType=VARCHAR},
+			error_status_code = #{errorStatusCode,jdbcType=VARCHAR},
+			error_status_name = #{errorStatusName,jdbcType=VARCHAR}
+		</set>
+		where visit_guid = #{visitGuid,jdbcType=VARCHAR} and coding_error_code = #{codingErrorCode,jdbcType=VARCHAR}
+	</update>
+	
+	<select id="getMedicalRecordOfRepair" resultType="map"
+		parameterType="com.kurumi.query.MedicalRecordQuery">
+		select
+			note.visit_guid,
+			note.patient_name,
+			note.sex_code,
+			note.sex_name,
+			date_format(note.birthday,'%Y-%m-%d') as birthday,
+			note.document_type_code,
+			note.document_type_name,
+			note.id_number,
+			note.only_id,
+			note.mr_id,
+			note.visit_number,
+			date_format(note.in_hospital_date_time,'%Y-%m-%d') as in_hospital_date,
+			date_format(note.in_hospital_date_time,'%Y-%m-%d %H:%i:%S') as in_hospital_date_time,
+			note.in_dept_code,
+			note.in_dept_name,
+			date_format(note.out_hospital_date_time,'%Y-%m-%d') as out_hospital_date,
+			date_format(note.out_hospital_date_time,'%Y-%m-%d %H:%i:%S') as
+			out_hospital_date_time,
+			note.out_dept_code,
+			note.out_dept_name,
+			note.out_hospital_type_code,
+			note.out_hospital_type_name,
+			note.treatment_sign_code,
+			note.treatment_sign_name,
+			check_error.error_msg
+		from
+		medical_record note
+		inner join
+		(select record.visit_guid,GROUP_CONCAT(coding_error.coding_error_name SEPARATOR ';') as error_msg
+		from medical_record_coding_error coding_error
+		inner join medical_record record
+		on coding_error.visit_guid = record.visit_guid
+		where coding_error.error_status_code = 'ERROR'
+		group by record.visit_guid) check_error
+		on note.visit_guid = check_error.visit_guid
+		where 1=1
+		<if test="patientName != null">
+			and note.patient_name=#{patientName}
+		</if>
+		<if test="idNumber != null">
+			and note.id_number=#{idNumber}
+		</if>
+
+		<if test="mrId != null">
+			and note.mr_id=#{mrId}
+		</if>
+		<if test="onlyId != null">
+			and note.only_id=#{onlyId}
+		</if>
+		<if test="outHospitalStartDate!=null and outHospitalEndDate!=null">
+   	  <![CDATA[and (CAST(note.out_hospital_date_time AS date) >= #{outHospitalStartDate} and CAST(note.out_hospital_date_time AS date) <= #{outHospitalEndDate})]]>
+		</if>
+		<if test="outHospitalDeptCode!=null">
+			and note.out_dept_code = #{outHospitalDeptCode}
+		</if>
+		<if test="outHospitalTypeCode!=null">
+			and note.out_hospital_type_code = #{outHospitalTypeCode}
+		</if>
+		<if test="currentStartNum != null and pageSize != null">
+			limit #{currentStartNum},#{pageSize}
+		</if>
+	</select>
+	
+	
+	<select id="getMedicalRecordCountOfRepair" resultType="int"
+		parameterType="com.kurumi.query.MedicalRecordQuery">
+		select
+			count(note.visit_guid)
+		from
+		medical_record note
+		inner join
+		(select record.visit_guid,GROUP_CONCAT(coding_error.coding_error_name SEPARATOR ';') as error_msg
+		from medical_record_coding_error coding_error
+		inner join medical_record record
+		on coding_error.visit_guid = record.visit_guid
+		where coding_error.error_status_code = 'ERROR'
+		group by record.visit_guid) check_error
+		on note.visit_guid = check_error.visit_guid
+		where 1=1
+		<if test="patientName != null">
+			and note.patient_name=#{patientName}
+		</if>
+		<if test="idNumber != null">
+			and note.id_number=#{idNumber}
+		</if>
+
+		<if test="mrId != null">
+			and note.mr_id=#{mrId}
+		</if>
+		<if test="onlyId != null">
+			and note.only_id=#{onlyId}
+		</if>
+		<if test="outHospitalStartDate!=null and outHospitalEndDate!=null">
+   	  <![CDATA[and (CAST(note.out_hospital_date_time AS date) >= #{outHospitalStartDate} and CAST(note.out_hospital_date_time AS date) <= #{outHospitalEndDate})]]>
+		</if>
+		<if test="outHospitalDeptCode!=null">
+			and note.out_dept_code = #{outHospitalDeptCode}
+		</if>
+		<if test="outHospitalTypeCode!=null">
+			and note.out_hospital_type_code = #{outHospitalTypeCode}
+		</if>
+		
+	</select>
+	
+</mapper>

@@ -38,37 +38,62 @@ request.setAttribute("basePath", basePath);
  <ul class="multiUl">
   <li><a href="${basePath }index">首页</a></li>
   <shiro:hasAnyRoles name="role_version_1,role_version_1.1,role_version_2,role_version_2.1">
+  	<shiro:hasAnyRoles name="role_admin">
   	<li><a href="${basePath }medical_record/pigeonholed_index" id="demoBtn">病案归档</a></li>
+  	</shiro:hasAnyRoles>
   </shiro:hasAnyRoles>
   <shiro:hasAnyRoles name="role_version_1,role_version_1.1,role_version_2,role_version_2.1">
+  	<shiro:hasAnyRoles name="role_admin">
   	<li><a href="${basePath }medical_record/quality_control_index" id="demoBtn1">病案质控</a></li>
+  	</shiro:hasAnyRoles>
   </shiro:hasAnyRoles>
   <shiro:hasAnyRoles name="role_version_1.1,role_version_2.1">
+  	<shiro:hasAnyRoles name="role_admin">
   	<li><a href="${basePath }medical_record/scan_index" id="demoBtn2">病案扫描</a></li>
+  	</shiro:hasAnyRoles>
   </shiro:hasAnyRoles>
   <shiro:hasAnyRoles name="role_version_2,role_version_2.1">
+  	<shiro:hasAnyRoles name="role_admin,role_coder">
   	<li><a href="${basePath }medical_record/coding_index" id="demoBtn3">病案编码</a></li>
+  	</shiro:hasAnyRoles>
   </shiro:hasAnyRoles>
   <shiro:hasAnyRoles name="role_version_3">
   	<li><a href="#" id="demoBtn4">病案管理</a></li>
   </shiro:hasAnyRoles>
   <shiro:hasAnyRoles name="role_version_1.1,role_version_2.1">
+  	<shiro:hasAnyRoles name="role_admin">
   	<li><a href="${basePath }medical_record/windows_index" id="demoBtn5">窗口服务</a></li>
+  	</shiro:hasAnyRoles>
   </shiro:hasAnyRoles>
   <shiro:hasAnyRoles name="role_version_1,role_version_1.1,role_version_2,role_version_2.1">
+  	<shiro:hasAnyRoles name="role_admin">
   	<li><a href="${basePath }medical_record/trace_index" id="demoBtn7">病案示踪</a></li>
+  	</shiro:hasAnyRoles>
   </shiro:hasAnyRoles>
    <shiro:hasAnyRoles name="role_version_1.1,role_version_2.1">
+   <shiro:hasAnyRoles name="role_admin,role_normal">
   	<li><a href="${basePath }medical_record/borrow_index" id="demoBtn6">病案借阅</a></li>
+  	</shiro:hasAnyRoles>
   </shiro:hasAnyRoles>
-  <shiro:hasAnyRoles name="role_version_3">
-  	<li><a href="#" id="demoBtn8">环节质控</a></li>
+   <shiro:hasAnyRoles name="role_version_2.1">
+   <shiro:hasAnyRoles name="role_admin">
+  	<li><a href="${basePath }medical_record_searching/medical_record_searching_index" id="demoBtn61">病案检索</a></li>
+  	</shiro:hasAnyRoles>
   </shiro:hasAnyRoles>
   <shiro:hasAnyRoles name="role_version_2.1">
+  <shiro:hasAnyRoles name="role_admin">
+  	<li><a href="${basePath }statistics_analysis/statistics_analysis_index" id="demoBtn8">统计分析</a></li>
+  	</shiro:hasAnyRoles>
+  </shiro:hasAnyRoles>
+  <shiro:hasAnyRoles name="role_version_2.1">
+  <shiro:hasAnyRoles name="role_admin">
   	<li><a href="${basePath }medical_record/work_statistics_index" id="demoBtn9">工作统计</a></li>
+  	</shiro:hasAnyRoles>
   </shiro:hasAnyRoles>
   <shiro:hasAnyRoles name="role_version_2,role_version_2.1">
+  <shiro:hasAnyRoles name="role_admin">
   	<li><a href="${basePath }medical_record/data_manage_index" id="demoBtn10">数据管理</a></li>
+  	</shiro:hasAnyRoles>
   </shiro:hasAnyRoles>
  </ul>
 </div>

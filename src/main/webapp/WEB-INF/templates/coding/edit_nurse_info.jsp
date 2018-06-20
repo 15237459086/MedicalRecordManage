@@ -19,7 +19,7 @@ String respondResultJson= (String)request.getAttribute("respondResultJson");
 <script type="text/javascript" src="${basePath}assets/js/coding/edit_nurse_info.js"></script>
 <form action="${basePath }medical_record_coding/edit_nurse_info" style="height:auto" method="post" id="nurseInfoForm">
 	<input type="hidden" id="visitGuid" name="visitGuid" value="${visitGuid }">
-	<table style="width:100%;" cellspacing="0" cellpadding="0">
+	<table style="width:100%;">
 		<tbody>
 			<tr>
 				<td colspan="6" class="dark">

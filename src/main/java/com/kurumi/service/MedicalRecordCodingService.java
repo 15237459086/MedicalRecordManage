@@ -12,6 +12,7 @@ import com.kurumi.pojo.coding.DiseaseDiagInfo;
 import com.kurumi.pojo.coding.NurseInfo;
 import com.kurumi.pojo.coding.OperateInfo;
 import com.kurumi.query.MedicalRecordQuery;
+import com.kurumi.query.MedicalRecordSearchingQuery;
 
 public interface MedicalRecordCodingService {
 
@@ -57,4 +58,12 @@ public interface MedicalRecordCodingService {
 	 * @return
 	 */
 	List<Map<String,Object>> dateTimeCheck(MedicalRecordQuery medicalRecordQuery);
+	
+	List<Map<String,Object>> getDiseaseMedicalRecord(MedicalRecordSearchingQuery params);
+	
+	int getDiseaseMedicalRecordCount(MedicalRecordSearchingQuery params);
+	
+	List<Map<String,Object>> getMedicalRecordOfRepair(MedicalRecordQuery params);
+	
+	int getMedicalRecordCountOfRepair(MedicalRecordQuery params);
 }

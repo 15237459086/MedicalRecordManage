@@ -30,10 +30,9 @@ String respondResultJson= (String)request.getAttribute("respondResultJson");
 <form action="${basePath}medical_record_coding/edit_basic_info"
 	method="post" id="basicInfoForm">
 <input type="hidden" name="visitGuid" value="${visitGuid }">
-<table style="width:99.5%;" cellpadding="0" cellspacing="0">
+<table style="width:99.5%;">
 <tbody>
 	<tr>
-		<!-- <td colspan="6"><input type="submit" value="保存" class="btn"></td> -->
 		<td colspan="6"><input type="submit" value="保存" class="btn" disabled="disabled">
 				</td>
 			</tr>
@@ -410,7 +409,7 @@ String respondResultJson= (String)request.getAttribute("respondResultJson");
 
 			</tr>
 			<tr>
-				<td class="tdLabel_7 redColor">死亡时间</td>
+				<td class="tdLabel_7">死亡时间</td>
 				<td class="tdLabel_8">
 					<input type="text" name="dealthDateTime" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})"
 					value="${basicInfo.dealthDateTime}"></td>

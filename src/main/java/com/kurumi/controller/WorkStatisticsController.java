@@ -1,7 +1,5 @@
 package com.kurumi.controller;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kurumi.pojo.RespondResult;
-import com.kurumi.query.MedicalRecordQuery;
 import com.kurumi.query.WorkStatisticsQuery;
 import com.kurumi.service.WorkStatisticsService;
 

@@ -7,6 +7,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.kurumi.pojo.regionalism.Regionalism;
+import com.kurumi.util.StringUtil;
 
 public class BasicInfo {
 
@@ -620,7 +621,7 @@ public class BasicInfo {
     private String infusionBloodDesc;
 
 	public String getVisitGuid() {
-		return visitGuid;
+		return StringUtil.meaningStr(visitGuid);
 	}
 
 	public void setVisitGuid(String visitGuid) {
@@ -628,7 +629,7 @@ public class BasicInfo {
 	}
 
 	public String getPatientName() {
-		return patientName;
+		return StringUtil.meaningStr(patientName);
 	}
 
 	public void setPatientName(String patientName) {
@@ -636,7 +637,7 @@ public class BasicInfo {
 	}
 
 	public String getSexCode() {
-		return sexCode;
+		return StringUtil.meaningStr(sexCode);
 	}
 
 	public void setSexCode(String sexCode) {
@@ -644,7 +645,7 @@ public class BasicInfo {
 	}
 
 	public String getSexName() {
-		return sexName;
+		return StringUtil.meaningStr(sexName);
 	}
 
 	public void setSexName(String sexName) {
@@ -694,7 +695,7 @@ public class BasicInfo {
 	}
 
 	public String getMarriageCode() {
-		return marriageCode;
+		return StringUtil.meaningStr(marriageCode);
 	}
 
 	public void setMarriageCode(String marriageCode) {
@@ -702,7 +703,7 @@ public class BasicInfo {
 	}
 
 	public String getMarriageName() {
-		return marriageName;
+		return StringUtil.meaningStr(marriageName);
 	}
 
 	public void setMarriageName(String marriageName) {
@@ -710,7 +711,7 @@ public class BasicInfo {
 	}
 
 	public String getProfessionCode() {
-		return professionCode;
+		return StringUtil.meaningStr(professionCode);
 	}
 
 	public void setProfessionCode(String professionCode) {
@@ -718,7 +719,7 @@ public class BasicInfo {
 	}
 
 	public String getProfessionName() {
-		return professionName;
+		return StringUtil.meaningStr(professionName);
 	}
 
 	public void setProfessionName(String professionName) {
@@ -726,7 +727,7 @@ public class BasicInfo {
 	}
 
 	public String getBirthAddressCode() {
-		return birthAddressCode;
+		return StringUtil.meaningStr(birthAddressCode);
 	}
 
 	public void setBirthAddressCode(String birthAddressCode) {
@@ -734,7 +735,7 @@ public class BasicInfo {
 	}
 
 	public String getBirthAddress() {
-		return birthAddress;
+		return StringUtil.meaningStr(birthAddress);
 	}
 
 	public void setBirthAddress(String birthAddress) {
@@ -750,7 +751,7 @@ public class BasicInfo {
 	}
 
 	public String getBirthAddressPostCode() {
-		return birthAddressPostCode;
+		return StringUtil.meaningStr(birthAddressPostCode);
 	}
 
 	public void setBirthAddressPostCode(String birthAddressPostCode) {
@@ -758,7 +759,7 @@ public class BasicInfo {
 	}
 
 	public String getTelePhone() {
-		return telePhone;
+		return StringUtil.meaningStr(telePhone);
 	}
 
 	public void setTelePhone(String telePhone) {
@@ -766,7 +767,7 @@ public class BasicInfo {
 	}
 
 	public String getNationCode() {
-		return nationCode;
+		return StringUtil.meaningStr(nationCode);
 	}
 
 	public void setNationCode(String nationCode) {
@@ -774,7 +775,7 @@ public class BasicInfo {
 	}
 
 	public String getNationName() {
-		return nationName;
+		return StringUtil.meaningStr(nationName);
 	}
 
 	public void setNationName(String nationName) {
@@ -782,7 +783,7 @@ public class BasicInfo {
 	}
 
 	public String getNationalityCode() {
-		return nationalityCode;
+		return StringUtil.meaningStr(nationalityCode);
 	}
 
 	public void setNationalityCode(String nationalityCode) {
@@ -790,7 +791,7 @@ public class BasicInfo {
 	}
 
 	public String getNationalityName() {
-		return nationalityName;
+		return StringUtil.meaningStr(nationalityName);
 	}
 
 	public void setNationalityName(String nationalityName) {
@@ -798,7 +799,7 @@ public class BasicInfo {
 	}
 
 	public String getNativePlaceCode() {
-		return nativePlaceCode;
+		return StringUtil.meaningStr(nativePlaceCode);
 	}
 
 	public void setNativePlaceCode(String nativePlaceCode) {
@@ -806,7 +807,7 @@ public class BasicInfo {
 	}
 
 	public String getNativePlace() {
-		return nativePlace;
+		return StringUtil.meaningStr(nativePlace);
 	}
 
 	public void setNativePlace(String nativePlace) {
@@ -822,7 +823,7 @@ public class BasicInfo {
 	}
 
 	public String getRegisteredAddressCode() {
-		return registeredAddressCode;
+		return StringUtil.meaningStr(registeredAddressCode);
 	}
 
 	public void setRegisteredAddressCode(String registeredAddressCode) {
@@ -830,7 +831,7 @@ public class BasicInfo {
 	}
 
 	public String getRegisteredAddress() {
-		return registeredAddress;
+		return StringUtil.meaningStr(registeredAddress);
 	}
 
 	public void setRegisteredAddress(String registeredAddress) {
@@ -846,7 +847,7 @@ public class BasicInfo {
 	}
 
 	public String getRegisteredAddressPhone() {
-		return registeredAddressPhone;
+		return StringUtil.meaningStr(registeredAddressPhone);
 	}
 
 	public void setRegisteredAddressPhone(String registeredAddressPhone) {
@@ -854,7 +855,7 @@ public class BasicInfo {
 	}
 
 	public String getRegisteredAddressPostCode() {
-		return registeredAddressPostCode;
+		return StringUtil.meaningStr(registeredAddressPostCode);
 	}
 
 	public void setRegisteredAddressPostCode(String registeredAddressPostCode) {
@@ -863,7 +864,7 @@ public class BasicInfo {
 
 
 	public String getDocumentTypeCode() {
-		return documentTypeCode;
+		return StringUtil.meaningStr(documentTypeCode);
 	}
 
 	public void setDocumentTypeCode(String documentTypeCode) {
@@ -871,7 +872,7 @@ public class BasicInfo {
 	}
 
 	public String getDocumentTypeName() {
-		return documentTypeName;
+		return StringUtil.meaningStr(documentTypeName);
 	}
 
 	public void setDocumentTypeName(String documentTypeName) {
@@ -879,7 +880,7 @@ public class BasicInfo {
 	}
 
 	public String getIdNumber() {
-		return idNumber;
+		return StringUtil.meaningStr(idNumber);
 	}
 
 	public void setIdNumber(String idNumber) {
@@ -887,7 +888,7 @@ public class BasicInfo {
 	}
 
 	public String getHospitalCode() {
-		return hospitalCode;
+		return StringUtil.meaningStr(hospitalCode);
 	}
 
 	public void setHospitalCode(String hospitalCode) {
@@ -895,7 +896,7 @@ public class BasicInfo {
 	}
 
 	public String getHospitalName() {
-		return hospitalName;
+		return StringUtil.meaningStr(hospitalName);
 	}
 
 	public void setHospitalName(String hospitalName) {
@@ -903,7 +904,7 @@ public class BasicInfo {
 	}
 
 	public String getMrId() {
-		return mrId;
+		return StringUtil.meaningStr(mrId);
 	}
 
 	public void setMrId(String mrId) {
@@ -911,7 +912,7 @@ public class BasicInfo {
 	}
 
 	public String getOnlyId() {
-		return onlyId;
+		return StringUtil.meaningStr(onlyId);
 	}
 
 	public void setOnlyId(String onlyId) {
@@ -927,7 +928,7 @@ public class BasicInfo {
 	}
 
 	public String getMedicalPayTypeCode() {
-		return medicalPayTypeCode;
+		return StringUtil.meaningStr(medicalPayTypeCode);
 	}
 
 	public void setMedicalPayTypeCode(String medicalPayTypeCode) {
@@ -935,7 +936,7 @@ public class BasicInfo {
 	}
 
 	public String getMedicalPayTypeName() {
-		return medicalPayTypeName;
+		return StringUtil.meaningStr(medicalPayTypeName);
 	}
 
 	public void setMedicalPayTypeName(String medicalPayTypeName) {
@@ -943,7 +944,7 @@ public class BasicInfo {
 	}
 
 	public String getMedicalInsuranceNumber() {
-		return medicalInsuranceNumber;
+		return StringUtil.meaningStr(medicalInsuranceNumber);
 	}
 
 	public void setMedicalInsuranceNumber(String medicalInsuranceNumber) {
@@ -951,7 +952,7 @@ public class BasicInfo {
 	}
 
 	public String getMedicalHealthNumber() {
-		return medicalHealthNumber;
+		return StringUtil.meaningStr(medicalHealthNumber);
 	}
 
 	public void setMedicalHealthNumber(String medicalHealthNumber) {
@@ -959,7 +960,7 @@ public class BasicInfo {
 	}
 
 	public String getWorkUnitName() {
-		return workUnitName;
+		return StringUtil.meaningStr(workUnitName);
 	}
 
 	public void setWorkUnitName(String workUnitName) {
@@ -967,7 +968,7 @@ public class BasicInfo {
 	}
 
 	public String getWorkUnitAddressCode() {
-		return workUnitAddressCode;
+		return StringUtil.meaningStr(workUnitAddressCode);
 	}
 
 	public void setWorkUnitAddressCode(String workUnitAddressCode) {
@@ -975,7 +976,7 @@ public class BasicInfo {
 	}
 
 	public String getWorkUnitAddress() {
-		return workUnitAddress;
+		return StringUtil.meaningStr(workUnitAddress);
 	}
 
 	public void setWorkUnitAddress(String workUnitAddress) {
@@ -991,7 +992,7 @@ public class BasicInfo {
 	}
 
 	public String getWorkUnitPhone() {
-		return workUnitPhone;
+		return StringUtil.meaningStr(workUnitPhone);
 	}
 
 	public void setWorkUnitPhone(String workUnitPhone) {
@@ -999,7 +1000,7 @@ public class BasicInfo {
 	}
 
 	public String getWorkUnitPostCode() {
-		return workUnitPostCode;
+		return StringUtil.meaningStr(workUnitPostCode);
 	}
 
 	public void setWorkUnitPostCode(String workUnitPostCode) {
@@ -1007,7 +1008,7 @@ public class BasicInfo {
 	}
 
 	public String getPermanentAddressCode() {
-		return permanentAddressCode;
+		return StringUtil.meaningStr(permanentAddressCode);
 	}
 
 	public void setPermanentAddressCode(String permanentAddressCode) {
@@ -1015,7 +1016,7 @@ public class BasicInfo {
 	}
 
 	public String getPermanentAddress() {
-		return permanentAddress;
+		return StringUtil.meaningStr(permanentAddress);
 	}
 
 	public void setPermanentAddress(String permanentAddress) {
@@ -1031,7 +1032,7 @@ public class BasicInfo {
 	}
 
 	public String getPermanentAddressPhone() {
-		return permanentAddressPhone;
+		return StringUtil.meaningStr(permanentAddressPhone);
 	}
 
 	public void setPermanentAddressPhone(String permanentAddressPhone) {
@@ -1039,7 +1040,7 @@ public class BasicInfo {
 	}
 
 	public String getPermanentAddressMobilePhone() {
-		return permanentAddressMobilePhone;
+		return StringUtil.meaningStr(permanentAddressMobilePhone);
 	}
 
 	public void setPermanentAddressMobilePhone(String permanentAddressMobilePhone) {
@@ -1047,7 +1048,7 @@ public class BasicInfo {
 	}
 
 	public String getPermanentAddressPostCode() {
-		return permanentAddressPostCode;
+		return StringUtil.meaningStr(permanentAddressPostCode);
 	}
 
 	public void setPermanentAddressPostCode(String permanentAddressPostCode) {
@@ -1055,7 +1056,7 @@ public class BasicInfo {
 	}
 
 	public String getLinkManName() {
-		return linkManName;
+		return StringUtil.meaningStr(linkManName);
 	}
 
 	public void setLinkManName(String linkManName) {
@@ -1063,7 +1064,7 @@ public class BasicInfo {
 	}
 
 	public String getLinkManRelativeRelationCode() {
-		return linkManRelativeRelationCode;
+		return StringUtil.meaningStr(linkManRelativeRelationCode);
 	}
 
 	public void setLinkManRelativeRelationCode(String linkManRelativeRelationCode) {
@@ -1071,7 +1072,7 @@ public class BasicInfo {
 	}
 
 	public String getLinkManRelativeRelationName() {
-		return linkManRelativeRelationName;
+		return StringUtil.meaningStr(linkManRelativeRelationName);
 	}
 
 	public void setLinkManRelativeRelationName(String linkManRelativeRelationName) {
@@ -1079,7 +1080,7 @@ public class BasicInfo {
 	}
 
 	public String getLinkManPhone() {
-		return linkManPhone;
+		return StringUtil.meaningStr(linkManPhone);
 	}
 
 	public void setLinkManPhone(String linkManPhone) {
@@ -1087,7 +1088,7 @@ public class BasicInfo {
 	}
 
 	public String getLinkManAddressCode() {
-		return linkManAddressCode;
+		return StringUtil.meaningStr(linkManAddressCode);
 	}
 
 	public void setLinkManAddressCode(String linkManAddressCode) {
@@ -1095,7 +1096,7 @@ public class BasicInfo {
 	}
 
 	public String getLinkManAddress() {
-		return linkManAddress;
+		return StringUtil.meaningStr(linkManAddress);
 	}
 
 	public void setLinkManAddress(String linkManAddress) {
@@ -1111,7 +1112,7 @@ public class BasicInfo {
 	}
 
 	public String getLinkManAddressPostCode() {
-		return linkManAddressPostCode;
+		return StringUtil.meaningStr(linkManAddressPostCode);
 	}
 
 	public void setLinkManAddressPostCode(String linkManAddressPostCode) {
@@ -1119,7 +1120,7 @@ public class BasicInfo {
 	}
 
 	public String getInHospitalTypeCode() {
-		return inHospitalTypeCode;
+		return StringUtil.meaningStr(inHospitalTypeCode);
 	}
 
 	public void setInHospitalTypeCode(String inHospitalTypeCode) {
@@ -1127,7 +1128,7 @@ public class BasicInfo {
 	}
 
 	public String getInHospitalTypeName() {
-		return inHospitalTypeName;
+		return StringUtil.meaningStr(inHospitalTypeName);
 	}
 
 	public void setInHospitalTypeName(String inHospitalTypeName) {
@@ -1135,7 +1136,7 @@ public class BasicInfo {
 	}
 
 	public String getInHospitalStateCode() {
-		return inHospitalStateCode;
+		return StringUtil.meaningStr(inHospitalStateCode);
 	}
 
 	public void setInHospitalStateCode(String inHospitalStateCode) {
@@ -1143,7 +1144,7 @@ public class BasicInfo {
 	}
 
 	public String getInHospitalStateName() {
-		return inHospitalStateName;
+		return StringUtil.meaningStr(inHospitalStateName);
 	}
 
 	public void setInHospitalStateName(String inHospitalStateName) {
@@ -1159,7 +1160,7 @@ public class BasicInfo {
 	}
 
 	public String getOutpatientOfDoctorCode() {
-		return outpatientOfDoctorCode;
+		return StringUtil.meaningStr(outpatientOfDoctorCode);
 	}
 
 	public void setOutpatientOfDoctorCode(String outpatientOfDoctorCode) {
@@ -1167,7 +1168,7 @@ public class BasicInfo {
 	}
 
 	public String getOutpatientOfDoctorName() {
-		return outpatientOfDoctorName;
+		return StringUtil.meaningStr(outpatientOfDoctorName);
 	}
 
 	public void setOutpatientOfDoctorName(String outpatientOfDoctorName) {
@@ -1175,7 +1176,7 @@ public class BasicInfo {
 	}
 
 	public String getResponsiblePersonCode() {
-		return responsiblePersonCode;
+		return StringUtil.meaningStr(responsiblePersonCode);
 	}
 
 	public void setResponsiblePersonCode(String responsiblePersonCode) {
@@ -1183,7 +1184,7 @@ public class BasicInfo {
 	}
 
 	public String getResponsiblePersonName() {
-		return responsiblePersonName;
+		return StringUtil.meaningStr(responsiblePersonName);
 	}
 
 	public void setResponsiblePersonName(String responsiblePersonName) {
@@ -1207,7 +1208,7 @@ public class BasicInfo {
 	}
 
 	public String getInDeptCode() {
-		return inDeptCode;
+		return StringUtil.meaningStr(inDeptCode);
 	}
 
 	public void setInDeptCode(String inDeptCode) {
@@ -1215,7 +1216,7 @@ public class BasicInfo {
 	}
 
 	public String getInDeptName() {
-		return inDeptName;
+		return StringUtil.meaningStr(inDeptName);
 	}
 
 	public void setInDeptName(String inDeptName) {
@@ -1223,7 +1224,7 @@ public class BasicInfo {
 	}
 
 	public String getInHospitalWardName() {
-		return inHospitalWardName;
+		return StringUtil.meaningStr(inHospitalWardName);
 	}
 
 	public void setInHospitalWardName(String inHospitalWardName) {
@@ -1231,7 +1232,7 @@ public class BasicInfo {
 	}
 
 	public String getInHospitalHouseName() {
-		return inHospitalHouseName;
+		return StringUtil.meaningStr(inHospitalHouseName);
 	}
 
 	public void setInHospitalHouseName(String inHospitalHouseName) {
@@ -1239,7 +1240,7 @@ public class BasicInfo {
 	}
 
 	public String getInHospitalBedName() {
-		return inHospitalBedName;
+		return StringUtil.meaningStr(inHospitalBedName);
 	}
 
 	public void setInHospitalBedName(String inHospitalBedName) {
@@ -1263,7 +1264,7 @@ public class BasicInfo {
 	}
 
 	public String getOutDeptCode() {
-		return outDeptCode;
+		return StringUtil.meaningStr(outDeptCode);
 	}
 
 	public void setOutDeptCode(String outDeptCode) {
@@ -1271,7 +1272,7 @@ public class BasicInfo {
 	}
 
 	public String getOutDeptName() {
-		return outDeptName;
+		return StringUtil.meaningStr(outDeptName);
 	}
 
 	public void setOutDeptName(String outDeptName) {
@@ -1279,7 +1280,7 @@ public class BasicInfo {
 	}
 
 	public String getOutHospitalWardName() {
-		return outHospitalWardName;
+		return StringUtil.meaningStr(outHospitalWardName);
 	}
 
 	public void setOutHospitalWardName(String outHospitalWardName) {
@@ -1287,7 +1288,7 @@ public class BasicInfo {
 	}
 
 	public String getOutHospitalHouseName() {
-		return outHospitalHouseName;
+		return StringUtil.meaningStr(outHospitalHouseName);
 	}
 
 	public void setOutHospitalHouseName(String outHospitalHouseName) {
@@ -1295,7 +1296,7 @@ public class BasicInfo {
 	}
 
 	public String getOutHospitalBedName() {
-		return outHospitalBedName;
+		return StringUtil.meaningStr(outHospitalBedName);
 	}
 
 	public void setOutHospitalBedName(String outHospitalBedName) {
@@ -1303,7 +1304,7 @@ public class BasicInfo {
 	}
 
 	public String getOutHospitalTypeCode() {
-		return outHospitalTypeCode;
+		return StringUtil.meaningStr(outHospitalTypeCode);
 	}
 
 	public void setOutHospitalTypeCode(String outHospitalTypeCode) {
@@ -1311,7 +1312,7 @@ public class BasicInfo {
 	}
 
 	public String getOutHospitalTypeName() {
-		return outHospitalTypeName;
+		return StringUtil.meaningStr(outHospitalTypeName);
 	}
 
 	public void setOutHospitalTypeName(String outHospitalTypeName) {
@@ -1343,7 +1344,7 @@ public class BasicInfo {
 	}
 
 	public String getShiftToUnitCode() {
-		return shiftToUnitCode;
+		return StringUtil.meaningStr(shiftToUnitCode);
 	}
 
 	public void setShiftToUnitCode(String shiftToUnitCode) {
@@ -1351,7 +1352,7 @@ public class BasicInfo {
 	}
 
 	public String getShiftToUnitName() {
-		return shiftToUnitName;
+		return StringUtil.meaningStr(shiftToUnitName);
 	}
 
 	public void setShiftToUnitName(String shiftToUnitName) {
@@ -1367,7 +1368,7 @@ public class BasicInfo {
 	}
 
 	public String getDiagSubjectCode() {
-		return diagSubjectCode;
+		return StringUtil.meaningStr(diagSubjectCode);
 	}
 
 	public void setDiagSubjectCode(String diagSubjectCode) {
@@ -1375,7 +1376,7 @@ public class BasicInfo {
 	}
 
 	public String getDiagSubjectName() {
-		return diagSubjectName;
+		return StringUtil.meaningStr(diagSubjectName);
 	}
 
 	public void setDiagSubjectName(String diagSubjectName) {
@@ -1383,7 +1384,7 @@ public class BasicInfo {
 	}
 
 	public String getReceiveUnitCode() {
-		return receiveUnitCode;
+		return StringUtil.meaningStr(receiveUnitCode);
 	}
 
 	public void setReceiveUnitCode(String receiveUnitCode) {
@@ -1391,7 +1392,7 @@ public class BasicInfo {
 	}
 
 	public String getReceiveUnitName() {
-		return receiveUnitName;
+		return StringUtil.meaningStr(receiveUnitName);
 	}
 
 	public void setReceiveUnitName(String receiveUnitName) {
@@ -1399,7 +1400,7 @@ public class BasicInfo {
 	}
 
 	public String getRehospitalAimCode() {
-		return rehospitalAimCode;
+		return StringUtil.meaningStr(rehospitalAimCode);
 	}
 
 	public void setRehospitalAimCode(String rehospitalAimCode) {
@@ -1407,7 +1408,7 @@ public class BasicInfo {
 	}
 
 	public String getRehospitalAimName() {
-		return rehospitalAimName;
+		return StringUtil.meaningStr(rehospitalAimName);
 	}
 
 	public void setRehospitalAimName(String rehospitalAimName) {
@@ -1431,7 +1432,7 @@ public class BasicInfo {
 	}
 
 	public String getDealthReasonCode() {
-		return dealthReasonCode;
+		return StringUtil.meaningStr(dealthReasonCode);
 	}
 
 	public void setDealthReasonCode(String dealthReasonCode) {
@@ -1439,7 +1440,7 @@ public class BasicInfo {
 	}
 
 	public String getDealthReasonName() {
-		return dealthReasonName;
+		return StringUtil.meaningStr(dealthReasonName);
 	}
 
 	public void setDealthReasonName(String dealthReasonName) {
@@ -1447,7 +1448,7 @@ public class BasicInfo {
 	}
 
 	public String getAutopsyCode() {
-		return autopsyCode;
+		return StringUtil.meaningStr(autopsyCode);
 	}
 
 	public void setAutopsyCode(String autopsyCode) {
@@ -1455,7 +1456,7 @@ public class BasicInfo {
 	}
 
 	public String getAutopsyName() {
-		return autopsyName;
+		return StringUtil.meaningStr(autopsyName);
 	}
 
 	public void setAutopsyName(String autopsyName) {
@@ -1463,7 +1464,7 @@ public class BasicInfo {
 	}
 
 	public String getPathologyNumber() {
-		return pathologyNumber;
+		return StringUtil.meaningStr(pathologyNumber);
 	}
 
 	public void setPathologyNumber(String pathologyNumber) {
@@ -1471,7 +1472,7 @@ public class BasicInfo {
 	}
 
 	public String getAgeUnitCode() {
-		return ageUnitCode;
+		return StringUtil.meaningStr(ageUnitCode);
 	}
 
 	public void setAgeUnitCode(String ageUnitCode) {
@@ -1479,7 +1480,7 @@ public class BasicInfo {
 	}
 
 	public String getAgeUnitName() {
-		return ageUnitName;
+		return StringUtil.meaningStr(ageUnitName);
 	}
 
 	public void setAgeUnitName(String ageUnitName) {
@@ -1495,7 +1496,7 @@ public class BasicInfo {
 	}
 
 	public String getDrugAllergyDesc() {
-		return drugAllergyDesc;
+		return StringUtil.meaningStr(drugAllergyDesc);
 	}
 
 	public void setDrugAllergyDesc(String drugAllergyDesc) {
@@ -1503,7 +1504,7 @@ public class BasicInfo {
 	}
 
 	public String getChangeDeptDesc() {
-		return changeDeptDesc;
+		return StringUtil.meaningStr(changeDeptDesc);
 	}
 
 	public void setChangeDeptDesc(String changeDeptDesc) {
@@ -1511,7 +1512,7 @@ public class BasicInfo {
 	}
 
 	public String getInfusionBloodDesc() {
-		return infusionBloodDesc;
+		return StringUtil.meaningStr(infusionBloodDesc);
 	}
 
 	public void setInfusionBloodDesc(String infusionBloodDesc) {

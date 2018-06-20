@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -16,9 +17,9 @@ request.setAttribute("basePath", basePath);
 	  <div class="list_menu2">
 	   <h3>病案借阅</h3>
 	   	<h4 class="li_t"><a onclick="loadContent('${basePath }medical_record_borrow/borrow_apply')">借阅申请</a></h4>
-	  
+	  	<shiro:hasAnyRoles name="role_admin">
 	   	<h4 class="li_t"><a onclick="loadContent('${basePath }medical_record_borrow/borrow_reply')">借阅审批</a></h4>
-	  
+	  	</shiro:hasAnyRoles>
 	  	<h4 class="li_t"><a onclick="loadContent('${basePath }medical_record_borrow/borrow_record')">借阅记录</a></h4>
 	  	
 	  

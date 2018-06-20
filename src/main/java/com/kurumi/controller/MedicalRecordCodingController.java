@@ -122,10 +122,10 @@ public class MedicalRecordCodingController {
 			Map<String, Object> jsonMap = new HashMap<String, Object>();
 			jsonMap = JsonUtil.jsonToPojo(jsonDatas.get(0), Map.class);
 			basicInfo = (Map<String, Object>)jsonMap.get("basicInfo");
-			if(basicInfo == null){
-				basicInfo = new HashMap<String, Object>();
-			}
-		}else{
+			
+		}
+		if(basicInfo == null){
+			basicInfo = new HashMap<String, Object>();
 			MedicalRecord medicalRecord = medicalRecordService.selectMedicalRecordByPrimaryKey(visitGuid);
 			
 			String patientName = medicalRecord.getPatientName();
@@ -661,7 +661,8 @@ public class MedicalRecordCodingController {
 			
 		}catch (Exception e) {
 			// TODO: handle exception
-			respondResult = new RespondResult(false, RespondResult.errorCode, e.getMessage(), null);
+			e.printStackTrace();
+			respondResult = new RespondResult(false, RespondResult.errorCode, e.getMessage(), "编码完成失败");
 		}
 		
 		return respondResult;
@@ -868,4 +869,35 @@ public class MedicalRecordCodingController {
 		
 		return respondResult;
 	}
+	
+	@GetMapping("/medical_record_repair_page")
+	public String medicalRecordRepairPage(){
+		return "coding/medical_record_repair_page";
+	}
+	
+	
+	@GetMapping("/query_repair_medical_record")
+	@ResponseBody
+	public RespondResult queryRepairMedicalRecord(MedicalRecordQuery params){
+		RespondResult respondResult = null;
+		
+		try{
+			List<Map<String,Object>> medicalRecords = new ArrayList<Map<String,Object>>();
+			int count = 0;
+			if(!params.queryUnEncodingEmpty()){
+				medicalRecords = medicalRecordCodingService.getMedicalRecordOfRepair(params);
+				count = medicalRecordCodingService.getMedicalRecordCountOfRepair(params);
+			}
+			
+			params.setTotalCounts(count);
+			params.setQueryDatas(medicalRecords);
+			respondResult = new RespondResult(true, RespondResult.successCode, null, params);
+		}catch (Exception e) {
+			// TODO: handle exception
+			respondResult = new RespondResult(false, RespondResult.errorCode, e.getMessage(), params);
+		}
+		
+		return respondResult;
+	}
+	
 }

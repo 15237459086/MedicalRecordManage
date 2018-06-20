@@ -24,7 +24,7 @@ String respondResultJson= (String)request.getAttribute("respondResultJson");
 <input type="hidden" id="basePath" value="${basePath }"/>
 <form action="${basePath}medical_record_coding/edit_operate_info" method="post" id="operateInfoForm" style="width: 100%">
 	<input type="hidden" name="visitGuid" value="${visitGuid }">
-	<table style="width: 100%" cellspacing="0" cellpadding="0">
+	<table style="width: 100%">
 		<tbody>
 			<tr>
 				<td class="tdLabel_7">围手术期</td>

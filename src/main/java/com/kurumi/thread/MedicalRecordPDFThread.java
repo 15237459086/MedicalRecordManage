@@ -1,13 +1,10 @@
 package com.kurumi.thread;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-
 
 import com.itextpdf.text.DocumentException;
 import com.kurumi.pojo.resource.MedicalRecordResource;
 import com.kurumi.util.PDFUtil;
-import com.kurumi.util.WaterMarkUtil;
 
 
 public class MedicalRecordPDFThread extends Thread {

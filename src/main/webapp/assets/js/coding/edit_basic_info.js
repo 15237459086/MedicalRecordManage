@@ -590,10 +590,12 @@ function initPage(baseInfoJson,basicInfo){
 		errorElement: "title",
 		submitHandler:function(form){
 			var url = $(form).attr("action");
+			layer.load(1);
 			/*if(url){
 				return true;
 			}*/
-			return checkBasicInfoData();
+			/*return checkBasicInfoData();*/
+			return true;
 		},
 		rules:{
 			onlyId: {
@@ -746,7 +748,6 @@ function checkBasicInfoData(){
 		}
 		
 	}
-	layer.load(1);
 	return true;
 }
 

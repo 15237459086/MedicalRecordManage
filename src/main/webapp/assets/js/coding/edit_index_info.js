@@ -1,5 +1,6 @@
 function codingFinish(visitGuid){
 	var basePath = $("#basePath").val();
+	layer.load(1);
 	$.ajax({
 		url: basePath + "medical_record_coding/ajax_coding_finish",
 		dataType: "json",

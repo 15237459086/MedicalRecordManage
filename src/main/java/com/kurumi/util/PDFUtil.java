@@ -10,11 +10,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.Element;
 import com.itextpdf.text.Image;
 import com.itextpdf.text.PageSize;
 import com.itextpdf.text.pdf.AcroFields;
@@ -22,7 +20,6 @@ import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.PdfAction;
 import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfCopy;
-import com.itextpdf.text.pdf.PdfGState;
 import com.itextpdf.text.pdf.PdfImportedPage;
 import com.itextpdf.text.pdf.PdfOutline;
 import com.itextpdf.text.pdf.PdfReader;
@@ -237,20 +234,20 @@ public class PDFUtil {
     	    }
 			
 			// 读取一个图片
-			Map<String, String> pageTypes = new HashMap<String, String>();
-			List<String> pageTypeCodes = new ArrayList<String>();
+			/*Map<String, String> pageTypes = new HashMap<String, String>();
+			List<String> pageTypeCodes = new ArrayList<String>();*/
 			for (Map<String, Object> sourceFile : imageFiles) {
 				String fileType = (String)sourceFile.get("file_type");
 				if(fileType.equalsIgnoreCase("PNG")|| fileType.equalsIgnoreCase("JPG")||fileType.equalsIgnoreCase("JPEG")){
 					
 					String imagePath = imageBasicPath + GuidUtil.getLocalPath((String)sourceFile.get("file_hash"))+"\\"
 		 					+(String)sourceFile.get("file_name")+"."+fileType;
-		        	String pageTypeCode = (String)(String)sourceFile.get("mr_page_type_code");
+		        	/*String pageTypeCode = (String)(String)sourceFile.get("mr_page_type_code");
 		        	String pageTypeName = (String)(String)sourceFile.get("page_type_name");
 		        	if(pageTypeCode == null){
 		        		pageTypeCode = "-01";
 		        		pageTypeName = "未编页";
-		        	}
+		        	}*/
 		        	
 					Image image = Image.getInstance(imagePath);
 			        // 获取操作的页面

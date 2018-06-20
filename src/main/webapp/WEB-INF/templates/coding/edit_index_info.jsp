@@ -47,7 +47,7 @@
 		<div class="TC_title">
 			<h3 id="title">标题</h3>
 	        <ul style="width:100px;">
-	            <li><a style="color: white;" onclick="codingFinish('${visitGuid}')">完成编页</a></li>
+	            <li><a onclick="codingFinish('${visitGuid}')">完成编码</a></li>
 	        </ul>
 		</div>
 		<input type="hidden" id ="basePath" value="${basePath }">

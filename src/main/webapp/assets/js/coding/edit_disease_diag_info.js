@@ -112,6 +112,12 @@ function initPage(baseInfoJson,diseaseDiagInfoJson){
 				return true;
 			}*/
 			return true;
+		},
+		rules:{
+			"mainDiagRecord.diseaseDiagShow": {
+				required: true,
+				minlength: 2
+            }
 		}
 	});
 	

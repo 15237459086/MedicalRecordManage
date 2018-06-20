@@ -163,7 +163,7 @@
 	color:#333; cursor:pointer;
 }
 .list_con_table{
-	width:936px; height:auto;; float:left; margin-top:12px; overflow:hidden;
+	width:936px; height:auto;; float:left; /* margin-top:12px; */ overflow:hidden;
 }
 /*------表格 ---------*/
 .search_table{

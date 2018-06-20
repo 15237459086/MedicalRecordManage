@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kurumi.mapper.StatisticsAnalysisMapper">
+
+	<select id="getMedicalRecordCount" resultType="int">
+		select count(json.visit_guid) as count
+		from medical_record_json json
+		where 
+	   	<![CDATA[(STR_TO_DATE(REPLACE(json.out_hospital_date_time,'"',''),'%Y-%m-%d') >= #{outHospitalStartDate} and STR_TO_DATE(REPLACE(json.out_hospital_date_time,'"',''),'%Y-%m-%d') <= #{outHospitalEndDate})]]>
+		
+	</select>
+	
+	<select id="getMedicalPayTypeAnalysis" resultType="map">
+		select json.medical_pay_type_code,json.medical_pay_type_name,count(json.visit_guid) as count
+		from medical_record_json json
+		where 
+	   	<![CDATA[(STR_TO_DATE(REPLACE(json.out_hospital_date_time,'"',''),'%Y-%m-%d') >= #{outHospitalStartDate} and STR_TO_DATE(REPLACE(json.out_hospital_date_time,'"',''),'%Y-%m-%d') <= #{outHospitalEndDate})]]>
+		
+		GROUP BY json.medical_pay_type_code,json.medical_pay_type_name
+	</select>
+	
+	<select id="getInHospitalTypeAnalysis" resultType="map">
+		select json.in_hospital_type_code,json.in_hospital_type_name,count(json.visit_guid) as count
+		from medical_record_json json
+		where 
+	   	<![CDATA[(STR_TO_DATE(REPLACE(json.out_hospital_date_time,'"',''),'%Y-%m-%d') >= #{outHospitalStartDate} and STR_TO_DATE(REPLACE(json.out_hospital_date_time,'"',''),'%Y-%m-%d') <= #{outHospitalEndDate})]]>
+		
+		GROUP BY json.in_hospital_type_code,json.in_hospital_type_name
+	</select>
+</mapper>

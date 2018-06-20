@@ -17,7 +17,6 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
-import org.apache.poi.ss.util.CellReference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,6 +48,7 @@ public class MedicalRecordController {
 	@Autowired
 	private BaseInfoService bseInfoService;
 	
+	@SuppressWarnings("unused")
 	private Logger log = LoggerFactory.getLogger(MedicalRecordController.class);
 	
 	@GetMapping("/pigeonholed_index")
@@ -635,7 +635,7 @@ public class MedicalRecordController {
 					for (Cell cell : row) {
 						colIndex ++;
 						String value =null;
-						CellReference cellRef = new CellReference(row.getRowNum(), cell.getColumnIndex());
+						/*CellReference cellRef = new CellReference(row.getRowNum(), cell.getColumnIndex());*/
 						switch (cell.getCellType()) {
 							case Cell.CELL_TYPE_STRING:// 字符串型
 								value = cell.getRichStringCellValue().getString();
