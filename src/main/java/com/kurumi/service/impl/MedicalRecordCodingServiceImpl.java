@@ -38,6 +38,7 @@ import com.kurumi.pojo.coding.OperateInfo;
 import com.kurumi.pojo.resource.MedicalRecordResource;
 import com.kurumi.query.MedicalRecordQuery;
 import com.kurumi.query.MedicalRecordSearchingQuery;
+import com.kurumi.query.StatisticsAnalysisQuery;
 import com.kurumi.service.MedicalRecordCodingService;
 import com.kurumi.thread.PageIndexPDFThread;
 import com.kurumi.util.DateUtil;
@@ -926,6 +927,18 @@ public class MedicalRecordCodingServiceImpl implements MedicalRecordCodingServic
 	public int getMedicalRecordCountOfRepair(MedicalRecordQuery params) {
 		// TODO Auto-generated method stub
 		return medicalRecordCodingMapper.getMedicalRecordCountOfRepair(params);
+	}
+
+	@Override
+	public List<Map<String, Object>> getMedicalRecordOfDefect(StatisticsAnalysisQuery params) {
+		// TODO Auto-generated method stub
+		return medicalRecordCodingMapper.getMedicalRecordOfDefect(params);
+	}
+
+	@Override
+	public List<Map<String, Object>> getMedicalRecordOfDefectDetail(StatisticsAnalysisQuery params) {
+		// TODO Auto-generated method stub
+		return medicalRecordCodingMapper.getMedicalRecordOfDefectDetail(params);
 	}
 
 }

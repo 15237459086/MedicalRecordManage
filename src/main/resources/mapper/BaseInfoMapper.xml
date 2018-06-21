@@ -154,6 +154,14 @@
   	where code like #{queryName} or name like #{queryName}
  </select>
  
+ <select id="getMedicalWorkerByWorkerCodes" resultType="map" parameterType="java.util.Map">
+  	select name as label,code as uniq_code,signature_path from medical_worker
+  	where code in 
+  	<foreach item="item" index="index" collection="list" open="(" separator="," close=")"> 
+	    #{item} 
+	</foreach>
+ </select>
+ 
  <!-- 获取ABO血型 -->
  <select id="getBloodTypes" resultType="map">
   	select name as label,code as uniq_code from blood_type

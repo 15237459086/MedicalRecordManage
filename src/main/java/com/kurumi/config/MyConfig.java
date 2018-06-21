@@ -34,6 +34,9 @@ public class MyConfig {
 
 	@Value("${config.page.index.pdf.template.path}")
 	private String pageIndexpPdfTemplatePath;
+	
+	@Value("${config.worker.signature.path}")
+	private String workerSignaturePath;
 
 	
 	public String getRemoteLoginUrl() {
@@ -96,7 +99,11 @@ public class MyConfig {
 		return pageIndexpPdfTemplatePath;
 	}
 
+	public String getWorkerSignaturePath() {
+		return workerSignaturePath;
+	}
 
+	
 	
 	
 }

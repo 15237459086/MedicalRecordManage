@@ -35,6 +35,7 @@ import com.kurumi.pojo.coding.DiseaseDiagRecord;
 import com.kurumi.pojo.coding.NurseInfo;
 import com.kurumi.pojo.coding.OperateInfo;
 import com.kurumi.query.MedicalRecordQuery;
+import com.kurumi.query.StatisticsAnalysisQuery;
 import com.kurumi.service.BaseInfoService;
 import com.kurumi.service.MedicalRecordCodingService;
 import com.kurumi.service.MedicalRecordService;
@@ -750,7 +751,24 @@ public class MedicalRecordCodingController {
 				jsonMap.put("basicInfo", basicInfo);
 			}
 			
-			baos = PDFUtil.getPDFStreamByTemplate(jsonMap, myConfig.getPageIndexpPdfTemplatePath(),new HashMap<String, Object>());
+			List<String> medicalWorkerCodes = new ArrayList<String>();
+			Map<String, Object> cureInfo = (Map<String, Object>) jsonMap.get("cureInfo");
+			if(cureInfo != null){
+				List<Map<String, Object>> medicalWorkers = (List<Map<String, Object>>)cureInfo.get("cureWorkers");
+				if(medicalWorkers != null){
+					for (Map<String, Object> medicalWorker : medicalWorkers) {
+						String medicalWorkerCode = StringUtil.meaningStr((String)medicalWorker.get("medicalWorkerCode"));
+						if(medicalWorkerCode != null){
+							medicalWorkerCodes.add(medicalWorkerCode);
+						}
+						
+					}
+				}
+				
+			}
+			Map<String, Object> signatureMedicalWorks = baseInfoService.getSignatureMedicalWorks(medicalWorkerCodes);
+			
+			baos = PDFUtil.getPDFStreamByTemplate(jsonMap, myConfig.getPageIndexpPdfTemplatePath(),signatureMedicalWorks);
 			ByteArrayOutputStream out = WaterMarkUtil.getOutputStreamOfWterMarkByText(baos, (String)currentUser.get("user_code"));
 			/*ByteArrayOutputStream out = WaterMarkUtil.getOutputStreamOfWterMarkByIcon(baos, "D:\\publics\\medical_record\\water_icon\\305logo.jpg");*/
 			response.setContentLength(out.size());
@@ -900,4 +918,46 @@ public class MedicalRecordCodingController {
 		return respondResult;
 	}
 	
+	@GetMapping("/coding_defect_page")
+	public String codingDefectPage(Model model){
+		return "coding/coding_defect_page";
+	}
+	
+	
+	@GetMapping("/query_coding_defect")
+	@ResponseBody
+	public RespondResult queryCodingDefect(StatisticsAnalysisQuery params){
+		RespondResult respondResult = null;
+		
+		try{
+			List<Map<String,Object>> medicalRecordDefects = new ArrayList<Map<String,Object>>();
+			medicalRecordDefects = medicalRecordCodingService.getMedicalRecordOfDefect(params);
+				
+			respondResult = new RespondResult(true, RespondResult.successCode, null, medicalRecordDefects);
+		}catch (Exception e) {
+			// TODO: handle exception
+			respondResult = new RespondResult(false, RespondResult.errorCode, e.getMessage(), e);
+		}
+		
+		return respondResult;
+	}
+	
+	
+	@GetMapping("/query_coding_defect_detail")
+	@ResponseBody
+	public RespondResult queryCodingDefectDetail(StatisticsAnalysisQuery params){
+		RespondResult respondResult = null;
+		
+		try{
+			List<Map<String,Object>> defectDetails = new ArrayList<Map<String,Object>>();
+			defectDetails = medicalRecordCodingService.getMedicalRecordOfDefectDetail(params);
+				
+			respondResult = new RespondResult(true, RespondResult.successCode, null, defectDetails);
+		}catch (Exception e) {
+			// TODO: handle exception
+			respondResult = new RespondResult(false, RespondResult.errorCode, e.getMessage(), e);
+		}
+		
+		return respondResult;
+	}
 }

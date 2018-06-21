@@ -5,6 +5,7 @@ import java.util.Date;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.kurumi.util.StringUtil;
 
 public class StatisticsAnalysisQuery {
 	
@@ -26,6 +27,8 @@ public class StatisticsAnalysisQuery {
 	@JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd")
 	@DateTimeFormat(pattern="yyyy-MM-dd")
     private Date outHospitalEndDate;
+	
+	private String codingDefectCode;
 
 	public Date getStartDate() {
 		return startDate;
@@ -57,6 +60,14 @@ public class StatisticsAnalysisQuery {
 
 	public void setOutHospitalEndDate(Date outHospitalEndDate) {
 		this.outHospitalEndDate = outHospitalEndDate;
+	}
+
+	public String getCodingDefectCode() {
+		return StringUtil.meaningStr(codingDefectCode);
+	}
+
+	public void setCodingDefectCode(String codingDefectCode) {
+		this.codingDefectCode = codingDefectCode;
 	}
 
 	

@@ -8,13 +8,18 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kurumi.config.MyConfig;
 import com.kurumi.mapper.BaseInfoMapper;
 import com.kurumi.service.BaseInfoService;
+import com.kurumi.util.StringUtil;
 
 @Service
 public class BaseInfoServiceImpl implements BaseInfoService {
 
 	private String hospitalCode = "49557184-0";
+	
+	@Autowired
+	private MyConfig myConfig;
 	
 	@Autowired
 	private BaseInfoMapper baseInfoMapper;
@@ -345,5 +350,28 @@ public class BaseInfoServiceImpl implements BaseInfoService {
 		List<Map<String, Object>> printerTypes = baseInfoMapper.getPrinterTypes();
 		baseInfo.put("printerTypes", printerTypes);
 		return baseInfo;
+	}
+
+	@Override
+	public Map<String, Object> getSignatureMedicalWorks(List<String> medicalWorkCodes) {
+		// TODO Auto-generated method stub
+		Map<String,Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("list", medicalWorkCodes);
+		Map<String, Object> medicalWorkerMap = new HashMap<String, Object>();
+		List<Map<String, Object>> medicalWorkers = baseInfoMapper.getMedicalWorkerByWorkerCodes(paramMap);
+		for (Map<String, Object> medicalWorker : medicalWorkers) {
+			String code = (String)medicalWorker.get("uniq_code");
+			String name = (String)medicalWorker.get("label");
+			String signaturePath = StringUtil.meaningStr((String)medicalWorker.get("signature_path"));
+			if(!medicalWorkerMap.containsKey(code) && signaturePath != null){
+				Map<String, String> map = new HashMap<String, String>();
+				map.put("code", code);
+				map.put("name", name);
+				map.put("signaturePath", myConfig.getWorkerSignaturePath()+ signaturePath);
+				medicalWorkerMap.put(code, map);
+			}
+			
+		}
+		return medicalWorkerMap;
 	}
 }

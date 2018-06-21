@@ -13,6 +13,7 @@ import com.kurumi.pojo.coding.NurseInfo;
 import com.kurumi.pojo.coding.OperateInfo;
 import com.kurumi.query.MedicalRecordQuery;
 import com.kurumi.query.MedicalRecordSearchingQuery;
+import com.kurumi.query.StatisticsAnalysisQuery;
 
 public interface MedicalRecordCodingService {
 
@@ -66,4 +67,8 @@ public interface MedicalRecordCodingService {
 	List<Map<String,Object>> getMedicalRecordOfRepair(MedicalRecordQuery params);
 	
 	int getMedicalRecordCountOfRepair(MedicalRecordQuery params);
+	
+	List<Map<String,Object>> getMedicalRecordOfDefect(StatisticsAnalysisQuery params);
+	
+	List<Map<String,Object>> getMedicalRecordOfDefectDetail(StatisticsAnalysisQuery params);
 }

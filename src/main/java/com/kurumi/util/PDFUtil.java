@@ -10,11 +10,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Image;
 import com.itextpdf.text.PageSize;
+import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.AcroFields;
 import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.PdfAction;
@@ -331,7 +333,7 @@ public class PDFUtil {
 	 */
 	@SuppressWarnings("unchecked")
 	public static ByteArrayOutputStream getPDFStreamByTemplate(Map<String, Object> data,
-			String pageIndexTemplatePDFPath, Map<String, Object> medicalWorkerMap)
+			String pageIndexTemplatePDFPath, Map<String, Object> signatureMedicalWorks)
 			throws IOException, DocumentException {
 
 		// // 模板路径
@@ -850,7 +852,7 @@ public class PDFUtil {
 
 				String qualityControlDateTime = (String) cureInfo.get("qualityControlDateTime");
 				if (qualityControlDateTime != null) {
-					form.setField("qualityControlDateTime", qualityControlDateTime);
+					form.setField("qualityControlDateTime", qualityControlDateTime.substring(0, 10));
 				}
 				
 				String medicalRecordQualityCode = (String) cureInfo.get("medicalRecordQualityCode");
@@ -872,24 +874,97 @@ public class PDFUtil {
 						String professionTitleName = (String) cureWorker.get("professionTitleName");
 						if (professionTitleName != null) {
 							if (professionTitleName.contains("科主任")) {
+								String medicalWorkerCode = (String) cureWorker.get("medicalWorkerCode");
 								String medicalWorkerName = (String) cureWorker.get("medicalWorkerName");
-								if (medicalWorkerName != null) {
+								if(medicalWorkerCode != null && signatureMedicalWorks.containsKey(medicalWorkerCode)){
+									int pageNo = form.getFieldPositions("directorDepartment").get(0).page;
+              			            Rectangle signRect = form.getFieldPositions("directorDepartment").get(0).position;
+              			            float x = signRect.getLeft();
+              			            float y = signRect.getBottom();
+              			            Map<String, Object> signatureMedicalWork = (Map<String, Object>)signatureMedicalWorks.get(medicalWorkerCode);
+              			            String signaturePath = (String)signatureMedicalWork.get("signaturePath");
+              			            Image image = Image.getInstance(signaturePath);
+              			            // 获取操作的页面
+              			            PdfContentByte under = stamper.getOverContent(pageNo);
+              			            float scaler = ((float)signRect.getHeight()/image.getHeight())*100;
+            			            
+            			            image.scalePercent(scaler);
+              			            // 添加图片
+              			            image.setAbsolutePosition(x, y);
+              			            under.addImage(image); 
+								}
+								else if (medicalWorkerName != null) {
 									form.setField("directorDepartment", medicalWorkerName);
 								}
 								
 							} else if (professionTitleName.contains("副主任")) {
+								String medicalWorkerCode = (String) cureWorker.get("medicalWorkerCode");
 								String medicalWorkerName = (String) cureWorker.get("medicalWorkerName");
-								if (medicalWorkerName != null) {
+								if(medicalWorkerCode != null && signatureMedicalWorks.containsKey(medicalWorkerCode)){
+									int pageNo = form.getFieldPositions("director").get(0).page;
+              			            Rectangle signRect = form.getFieldPositions("director").get(0).position;
+              			            float x = signRect.getLeft();
+              			            float y = signRect.getBottom();
+              			            Map<String, Object> signatureMedicalWork = (Map<String, Object>)signatureMedicalWorks.get(medicalWorkerCode);
+              			            String signaturePath = (String)signatureMedicalWork.get("signaturePath");
+              			            Image image = Image.getInstance(signaturePath);
+              			            // 获取操作的页面
+              			            PdfContentByte under = stamper.getOverContent(pageNo);
+              			            float scaler = ((float)signRect.getHeight()/image.getHeight())*100;
+          			            
+              			            image.scalePercent(scaler);
+              			            // 添加图片
+              			            image.setAbsolutePosition(x, y);
+              			            under.addImage(image); 
+								}
+								else if (medicalWorkerName != null) {
 									form.setField("director", medicalWorkerName);
 								}
 							} else if (professionTitleName.contains("主治")) {
+								String medicalWorkerCode = (String) cureWorker.get("medicalWorkerCode");
 								String medicalWorkerName = (String) cureWorker.get("medicalWorkerName");
-								if (medicalWorkerName != null) {
+								if(medicalWorkerCode != null && signatureMedicalWorks.containsKey(medicalWorkerCode)){
+									int pageNo = form.getFieldPositions("zhuZhimedicalWorkerName").get(0).page;
+              			            Rectangle signRect = form.getFieldPositions("zhuZhimedicalWorkerName").get(0).position;
+              			            float x = signRect.getLeft();
+              			            float y = signRect.getBottom();
+              			            Map<String, Object> signatureMedicalWork = (Map<String, Object>)signatureMedicalWorks.get(medicalWorkerCode);
+              			            String signaturePath = (String)signatureMedicalWork.get("signaturePath");
+              			            Image image = Image.getInstance(signaturePath);
+              			           
+              			            // 获取操作的页面
+              			            PdfContentByte under = stamper.getOverContent(pageNo);
+              			            float scaler = ((float)signRect.getHeight()/image.getHeight())*100;
+              			            
+              			            image.scalePercent(scaler);
+              			            // 添加图片
+              			            image.setAbsolutePosition(x, y);
+              			            under.addImage(image); 
+								}
+								else if (medicalWorkerName != null) {
 									form.setField("zhuZhimedicalWorkerName", medicalWorkerName);
 								}
 							} else if (professionTitleName.contains("住院")) {
+								String medicalWorkerCode = (String) cureWorker.get("medicalWorkerCode");
 								String medicalWorkerName = (String) cureWorker.get("medicalWorkerName");
-								if (medicalWorkerName != null) {
+								if(medicalWorkerCode != null && signatureMedicalWorks.containsKey(medicalWorkerCode)){
+									int pageNo = form.getFieldPositions("zhuYuanmedicalWorkerName").get(0).page;
+              			            Rectangle signRect = form.getFieldPositions("zhuYuanmedicalWorkerName").get(0).position;
+              			            float x = signRect.getLeft();
+              			            float y = signRect.getBottom();
+              			            Map<String, Object> signatureMedicalWork = (Map<String, Object>)signatureMedicalWorks.get(medicalWorkerCode);
+              			            String signaturePath = (String)signatureMedicalWork.get("signaturePath");
+              			            Image image = Image.getInstance(signaturePath);
+              			            // 获取操作的页面
+              			            PdfContentByte under = stamper.getOverContent(pageNo);
+              			            float scaler = ((float)signRect.getHeight()/image.getHeight())*100;
+          			            
+              			            image.scalePercent(scaler);
+              			            // 添加图片
+              			            image.setAbsolutePosition(x, y);
+              			            under.addImage(image); 
+								}
+								else if(medicalWorkerName != null) {
 									form.setField("zhuYuanmedicalWorkerName", medicalWorkerName);
 								}
 							} else if (professionTitleName.contains("责任")) {

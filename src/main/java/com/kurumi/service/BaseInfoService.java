@@ -53,6 +53,8 @@ public interface BaseInfoService {
 	 */
 	List<Map<String,Object>> getMedicalWorkerByQueryName(String queryName);
 	
+	Map<String, Object> getSignatureMedicalWorks(List<String> medicalWorkCodes);
+	
 	/**
 	 * 模糊搜索手术操作
 	 * @return

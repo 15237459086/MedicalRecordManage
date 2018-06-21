@@ -7,6 +7,7 @@ import com.kurumi.pojo.MedicalRecordCodingError;
 import com.kurumi.pojo.MedicalRecordDiseaseDiag;
 import com.kurumi.query.MedicalRecordQuery;
 import com.kurumi.query.MedicalRecordSearchingQuery;
+import com.kurumi.query.StatisticsAnalysisQuery;
 
 public interface MedicalRecordCodingMapper {
 
@@ -28,4 +29,8 @@ public interface MedicalRecordCodingMapper {
 	 List<Map<String,Object>> getMedicalRecordCodingErrorByVisitGuid(String visitGuid);
 	 
 	 int updateMedicalRecordCodingError(MedicalRecordCodingError record);
+	 
+	 List<Map<String,Object>> getMedicalRecordOfDefect(StatisticsAnalysisQuery params);
+	 
+	 List<Map<String,Object>> getMedicalRecordOfDefectDetail(StatisticsAnalysisQuery params);
 }

@@ -158,6 +158,8 @@ public interface BaseInfoMapper {
 	 */
 	List<Map<String,Object>> getMedicalWorkerByQueryName(@Param("queryName")String queryName);
 
+	List<Map<String,Object>> getMedicalWorkerByWorkerCodes(Map<String,Object> map);
+	
 	/**
 	 * 获取ABO血型
 	 * @return

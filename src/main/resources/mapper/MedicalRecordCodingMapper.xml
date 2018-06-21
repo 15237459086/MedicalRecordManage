@@ -203,4 +203,52 @@
 		
 	</select>
 	
+	
+	<select id="getMedicalRecordOfDefect" resultType="map"
+		parameterType="com.kurumi.query.StatisticsAnalysisQuery">
+		select coding_error.coding_error_code,coding_error.coding_error_name,count(coding_error.visit_guid) count
+		from medical_record_coding_error coding_error
+		inner join medical_record note
+		on note.visit_guid = coding_error.visit_guid
+		where  <![CDATA[(CAST(note.out_hospital_date_time AS date) >= #{outHospitalStartDate} and CAST(note.out_hospital_date_time AS date) <= #{outHospitalEndDate})]]>
+		group by coding_error.coding_error_code,coding_error.coding_error_name
+	</select>
+	
+	
+	<select id="getMedicalRecordOfDefectDetail" resultType="map"
+		parameterType="com.kurumi.query.StatisticsAnalysisQuery">
+		select
+			note.visit_guid,
+			note.patient_name,
+			note.sex_code,
+			note.sex_name,
+			date_format(note.birthday,'%Y-%m-%d') as birthday,
+			note.document_type_code,
+			note.document_type_name,
+			note.id_number,
+			note.only_id,
+			note.mr_id,
+			note.visit_number,
+			date_format(note.in_hospital_date_time,'%Y-%m-%d') as in_hospital_date,
+			date_format(note.in_hospital_date_time,'%Y-%m-%d %H:%i:%S') as in_hospital_date_time,
+			note.in_dept_code,
+			note.in_dept_name,
+			date_format(note.out_hospital_date_time,'%Y-%m-%d') as out_hospital_date,
+			date_format(note.out_hospital_date_time,'%Y-%m-%d %H:%i:%S') as
+			out_hospital_date_time,
+			note.out_dept_code,
+			note.out_dept_name,
+			note.out_hospital_type_code,
+			note.out_hospital_type_name,
+			note.treatment_sign_code,
+			note.treatment_sign_name,
+			coding_error.last_error_coder_code,
+			coding_error.last_error_coder_name
+		from
+		medical_record note
+		inner join medical_record_coding_error coding_error
+		on coding_error.visit_guid = note.visit_guid
+		where coding_error.coding_error_code = #{codingDefectCode} and 
+		<![CDATA[(CAST(note.out_hospital_date_time AS date) >= #{outHospitalStartDate} and CAST(note.out_hospital_date_time AS date) <= #{outHospitalEndDate})]]>
+	</select>
 </mapper>

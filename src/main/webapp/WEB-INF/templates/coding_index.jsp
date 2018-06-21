@@ -21,6 +21,7 @@ request.setAttribute("basePath", basePath);
 	   <h4 class="li_t"><a onclick="loadContent('${basePath }medical_record_coding/repeat_coding_check_page')">重复编码审核</a></h4>
 	   <h4 class="li_t"><a onclick="loadContent('${basePath }medical_record_coding/date_time_check_page')">日期审核</a></h4>
 	   <h4 class="li_t"><a onclick="loadContent('${basePath }medical_record_coding/medical_record_repair_page')">病案返修</a></h4>
+	   <h4 class="li_t"><a onclick="loadContent('${basePath }medical_record_coding/coding_defect_page')">编码缺陷</a></h4>
 	  </div>
 	 </div>
 	<div id="list_NR">
