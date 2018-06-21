@@ -10,7 +10,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>病案管理</title>
+<title>病案系统-数据平台</title>
 <style>
 #box {
 	max-width:1366px;

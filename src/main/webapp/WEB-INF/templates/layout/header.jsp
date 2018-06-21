@@ -12,8 +12,8 @@ request.setAttribute("basePath", basePath);
 		<img src="${basePath }assets/images/logo.png" />
 		<div class="h_right">
 			<ul>
-				<li>&nbsp;<a>基础数据</a>&nbsp;
-					|&nbsp;<a href="http://localhost:8080/system_authority/" target="_blank">系统权限</a>&nbsp;
+				<li>&nbsp;<a href="http://localhost:8082/MedicalRecordDataBase/" target="_blank">基础数据</a>&nbsp;
+					|&nbsp;<a href="http://localhost:8080/SystemAuthority/" target="_blank">系统权限</a>&nbsp;
 					<shiro:authenticated>
 						|&nbsp;<a>当前用户：${currentUser.user_name }</a>
 						|&nbsp;<a href="${basePath }login_out">退出登陆</a>
