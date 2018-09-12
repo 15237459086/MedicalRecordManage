@@ -1,0 +1,374 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kurumi.mapper.MedicalRecordRadioTherapyMapper">
+	<resultMap id="BaseResultMap" type="com.kurumi.pojo.MedicalRecordRadioTherapy">
+		<id column="visit_guid" property="visitGuid" jdbcType="VARCHAR" />
+		<result column="patient_name" property="patientName" jdbcType="VARCHAR" />
+		<result column="sex_code" property="sexCode" jdbcType="VARCHAR" />
+		<result column="sex_name" property="sexName" jdbcType="VARCHAR" />
+		<result column="birthday" property="birthday" jdbcType="DATE" />
+		<result column="document_type_code" property="documentTypeCode"
+			jdbcType="VARCHAR" />
+		<result column="document_type_name" property="documentTypeName"
+			jdbcType="VARCHAR" />
+		<result column="id_number" property="idNumber" jdbcType="VARCHAR" />
+		<result column="only_id" property="onlyId" jdbcType="VARCHAR" />
+		<result column="mr_id" property="mrId" jdbcType="VARCHAR" />
+		<result column="visit_number" property="visitNumber" jdbcType="INTEGER" />
+		<result column="in_hospital_date_time" property="inHospitalDateTime"
+			jdbcType="TIMESTAMP" />
+		<result column="in_dept_code" property="inDeptCode" jdbcType="VARCHAR" />
+		<result column="in_dept_name" property="inDeptName" jdbcType="VARCHAR" />
+		<result column="out_hospital_date_time" property="outHospitalDateTime"
+			jdbcType="TIMESTAMP" />
+		<result column="out_dept_code" property="outDeptCode" jdbcType="VARCHAR" />
+		<result column="out_dept_name" property="outDeptName" jdbcType="VARCHAR" />
+		
+		<result column="treatment_sign_code" property="treatmentSignCode"
+			jdbcType="VARCHAR" />
+		<result column="treatment_sign_name" property="treatmentSignName"
+			jdbcType="VARCHAR" />
+		<result column="version" property="version" jdbcType="INTEGER" />
+	</resultMap>
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Update_By_Example_Where_Clause">
+		<where>
+			<foreach collection="example.oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		visit_guid, patient_name, sex_code, sex_name, birthday, document_type_code,
+		document_type_name,
+		id_number, only_id, mr_id, visit_number, in_hospital_date_time, in_dept_code,
+		in_dept_name,
+		out_hospital_date_time, out_dept_code, out_dept_name, 
+		treatment_sign_code, treatment_sign_name, version
+	</sql>
+	
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from medical_record_radio_therapy
+		where visit_guid = #{visitGuid,jdbcType=VARCHAR}
+	</delete>
+	
+	<insert id="insert" parameterType="com.kurumi.pojo.MedicalRecordRadioTherapy">
+		insert into medical_record_radio_therapy (visit_guid, patient_name, sex_code,
+		sex_name, birthday, document_type_code,
+		document_type_name, id_number, only_id,
+		mr_id, visit_number, in_hospital_date_time,
+		in_dept_code, in_dept_name, out_hospital_date_time,
+		out_dept_code, out_dept_name, treatment_sign_code,
+		treatment_sign_name, version)
+		values (#{visitGuid,jdbcType=VARCHAR}, #{patientName,jdbcType=VARCHAR},
+		#{sexCode,jdbcType=VARCHAR},
+		#{sexName,jdbcType=VARCHAR}, #{birthday,jdbcType=DATE}, #{documentTypeCode,jdbcType=VARCHAR},
+		#{documentTypeName,jdbcType=VARCHAR}, #{idNumber,jdbcType=VARCHAR},
+		#{onlyId,jdbcType=VARCHAR},
+		#{mrId,jdbcType=VARCHAR}, #{visitNumber,jdbcType=INTEGER},
+		#{inHospitalDateTime,jdbcType=TIMESTAMP},
+		#{inDeptCode,jdbcType=VARCHAR}, #{inDeptName,jdbcType=VARCHAR},
+		#{outHospitalDateTime,jdbcType=TIMESTAMP},
+		#{outDeptCode,jdbcType=VARCHAR}, #{outDeptName,jdbcType=VARCHAR},
+		#{treatmentSignCode,jdbcType=VARCHAR},
+		#{treatmentSignName,jdbcType=VARCHAR}, #{version,jdbcType=INTEGER})
+	</insert>
+	
+	<insert id="insertSelective" parameterType="com.kurumi.pojo.MedicalRecordRadioTherapy">
+		insert into medical_record_radio_therapy
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="visitGuid != null">
+				visit_guid,
+			</if>
+			<if test="patientName != null">
+				patient_name,
+			</if>
+			<if test="sexCode != null">
+				sex_code,
+			</if>
+			<if test="sexName != null">
+				sex_name,
+			</if>
+			<if test="birthday != null">
+				birthday,
+			</if>
+			<if test="documentTypeCode != null">
+				document_type_code,
+			</if>
+			<if test="documentTypeName != null">
+				document_type_name,
+			</if>
+			<if test="idNumber != null">
+				id_number,
+			</if>
+			<if test="onlyId != null">
+				only_id,
+			</if>
+			<if test="mrId != null">
+				mr_id,
+			</if>
+			<if test="visitNumber != null">
+				visit_number,
+			</if>
+			<if test="inHospitalDateTime != null">
+				in_hospital_date_time,
+			</if>
+			<if test="inDeptCode != null">
+				in_dept_code,
+			</if>
+			<if test="inDeptName != null">
+				in_dept_name,
+			</if>
+			<if test="outHospitalDateTime != null">
+				out_hospital_date_time,
+			</if>
+			<if test="outDeptCode != null">
+				out_dept_code,
+			</if>
+			<if test="outDeptName != null">
+				out_dept_name,
+			</if>
+			
+			<if test="treatmentSignCode != null">
+				treatment_sign_code,
+			</if>
+			<if test="treatmentSignName != null">
+				treatment_sign_name,
+			</if>
+			<if test="version != null">
+				version,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="visitGuid != null">
+				#{visitGuid,jdbcType=VARCHAR},
+			</if>
+			<if test="patientName != null">
+				#{patientName,jdbcType=VARCHAR},
+			</if>
+			<if test="sexCode != null">
+				#{sexCode,jdbcType=VARCHAR},
+			</if>
+			<if test="sexName != null">
+				#{sexName,jdbcType=VARCHAR},
+			</if>
+			<if test="birthday != null">
+				#{birthday,jdbcType=DATE},
+			</if>
+			<if test="documentTypeCode != null">
+				#{documentTypeCode,jdbcType=VARCHAR},
+			</if>
+			<if test="documentTypeName != null">
+				#{documentTypeName,jdbcType=VARCHAR},
+			</if>
+			<if test="idNumber != null">
+				#{idNumber,jdbcType=VARCHAR},
+			</if>
+			<if test="onlyId != null">
+				#{onlyId,jdbcType=VARCHAR},
+			</if>
+			<if test="mrId != null">
+				#{mrId,jdbcType=VARCHAR},
+			</if>
+			<if test="visitNumber != null">
+				#{visitNumber,jdbcType=INTEGER},
+			</if>
+			<if test="inHospitalDateTime != null">
+				#{inHospitalDateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="inDeptCode != null">
+				#{inDeptCode,jdbcType=VARCHAR},
+			</if>
+			<if test="inDeptName != null">
+				#{inDeptName,jdbcType=VARCHAR},
+			</if>
+			<if test="outHospitalDateTime != null">
+				#{outHospitalDateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="outDeptCode != null">
+				#{outDeptCode,jdbcType=VARCHAR},
+			</if>
+			<if test="outDeptName != null">
+				#{outDeptName,jdbcType=VARCHAR},
+			</if>
+			
+			<if test="treatmentSignCode != null">
+				#{treatmentSignCode,jdbcType=VARCHAR},
+			</if>
+			<if test="treatmentSignName != null">
+				#{treatmentSignName,jdbcType=VARCHAR},
+			</if>
+			<if test="version != null">
+				#{version,jdbcType=INTEGER},
+			</if>
+		</trim>
+	</insert>
+	
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from medical_record_radio_therapy
+		where visit_guid = #{visitGuid,jdbcType=VARCHAR}
+	</select>
+	
+	<update id="updateByPrimaryKeySelective" parameterType="com.kurumi.pojo.MedicalRecordRadioTherapy">
+		update medical_record_radio_therapy
+		<set>
+			<if test="patientName != null">
+				patient_name = #{patientName,jdbcType=VARCHAR},
+			</if>
+			<if test="sexCode != null">
+				sex_code = #{sexCode,jdbcType=VARCHAR},
+			</if>
+			<if test="sexName != null">
+				sex_name = #{sexName,jdbcType=VARCHAR},
+			</if>
+			<if test="birthday != null">
+				birthday = #{birthday,jdbcType=DATE},
+			</if>
+			<if test="documentTypeCode != null">
+				document_type_code = #{documentTypeCode,jdbcType=VARCHAR},
+			</if>
+			<if test="documentTypeName != null">
+				document_type_name = #{documentTypeName,jdbcType=VARCHAR},
+			</if>
+			<if test="idNumber != null">
+				id_number = #{idNumber,jdbcType=VARCHAR},
+			</if>
+			<if test="onlyId != null">
+				only_id = #{onlyId,jdbcType=VARCHAR},
+			</if>
+			<if test="mrId != null">
+				mr_id = #{mrId,jdbcType=VARCHAR},
+			</if>
+			<if test="visitNumber != null">
+				visit_number = #{visitNumber,jdbcType=INTEGER},
+			</if>
+			<if test="inHospitalDateTime != null">
+				in_hospital_date_time = #{inHospitalDateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="inDeptCode != null">
+				in_dept_code = #{inDeptCode,jdbcType=VARCHAR},
+			</if>
+			<if test="inDeptName != null">
+				in_dept_name = #{inDeptName,jdbcType=VARCHAR},
+			</if>
+			<if test="outHospitalDateTime != null">
+				out_hospital_date_time = #{outHospitalDateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="outDeptCode != null">
+				out_dept_code = #{outDeptCode,jdbcType=VARCHAR},
+			</if>
+			<if test="outDeptName != null">
+				out_dept_name = #{outDeptName,jdbcType=VARCHAR},
+			</if>
+			<if test="treatmentSignCode != null">
+				treatment_sign_code = #{treatmentSignCode,jdbcType=VARCHAR},
+			</if>
+			<if test="treatmentSignName != null">
+				treatment_sign_name = #{treatmentSignName,jdbcType=VARCHAR},
+			</if>
+			<if test="version != null">
+				version = #{version,jdbcType=INTEGER},
+			</if>
+		</set>
+		where visit_guid = #{visitGuid,jdbcType=VARCHAR}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.kurumi.pojo.MedicalRecordRadioTherapy">
+		update medical_record_radio_therapy
+		set patient_name = #{patientName,jdbcType=VARCHAR},
+		sex_code = #{sexCode,jdbcType=VARCHAR},
+		sex_name = #{sexName,jdbcType=VARCHAR},
+		birthday = #{birthday,jdbcType=DATE},
+		document_type_code = #{documentTypeCode,jdbcType=VARCHAR},
+		document_type_name = #{documentTypeName,jdbcType=VARCHAR},
+		id_number = #{idNumber,jdbcType=VARCHAR},
+		only_id = #{onlyId,jdbcType=VARCHAR},
+		mr_id = #{mrId,jdbcType=VARCHAR},
+		visit_number = #{visitNumber,jdbcType=INTEGER},
+		in_hospital_date_time = #{inHospitalDateTime,jdbcType=TIMESTAMP},
+		in_dept_code = #{inDeptCode,jdbcType=VARCHAR},
+		in_dept_name = #{inDeptName,jdbcType=VARCHAR},
+		out_hospital_date_time = #{outHospitalDateTime,jdbcType=TIMESTAMP},
+		out_dept_code = #{outDeptCode,jdbcType=VARCHAR},
+		out_dept_name = #{outDeptName,jdbcType=VARCHAR},
+		
+		treatment_sign_code = #{treatmentSignCode,jdbcType=VARCHAR},
+		treatment_sign_name = #{treatmentSignName,jdbcType=VARCHAR},
+		version = #{version,jdbcType=INTEGER} +1
+		where visit_guid = #{visitGuid,jdbcType=VARCHAR} and version =
+		#{version,jdbcType=INTEGER}
+	</update>
+	
+	<select id="checkMeditalRecordUniq" resultType="int">
+		select
+		count(1)
+		from
+		medical_record_radio_therapy note
+		where note.mr_id=#{mrId}
+	</select>
+	
+	<select id="getVisitGuidByMrId" resultType="String">
+		select
+		visit_guid
+		from
+		medical_record_radio_therapy note
+		where note.mr_id=#{mrId}
+	</select>
+</mapper>

@@ -3,6 +3,7 @@
 <mapper namespace="com.kurumi.mapper.ScanImageMapper" >
   <resultMap id="BaseResultMap" type="com.kurumi.pojo.ScanImage" >
     <id column="file_hash" property="fileHash" jdbcType="VARCHAR" />
+    <result column="original_file_name" property="originalFileName" jdbcType="VARCHAR" />
     <result column="file_name" property="fileName" jdbcType="VARCHAR" />
     <result column="file_type" property="fileType" jdbcType="VARCHAR" />
     <result column="create_date_time" property="createDateTime" jdbcType="TIMESTAMP" />
@@ -70,7 +71,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    file_hash, file_name, file_type, create_date_time, update_date_time, create_user_id, 
+    file_hash,original_file_name, file_name, file_type, create_date_time, update_date_time, create_user_id, 
     create_user_name, version
   </sql>
   
@@ -86,10 +87,10 @@
   </delete>
   
   <insert id="insert" parameterType="com.kurumi.pojo.ScanImage" >
-    insert into scan_image (file_hash, file_name, file_type, 
+    insert into scan_image (file_hash, original_file_name,file_name, file_type, 
       create_date_time, update_date_time, create_user_id, 
       create_user_name, version)
-    values (#{fileHash,jdbcType=VARCHAR}, #{fileName,jdbcType=VARCHAR}, #{fileType,jdbcType=VARCHAR}, 
+    values (#{fileHash,jdbcType=VARCHAR},#{originalFileName,jdbcType=VARCHAR},  #{fileName,jdbcType=VARCHAR}, #{fileType,jdbcType=VARCHAR}, 
       #{createDateTime,jdbcType=TIMESTAMP}, #{updateDateTime,jdbcType=TIMESTAMP}, #{createUserId,jdbcType=VARCHAR}, 
       #{createUserName,jdbcType=VARCHAR}, #{version,jdbcType=INTEGER})
   </insert>
@@ -98,6 +99,9 @@
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="fileHash != null" >
         file_hash,
+      </if>
+      <if test="originalFileName != null" >
+        original_file_name,
       </if>
       <if test="fileName != null" >
         file_name,
@@ -125,6 +129,10 @@
       <if test="fileHash != null" >
         #{fileHash,jdbcType=VARCHAR},
       </if>
+      <if test="originalFileName != null" >
+        #{originalFileName,jdbcType=VARCHAR},
+      </if>
+      
       <if test="fileName != null" >
         #{fileName,jdbcType=VARCHAR},
       </if>
@@ -155,6 +163,9 @@
       <if test="fileName != null" >
         file_name = #{fileName,jdbcType=VARCHAR},
       </if>
+      <if test="originalFileName != null" >
+        original_file_name = #{originalFileName,jdbcType=VARCHAR},
+      </if>
       <if test="fileType != null" >
         file_type = #{fileType,jdbcType=VARCHAR},
       </if>
@@ -179,6 +190,7 @@
   <update id="updateByPrimaryKey" parameterType="com.kurumi.pojo.ScanImage" >
     update scan_image
     set file_name = #{fileName,jdbcType=VARCHAR},
+    original_file_name = #{originalFileName,jdbcType=VARCHAR},
       file_type = #{fileType,jdbcType=VARCHAR},
       create_date_time = #{createDateTime,jdbcType=TIMESTAMP},
       update_date_time = #{updateDateTime,jdbcType=TIMESTAMP},

@@ -28,19 +28,21 @@ public class DiseaseDiagInfo {
 	private DiseaseDiagRecord mainDiagRecord = new DiseaseDiagRecord();
 	
 	/**
+	 * 疾病诊断明细集合
+	 */
+	private List<DiseaseDiagRecord> diseaseDiagRecords = new ArrayList<DiseaseDiagRecord>();
+	
+	/**
 	 * 损伤、中毒外部原因
 	 */
-	private DiseaseDiagRecord damageAndVenenationDiagRecord = new DiseaseDiagRecord();
+	private List<DiseaseDiagRecord> damageAndVenenationDiagRecords = new ArrayList<DiseaseDiagRecord>();
 	
 	/**
 	 * 病理诊断
 	 */
-	private DiseaseDiagRecord pathologyDiagRecord = new DiseaseDiagRecord();
+	private List<PathologyDiseaseDiagRecord> pathologyDiagRecords = new ArrayList<PathologyDiseaseDiagRecord>();
 	
-	/**
-	 * 疾病诊断明细集合
-	 */
-	private List<DiseaseDiagRecord> diseaseDiagRecords = new ArrayList<DiseaseDiagRecord>();
+	
 
 	@JsonIgnore
 	public void clearEmpty(){
@@ -79,22 +81,21 @@ public class DiseaseDiagInfo {
 		this.mainDiagRecord = mainDiagRecord;
 	}
 
-	public DiseaseDiagRecord getDamageAndVenenationDiagRecord() {
-		return damageAndVenenationDiagRecord;
+
+	public List<DiseaseDiagRecord> getDamageAndVenenationDiagRecords() {
+		return damageAndVenenationDiagRecords;
 	}
 
-	public void setDamageAndVenenationDiagRecord(DiseaseDiagRecord damageAndVenenationDiagRecord) {
-		this.damageAndVenenationDiagRecord = damageAndVenenationDiagRecord;
-	}
-	
-	
-
-	public DiseaseDiagRecord getPathologyDiagRecord() {
-		return pathologyDiagRecord;
+	public void setDamageAndVenenationDiagRecords(List<DiseaseDiagRecord> damageAndVenenationDiagRecords) {
+		this.damageAndVenenationDiagRecords = damageAndVenenationDiagRecords;
 	}
 
-	public void setPathologyDiagRecord(DiseaseDiagRecord pathologyDiagRecord) {
-		this.pathologyDiagRecord = pathologyDiagRecord;
+	public List<PathologyDiseaseDiagRecord> getPathologyDiagRecords() {
+		return pathologyDiagRecords;
+	}
+
+	public void setPathologyDiagRecords(List<PathologyDiseaseDiagRecord> pathologyDiagRecords) {
+		this.pathologyDiagRecords = pathologyDiagRecords;
 	}
 
 	public List<DiseaseDiagRecord> getDiseaseDiagRecords() {

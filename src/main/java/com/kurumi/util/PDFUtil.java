@@ -14,18 +14,23 @@ import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.Font.FontFamily;
 import com.itextpdf.text.Image;
 import com.itextpdf.text.PageSize;
+import com.itextpdf.text.Phrase;
 import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.AcroFields;
 import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.PdfAction;
+import com.itextpdf.text.pdf.PdfAnnotation;
 import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfCopy;
 import com.itextpdf.text.pdf.PdfImportedPage;
 import com.itextpdf.text.pdf.PdfOutline;
 import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.PdfStamper;
+import com.itextpdf.text.pdf.PdfString;
 import com.itextpdf.text.pdf.PdfWriter;
 
 public class PDFUtil {
@@ -120,7 +125,7 @@ public class PDFUtil {
 			List<String> pageTypeCodes = new ArrayList<String>();
 			for (Map<String, Object> sourceFile : imageFiles) {
 				String fileType = (String)sourceFile.get("file_type");
-				if(fileType.equalsIgnoreCase("PNG")|| fileType.equalsIgnoreCase("JPG")||fileType.equalsIgnoreCase("JPEG")){
+				if(fileType.equalsIgnoreCase("PNG")|| fileType.equalsIgnoreCase("JPG")||fileType.equalsIgnoreCase("JPEG") || fileType.equalsIgnoreCase("TIF") || fileType.equalsIgnoreCase("TIFF")){
 					
 					String imagePath = imageBasicPath + GuidUtil.getLocalPath((String)sourceFile.get("file_hash"))+"\\"
 		 					+(String)sourceFile.get("file_name")+"."+fileType;
@@ -146,14 +151,16 @@ public class PDFUtil {
 						imageWidth=image.getScaledWidth();
 					}
 					/*image.scalePercent(100);*/
-					image.setAlignment(Image.ALIGN_CENTER);
+					image.setAlignment(Image.TOP);
+					image.setAbsolutePosition(0, 0);
 					document.newPage();
 					if(!pageTypes.containsKey(pageTypeCode)){
-						document.add(new Chunk(pageTypeName).setLocalDestination(pageTypeCode));
+						document.add(new Chunk(pageTypeName,new Font(FontFamily.UNDEFINED, 18, 0, BaseColor.WHITE)).setLocalDestination(pageTypeCode));
+						
+						
 						pageTypes.put(pageTypeCode, pageTypeName);
 						pageTypeCodes.add(pageTypeCode);
 					}
-					
 					document.add(image);
 				}
 				/*Image image = Image.getInstance(BarCodeUtil.generate("123456789"));*/
@@ -222,25 +229,32 @@ public class PDFUtil {
 			PdfWriter writer = PdfWriter.getInstance(document, out);
 			// 打开文档
 			document.open();
-			PdfReader pdfReader = new PdfReader(pageIndexPDFPath);
-			// 打开文档
-			document.open();
-			PdfContentByte cb = writer.getDirectContent();  
-			int pageOfCurrentReaderPDF = 0;
-			while (pageOfCurrentReaderPDF < pdfReader.getNumberOfPages()) {  
-    	        document.newPage();
-    	        pageOfCurrentReaderPDF++;  
-                PdfImportedPage page = writer.getImportedPage(pdfReader, pageOfCurrentReaderPDF);
-                cb.addTemplate(page, 0, 0);
-                
-    	    }
+			if(pageIndexPDFPath != null){
+				File pageIndexPDFFile = new File(pageIndexPDFPath);
+				if(pageIndexPDFFile.exists()){
+					PdfReader pdfReader = new PdfReader(pageIndexPDFPath);
+					// 打开文档
+					document.open();
+					PdfContentByte cb = writer.getDirectContent();  
+					int pageOfCurrentReaderPDF = 0;
+					while (pageOfCurrentReaderPDF < pdfReader.getNumberOfPages()) {  
+		    	        document.newPage();
+		    	        pageOfCurrentReaderPDF++;  
+		                PdfImportedPage page = writer.getImportedPage(pdfReader, pageOfCurrentReaderPDF);
+		                cb.addTemplate(page, 0, 0);
+		                
+		    	    }
+				}
+			}
+			
+			
 			
 			// 读取一个图片
 			/*Map<String, String> pageTypes = new HashMap<String, String>();
 			List<String> pageTypeCodes = new ArrayList<String>();*/
 			for (Map<String, Object> sourceFile : imageFiles) {
 				String fileType = (String)sourceFile.get("file_type");
-				if(fileType.equalsIgnoreCase("PNG")|| fileType.equalsIgnoreCase("JPG")||fileType.equalsIgnoreCase("JPEG")){
+				if(fileType.equalsIgnoreCase("PNG")|| fileType.equalsIgnoreCase("JPG")||fileType.equalsIgnoreCase("JPEG") || fileType.equalsIgnoreCase("TIF")|| fileType.equalsIgnoreCase("TIFF")){
 					
 					String imagePath = imageBasicPath + GuidUtil.getLocalPath((String)sourceFile.get("file_hash"))+"\\"
 		 					+(String)sourceFile.get("file_name")+"."+fileType;
@@ -360,6 +374,7 @@ public class PDFUtil {
 				String patientName = (String) basicInfo.get("patientName");
 				if (patientName != null) {
 					form.setField("patientName", patientName);
+					
 				}
 				
 
@@ -1206,8 +1221,6 @@ public class PDFUtil {
 				if(!parentFile.exists()){
 					parentFile.mkdirs();
 				}
-			}else{
-				return;
 			}
             out = new FileOutputStream(newPDFPath);// 输出流 
             bos = getPDFStreamByTemplate(data, pageIndexTemplatePDFPath, new HashMap<String, Object>()); 
@@ -1220,9 +1233,13 @@ public class PDFUtil {
             PdfReader pf =new PdfReader(bos.toByteArray());
             for(int index =1;index<=pf.getNumberOfPages();index++){
             	PdfImportedPage importPage = copy.getImportedPage(pf, index);
-            	
+            	copy.addAnnotation(new PdfAnnotation(copy, 0, 0, 0, 0,new PdfString( "text"+index), new PdfString( "text"+index)));
                 copy.addPage(importPage);
             }
+            PdfContentByte cb = copy.getDirectContent();
+			PdfOutline root = cb.getRootOutline();
+			PdfOutline oline1 = new PdfOutline(root, PdfAction.gotoLocalPage("text1", false),"text1");
+			PdfOutline oline2 = new PdfOutline(root, PdfAction.gotoLocalPage("text2", false),"text2");
             doc.close();
         }  catch (IOException e) {  
             e.printStackTrace();

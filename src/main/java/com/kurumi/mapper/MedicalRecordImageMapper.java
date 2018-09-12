@@ -60,5 +60,9 @@ public interface MedicalRecordImageMapper {
 	 */
 	int getUnPaginationImageCountByVisitGuid(@Param("visitGuid") String visitGuid);
     
-	
+	/**
+	 * 获取客观数据病案图片
+	 * @return
+	 */
+	List<Map<String,Object>> getObjectiveImageFilesByVisitGuid(@Param("visitGuid") String visitGuid,@Param("list") List<String> list);
 }

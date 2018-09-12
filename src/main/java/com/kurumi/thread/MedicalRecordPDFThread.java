@@ -24,7 +24,9 @@ public class MedicalRecordPDFThread extends Thread {
 		// TODO Auto-generated method stub
 		if(medicalRecordResource != null){
 			try {
-				if(medicalRecordResource.getCurrentVersion().equalsIgnoreCase("role_version_1.1")){
+				if(medicalRecordResource.getCurrentVersion() == null){
+					PDFUtil.createPdf(medicalRecordResource.getImageRecources(),medicalRecordResource.getImageBasicPath(), medicalRecordResource.getNewPDFPath());
+				}else if(medicalRecordResource.getCurrentVersion().equalsIgnoreCase("role_version_1.1")){
 					PDFUtil.createPdf(medicalRecordResource.getImageRecources(),medicalRecordResource.getImageBasicPath(), medicalRecordResource.getNewPDFPath());
 				}else if(medicalRecordResource.getCurrentVersion().equalsIgnoreCase("role_version_2.1")){
 					PDFUtil.createPdf(medicalRecordResource.getImageRecources(),medicalRecordResource.getImageBasicPath(),medicalRecordResource.getPageIndexPDFPath(),medicalRecordResource.getNewPDFPath());

@@ -6,6 +6,7 @@
     <result column="file_hash" property="fileHash" jdbcType="VARCHAR" />
     <result column="visit_guid" property="visitGuid" jdbcType="VARCHAR" />
     <result column="mr_page_type_code" property="mrPageTypeCode" jdbcType="VARCHAR" />
+    <result column="mr_page_type_name" property="mrPageTypeName" jdbcType="VARCHAR" />
     <result column="create_user_id" property="createUserId" jdbcType="VARCHAR" />
     <result column="create_user_name" property="createUserName" jdbcType="VARCHAR" />
     <result column="create_date_time" property="createDateTime" jdbcType="TIMESTAMP" />
@@ -73,7 +74,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, file_hash, visit_guid, mr_page_type_code, create_user_id, create_user_name, create_date_time, 
+    id, file_hash, visit_guid, mr_page_type_code,mr_page_type_name, create_user_id, create_user_name, create_date_time, 
     last_user_id, last_user_name, last_date_time, version
   </sql>
   
@@ -90,11 +91,11 @@
  
   <insert id="insert" parameterType="com.kurumi.pojo.MedicalRecordImage" >
     insert into medical_record_image (id, file_hash, visit_guid, 
-      mr_page_type_code, create_user_id, create_user_name, 
+      mr_page_type_code,mr_page_type_name, create_user_id, create_user_name, 
       create_date_time, last_user_id, last_user_name, 
       last_date_time, version)
     values (#{id,jdbcType=INTEGER}, #{fileHash,jdbcType=VARCHAR}, #{visitGuid,jdbcType=VARCHAR}, 
-      #{mrPageTypeCode,jdbcType=VARCHAR}, #{createUserId,jdbcType=VARCHAR}, #{createUserName,jdbcType=VARCHAR}, 
+      #{mrPageTypeCode,jdbcType=VARCHAR},  #{mrPageTypeName,jdbcType=VARCHAR}, #{createUserId,jdbcType=VARCHAR}, #{createUserName,jdbcType=VARCHAR}, 
       #{createDateTime,jdbcType=TIMESTAMP}, #{lastUserId,jdbcType=VARCHAR}, #{lastUserName,jdbcType=VARCHAR}, 
       #{lastDateTime,jdbcType=TIMESTAMP}, #{version,jdbcType=INTEGER})
   </insert>
@@ -112,6 +113,9 @@
       </if>
       <if test="mrPageTypeCode != null" >
         mr_page_type_code,
+      </if>
+      <if test="mrPageTypeName != null" >
+        mr_page_type_name,
       </if>
       <if test="createUserId != null" >
         create_user_id,
@@ -147,6 +151,9 @@
       </if>
       <if test="mrPageTypeCode != null" >
         #{mrPageTypeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="mrPageTypeName != null" >
+        #{mrPageTypeName,jdbcType=VARCHAR},
       </if>
       <if test="createUserId != null" >
         #{createUserId,jdbcType=VARCHAR},
@@ -186,6 +193,9 @@
       <if test="mrPageTypeCode != null" >
         mr_page_type_code = #{mrPageTypeCode,jdbcType=VARCHAR},
       </if>
+      <if test="mrPageTypeName != null" >
+        mr_page_type_name = #{mrPageTypeName,jdbcType=VARCHAR},
+      </if>
       <if test="createUserId != null" >
         create_user_id = #{createUserId,jdbcType=VARCHAR},
       </if>
@@ -215,6 +225,7 @@
     set file_hash = #{fileHash,jdbcType=VARCHAR},
       visit_guid = #{visitGuid,jdbcType=VARCHAR},
       mr_page_type_code = #{mrPageTypeCode,jdbcType=VARCHAR},
+       mr_page_type_name = #{mrPageTypeName,jdbcType=VARCHAR},
       create_user_id = #{createUserId,jdbcType=VARCHAR},
       create_user_name = #{createUserName,jdbcType=VARCHAR},
       create_date_time = #{createDateTime,jdbcType=TIMESTAMP},
@@ -273,7 +284,7 @@
   
   <select id="getImageFilesByVisitGuidAndPrinterTypeCode" resultType="map">
   	select 
-  		file.mr_page_type_code,scan_image.file_hash,scan_image.file_name,scan_image.file_type,page_type.sort_code,page_type.name as page_type_name
+  		file.mr_page_type_code,original_file_name,scan_image.file_hash,scan_image.file_name,scan_image.file_type,page_type.sort_code,page_type.name as page_type_name
   	 from 
   	 	medical_record_image file
   	 inner join scan_image
@@ -285,7 +296,7 @@
   	 inner join mr_printer_type printer_type
   	 on printer_range.mr_printer_type_id = printer_type.id
   	 where file.visit_guid=#{visitGuid} and printer_type.code=${printerTypeCode} 
-  	 order by page_type.sort_code
+  	 order by page_type.sort_code,original_file_name
   </select>
   
    <select id="getImageFileByFileHash" resultType="map">
@@ -320,5 +331,24 @@
     where  mr_page_type_code is null and visit_guid = #{visitGuid,jdbcType=VARCHAR}
   </select>
   
+  
+  <select id="getObjectiveImageFilesByVisitGuid" resultType="map">
+  	select 
+  		distinct file.mr_page_type_code,original_file_name,scan_image.file_hash,scan_image.file_name,scan_image.file_type,page_type.sort_code,page_type.name as page_type_name
+  	 from 
+  	 	medical_record_image file
+  	 inner join scan_image
+  	 on file.file_hash = scan_image.file_hash
+  	 left join mr_page_type page_type
+  	 on file.mr_page_type_code = page_type.code
+  	 inner join mr_printer_range printer_range
+  	 on printer_range.mr_page_type_id = page_type.id
+  	 
+  	 where file.visit_guid=#{visitGuid} and page_type.data_viewpoint_code in 
+  	 <foreach item="item" index="index" collection="list" open="(" separator="," close=")"> 
+	    #{item} 
+	</foreach>
+  	 order by page_type.sort_code,original_file_name
+  </select>
   
 </mapper>

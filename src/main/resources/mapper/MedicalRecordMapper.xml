@@ -597,8 +597,17 @@
 		count(1)
 		from
 		medical_record note
-		where note.mr_id=#{mrId} or (note.visit_number = #{visitNumber} and
-		note.only_id=#{onlyId})
+		where note.only_id=#{onlyId} or (note.visit_number = #{visitNumber} and
+		note.mr_id=#{mrId})
+	</select>
+	
+	<select id="getVisitGuidByMrIdAndVisitNumber" resultType="String">
+		select
+		visit_guid
+		from
+		medical_record note
+		where (note.visit_number = #{visitNumber} and
+		note.mr_id=#{mrId})
 	</select>
 
 

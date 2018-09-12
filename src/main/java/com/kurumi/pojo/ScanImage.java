@@ -4,6 +4,7 @@ import java.util.Date;
 
 public class ScanImage {
     private String fileHash;
+    private String originalFileName;
 
     private String fileName;
 
@@ -82,4 +83,12 @@ public class ScanImage {
     public void setVersion(Integer version) {
         this.version = version;
     }
+    
+    public String getOriginalFileName() {
+		return originalFileName;
+	}
+
+	public void setOriginalFileName(String originalFileName) {
+		this.originalFileName = originalFileName;
+	}
 }

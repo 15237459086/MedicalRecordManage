@@ -32,6 +32,7 @@ import com.kurumi.pojo.coding.CostInfo;
 import com.kurumi.pojo.coding.CureInfo;
 import com.kurumi.pojo.coding.DiseaseDiagInfo;
 import com.kurumi.pojo.coding.DiseaseDiagRecord;
+import com.kurumi.pojo.coding.IntensiveCareInfo;
 import com.kurumi.pojo.coding.NurseInfo;
 import com.kurumi.pojo.coding.OperateInfo;
 import com.kurumi.query.MedicalRecordQuery;
@@ -118,7 +119,7 @@ public class MedicalRecordCodingController {
 		
 		String jsonData = FileUtil.readFile(filePath, fileName);*/
 		List<String> jsonDatas = medicalRecordCodingService.getMedicalRecordJsonByVisitGuid(visitGuid);
-		Map<String, Object> basicInfo = new HashMap<String, Object>();
+		Map<String, Object> basicInfo = null;
 		if(!jsonDatas.isEmpty()){
 			Map<String, Object> jsonMap = new HashMap<String, Object>();
 			jsonMap = JsonUtil.jsonToPojo(jsonDatas.get(0), Map.class);
@@ -575,6 +576,84 @@ public class MedicalRecordCodingController {
 		return "coding/edit_nurse_info";
 	}
 	
+	@GetMapping("/edit_intensive_care_info_form")
+	public String editIntensiveCareInfoForm(String visitGuid,Model model){
+		Map<String, List<Map<String, Object>>> baseInfo = baseInfoService.getBaseDataOfIntensiveCareInfo();
+		String baseInfoJson = JsonUtil.objectToJson(baseInfo);
+		model.addAttribute("baseInfoJson", baseInfoJson);
+		model.addAttribute("visitGuid", visitGuid);
+		List<String> jsonDatas = medicalRecordCodingService.getMedicalRecordJsonByVisitGuid(visitGuid);
+		
+		Map<String, Object> intensiveCareInfo = new HashMap<String, Object>();
+		if(!jsonDatas.isEmpty()){
+			Map<String, Object> jsonMap = JsonUtil.jsonToPojo(jsonDatas.get(0), Map.class);
+			intensiveCareInfo = (Map<String, Object>)jsonMap.get("intensiveCareInfo");
+			if(intensiveCareInfo == null){
+				intensiveCareInfo = new HashMap<String, Object>();
+			}
+		}
+		
+		String intensiveCareInfoJson = JsonUtil.objectToJson(intensiveCareInfo);
+		model.addAttribute("intensiveCareInfo", intensiveCareInfo);
+		model.addAttribute("intensiveCareInfoJson", intensiveCareInfoJson);
+		return "coding/edit_intensive_care_info";
+	}
+	
+	
+	@SuppressWarnings("unchecked")
+	@PostMapping("/edit_intensive_care_info")
+	public String editIntensiveCareInfo(IntensiveCareInfo intensiveCareInfo,HttpServletRequest request,Model model){
+		try {
+			
+			String filePath = myConfig.getJsonRecourcePath() + StringUtil.getLocalPath(intensiveCareInfo.getVisitGuid());
+			String versionFilePath = myConfig.getJsonRecourcePath()+ StringUtil.getLocalPath(intensiveCareInfo.getVisitGuid())+"version\\";
+			String fileName = intensiveCareInfo.getVisitGuid() + ".json";
+			String versionFileName = intensiveCareInfo.getVisitGuid()+"-" + DateUtil.dateFormat("yyyyMMddHHmmssssss", new Date()) + ".json";
+			
+			/*String jsonData = FileUtil.readFile(filePath, fileName);*/
+			List<String> jsonDatas = medicalRecordCodingService.getMedicalRecordJsonByVisitGuid(intensiveCareInfo.getVisitGuid());
+			Map<String, Object> jsonMap = new HashMap<String, Object>();
+			if(!jsonDatas.isEmpty()){
+				jsonMap = JsonUtil.jsonToPojo(jsonDatas.get(0), Map.class);
+ 				if(jsonMap == null){
+					jsonMap = new HashMap<String, Object>();
+				}
+			}
+ 			Subject subject=SecurityUtils.getSubject();
+			Session session = subject.getSession();
+			Map<String, Object> currentUser = (Map<String, Object>)session.getAttribute("currentUser");
+			String userCode =(String)currentUser.get("user_code");
+			String userName =(String)currentUser.get("user_name");
+ 			jsonMap.put("userCode", userCode);
+ 			jsonMap.put("userName", userName);
+ 			jsonMap.put("intensiveCareInfo", intensiveCareInfo);
+ 			String jsonMapJson = JsonUtil.objectToJson(jsonMap);
+ 			FileUtil.createOrEditFile(jsonMapJson, filePath, fileName);
+ 			FileUtil.createOrEditFile(jsonMapJson, versionFilePath, versionFileName);
+  			medicalRecordCodingService.editIntensiveCareInfo(intensiveCareInfo.getVisitGuid(), intensiveCareInfo, jsonMap);
+  			jsonMap = JsonUtil.jsonToPojo(jsonMapJson, Map.class);
+ 			model.addAttribute("visitGuid", intensiveCareInfo.getVisitGuid());
+			
+ 			Map<String, Object> intensiveCareInfoMap = (Map<String, Object>)jsonMap.get("intensiveCareInfo");
+			String intensiveCareInfoJson = JsonUtil.objectToJson(intensiveCareInfoMap);
+			model.addAttribute("intensiveCareInfo", intensiveCareInfoMap);
+			
+			model.addAttribute("intensiveCareInfoJson",intensiveCareInfoJson);
+			RespondResult respondResult = new RespondResult(true,"200","保存成功",null);
+			Map<String, List<Map<String, Object>>> baseInfo = baseInfoService.getBaseDataOfIntensiveCareInfo();
+			String baseInfoJson = JsonUtil.objectToJson(baseInfo);
+			model.addAttribute("baseInfoJson", baseInfoJson);
+			model.addAttribute("respondResultJson", JsonUtil.objectToJson(respondResult));
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			RespondResult respondResult = new RespondResult(false,"500","保存失败",null);
+			model.addAttribute("respondResultJson", JsonUtil.objectToJson(respondResult));
+		}
+		return "coding/edit_intensive_care_info";
+	}
+	
 	@GetMapping("/edit_cost_info_form")
 	public String editCostInfoForm(String visitGuid,Model model){
 		model.addAttribute("visitGuid", visitGuid);
@@ -766,8 +845,10 @@ public class MedicalRecordCodingController {
 				}
 				
 			}
-			Map<String, Object> signatureMedicalWorks = baseInfoService.getSignatureMedicalWorks(medicalWorkerCodes);
-			
+			Map<String, Object> signatureMedicalWorks = new HashMap<String, Object>();
+			if(!medicalWorkerCodes.isEmpty()){
+				signatureMedicalWorks = baseInfoService.getSignatureMedicalWorks(medicalWorkerCodes);
+			}
 			baos = PDFUtil.getPDFStreamByTemplate(jsonMap, myConfig.getPageIndexpPdfTemplatePath(),signatureMedicalWorks);
 			ByteArrayOutputStream out = WaterMarkUtil.getOutputStreamOfWterMarkByText(baos, (String)currentUser.get("user_code"));
 			/*ByteArrayOutputStream out = WaterMarkUtil.getOutputStreamOfWterMarkByIcon(baos, "D:\\publics\\medical_record\\water_icon\\305logo.jpg");*/

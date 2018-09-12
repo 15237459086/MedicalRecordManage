@@ -17,7 +17,9 @@ public interface BaseInfoMapper {
 	 * 依据医院id获取医疗科室
 	 * @return
 	 */
-	List<Map<String,Object>> getMedicalDeptByHospitalId(@Param("hospitalId")Integer hospitalId);
+	List<Map<String,Object>> getMedicalDeptByHospitalCode(@Param("hospitalCode")String hospitalCode);
+	
+	
 	
 	/**
 	 * 依据编号获取医疗科室

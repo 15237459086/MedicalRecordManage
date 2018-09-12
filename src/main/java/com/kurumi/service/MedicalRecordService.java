@@ -64,6 +64,8 @@ public interface MedicalRecordService {
 	 */
 	int checkMeditalRecordUniq(String onlyId,String mrId,Integer visitNumber);
 	
+	List<String> getVisitGuidByMrIdAndVisitNumber(String mrId,Integer visitNumber);
+	
 	int insertMeditalRecord(MedicalRecord medicalRecord);
 	
 	/**

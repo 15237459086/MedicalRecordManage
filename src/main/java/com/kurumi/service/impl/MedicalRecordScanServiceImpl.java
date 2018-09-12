@@ -90,6 +90,7 @@ public class MedicalRecordScanServiceImpl implements MedicalRecordScanService {
 			String newFileName = hashStr.substring(8)+fileSizeHashStr.substring(0, 5);
 			scanImage.setFileHash(fileHash);
 			scanImage.setFileName(newFileName);
+			scanImage.setOriginalFileName(originalFilename);
 			scanImage.setFileType(fileSuffixes);
 			scanImages.add(scanImage);
 			//文件保存路径

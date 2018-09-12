@@ -708,4 +708,6 @@ public class MedicalRecordController {
 		}
 		
 	}
+	
+	
 }

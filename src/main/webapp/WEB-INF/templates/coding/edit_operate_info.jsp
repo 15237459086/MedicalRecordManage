@@ -129,7 +129,7 @@ String respondResultJson= (String)request.getAttribute("respondResultJson");
 					</td>
 					<td class="tdLabel_7">麻醉医师</td>
 					<td class="tdLabel_8">
-						<input type="hidden" name="operateRecords[0].operateWorkers[0].professionTitleCode" value="mzys"/>
+						<input type="hidden" name="operateRecords[0].operateWorkers[0].professionTitleCode" value="A5002"/>
 						<input type="hidden" name="operateRecords[0].operateWorkers[0].professionTitleName" value="麻醉医师"/>
 						<input type="text" name="operateRecords[0].operateWorkers[0].medicalWorkerName"/>
 						<input type="hidden" name="operateRecords[0].operateWorkers[0].medicalWorkerCode"/>
@@ -138,21 +138,21 @@ String respondResultJson= (String)request.getAttribute("respondResultJson");
 				<tr>
 					<td class="tdLabel_7">手术医师</td>
 					<td class="tdLabel_8">
-						<input type="hidden" name="operateRecords[0].operateWorkers[1].professionTitleCode" value="ssys"/>
+						<input type="hidden" name="operateRecords[0].operateWorkers[1].professionTitleCode" value="A5001"/>
 						<input type="hidden" name="operateRecords[0].operateWorkers[1].professionTitleName" value="手术医师"/>
 						<input type="text" name="operateRecords[0].operateWorkers[1].medicalWorkerName"/>
 						<input type="hidden" name="operateRecords[0].operateWorkers[1].medicalWorkerCode"/>
 					</td>
 					<td class="tdLabel_7">Ⅰ助</td>
 					<td class="tdLabel_8">
-						<input type="hidden" name="operateRecords[0].operateWorkers[2].professionTitleCode" value="dyzs"/>
+						<input type="hidden" name="operateRecords[0].operateWorkers[2].professionTitleCode" value="A5003"/>
 						<input type="hidden" name="operateRecords[0].operateWorkers[2].professionTitleName" value="第一助手"/>
 						<input type="text" name="operateRecords[0].operateWorkers[2].medicalWorkerName"/>
 						<input type="hidden" name="operateRecords[0].operateWorkers[2].medicalWorkerCode"/>
 					</td>
 					<td class="tdLabel_7">Ⅱ助</td>
 					<td class="tdLabel_8">
-						<input type="hidden" name="operateRecords[0].operateWorkers[3].professionTitleCode" value="dszs"/>
+						<input type="hidden" name="operateRecords[0].operateWorkers[3].professionTitleCode" value="A5004"/>
 						<input type="hidden" name="operateRecords[0].operateWorkers[3].professionTitleName" value="第二助手"/>
 						<input type="text" name="operateRecords[0].operateWorkers[3].medicalWorkerName"/>
 						<input type="hidden" name="operateRecords[0].operateWorkers[3].medicalWorkerCode"/>

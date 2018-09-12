@@ -33,8 +33,10 @@ import com.kurumi.pojo.coding.CostInfo;
 import com.kurumi.pojo.coding.CureInfo;
 import com.kurumi.pojo.coding.DiseaseDiagInfo;
 import com.kurumi.pojo.coding.DiseaseDiagRecord;
+import com.kurumi.pojo.coding.IntensiveCareInfo;
 import com.kurumi.pojo.coding.NurseInfo;
 import com.kurumi.pojo.coding.OperateInfo;
+import com.kurumi.pojo.coding.PathologyDiseaseDiagRecord;
 import com.kurumi.pojo.resource.MedicalRecordResource;
 import com.kurumi.query.MedicalRecordQuery;
 import com.kurumi.query.MedicalRecordSearchingQuery;
@@ -625,31 +627,37 @@ public class MedicalRecordCodingServiceImpl implements MedicalRecordCodingServic
 				medicalRecordCodingMapper.insertMedicalRecordDiseaseDiag(mainDiseaseDiag);
 			}
 			
-			DiseaseDiagRecord damageAndVenenationDiagRecord = diseaseDiagInfo.getDamageAndVenenationDiagRecord();
-			MedicalRecordDiseaseDiag damageAndVenenationDiseaseDiag = new MedicalRecordDiseaseDiag();
-			damageAndVenenationDiseaseDiag.setVisitGuid(visitGuid);
-			damageAndVenenationDiseaseDiag.setDiagTypeCode(damageAndVenenationDiagRecord.getDiagTypeCode());
-			damageAndVenenationDiseaseDiag.setDiagTypeName(damageAndVenenationDiagRecord.getDiagTypeName());
-			damageAndVenenationDiseaseDiag.setOriginalDiseaseDiagCode(damageAndVenenationDiagRecord.getDiseaseDiagOriginalCode());
-			damageAndVenenationDiseaseDiag.setOriginalDiseaseDiagName(damageAndVenenationDiagRecord.getDiseaseDiagOriginalDesc());
-			damageAndVenenationDiseaseDiag.setDiseaseDiagCode(damageAndVenenationDiagRecord.getDiseaseDiagCode());
-			damageAndVenenationDiseaseDiag.setDiseaseDiagName(damageAndVenenationDiagRecord.getDiseaseDiagName());
-			if(damageAndVenenationDiseaseDiag.getDiagTypeCode() != null && damageAndVenenationDiseaseDiag.getDiseaseDiagCode() != null){
-				medicalRecordCodingMapper.insertMedicalRecordDiseaseDiag(damageAndVenenationDiseaseDiag);
+			List<DiseaseDiagRecord> damageAndVenenationDiagRecords = diseaseDiagInfo.getDamageAndVenenationDiagRecords();
+			for (DiseaseDiagRecord damageAndVenenationDiagRecord : damageAndVenenationDiagRecords) {
+				MedicalRecordDiseaseDiag damageAndVenenationDiseaseDiag = new MedicalRecordDiseaseDiag();
+				damageAndVenenationDiseaseDiag.setVisitGuid(visitGuid);
+				damageAndVenenationDiseaseDiag.setDiagTypeCode(damageAndVenenationDiagRecord.getDiagTypeCode());
+				damageAndVenenationDiseaseDiag.setDiagTypeName(damageAndVenenationDiagRecord.getDiagTypeName());
+				damageAndVenenationDiseaseDiag.setOriginalDiseaseDiagCode(damageAndVenenationDiagRecord.getDiseaseDiagOriginalCode());
+				damageAndVenenationDiseaseDiag.setOriginalDiseaseDiagName(damageAndVenenationDiagRecord.getDiseaseDiagOriginalDesc());
+				damageAndVenenationDiseaseDiag.setDiseaseDiagCode(damageAndVenenationDiagRecord.getDiseaseDiagCode());
+				damageAndVenenationDiseaseDiag.setDiseaseDiagName(damageAndVenenationDiagRecord.getDiseaseDiagName());
+				if(damageAndVenenationDiseaseDiag.getDiagTypeCode() != null && damageAndVenenationDiseaseDiag.getDiseaseDiagCode() != null){
+					medicalRecordCodingMapper.insertMedicalRecordDiseaseDiag(damageAndVenenationDiseaseDiag);
+				}
 			}
 			
-			DiseaseDiagRecord pathologyDiagRecord = diseaseDiagInfo.getPathologyDiagRecord();
-			MedicalRecordDiseaseDiag pathologyDiseaseDiag = new MedicalRecordDiseaseDiag();
-			pathologyDiseaseDiag.setVisitGuid(visitGuid);
-			pathologyDiseaseDiag.setDiagTypeCode(pathologyDiagRecord.getDiagTypeCode());
-			pathologyDiseaseDiag.setDiagTypeName(pathologyDiagRecord.getDiagTypeName());
-			pathologyDiseaseDiag.setOriginalDiseaseDiagCode(pathologyDiagRecord.getDiseaseDiagOriginalCode());
-			pathologyDiseaseDiag.setOriginalDiseaseDiagName(pathologyDiagRecord.getDiseaseDiagOriginalDesc());
-			pathologyDiseaseDiag.setDiseaseDiagCode(pathologyDiagRecord.getDiseaseDiagCode());
-			pathologyDiseaseDiag.setDiseaseDiagName(pathologyDiagRecord.getDiseaseDiagName());
-			if(pathologyDiseaseDiag.getDiagTypeCode() != null && pathologyDiseaseDiag.getDiseaseDiagCode() != null){
-				medicalRecordCodingMapper.insertMedicalRecordDiseaseDiag(pathologyDiseaseDiag);
+			
+			List<PathologyDiseaseDiagRecord> pathologyDiagRecords = diseaseDiagInfo.getPathologyDiagRecords();
+			for (PathologyDiseaseDiagRecord pathologyDiagRecord : pathologyDiagRecords) {
+				MedicalRecordDiseaseDiag pathologyDiseaseDiag = new MedicalRecordDiseaseDiag();
+				pathologyDiseaseDiag.setVisitGuid(visitGuid);
+				pathologyDiseaseDiag.setDiagTypeCode(pathologyDiagRecord.getDiagTypeCode());
+				pathologyDiseaseDiag.setDiagTypeName(pathologyDiagRecord.getDiagTypeName());
+				pathologyDiseaseDiag.setOriginalDiseaseDiagCode(pathologyDiagRecord.getDiseaseDiagOriginalCode());
+				pathologyDiseaseDiag.setOriginalDiseaseDiagName(pathologyDiagRecord.getDiseaseDiagOriginalDesc());
+				pathologyDiseaseDiag.setDiseaseDiagCode(pathologyDiagRecord.getDiseaseDiagCode());
+				pathologyDiseaseDiag.setDiseaseDiagName(pathologyDiagRecord.getDiseaseDiagName());
+				if(pathologyDiseaseDiag.getDiagTypeCode() != null && pathologyDiseaseDiag.getDiseaseDiagCode() != null){
+					medicalRecordCodingMapper.insertMedicalRecordDiseaseDiag(pathologyDiseaseDiag);
+				}
 			}
+			
 			List<DiseaseDiagRecord> diseaseDiagRecords = diseaseDiagInfo.getDiseaseDiagRecords();
 			for (DiseaseDiagRecord diseaseDiagRecord : diseaseDiagRecords) {
 				MedicalRecordDiseaseDiag otherDiseaseDiag = new MedicalRecordDiseaseDiag();
@@ -905,6 +913,23 @@ public class MedicalRecordCodingServiceImpl implements MedicalRecordCodingServic
 		return 1;
 	}
 
+	@Transactional(propagation=Propagation.REQUIRED)
+	@Override
+	public int editIntensiveCareInfo(String visitGuid,IntensiveCareInfo intensiveCareInfo, Map<String, Object> jsonMap) {
+		// TODO Auto-generated method stub
+		List<String> medicalRecordJsons = medicalRecordMapper.getMedicalRecordJsonByVisitGuid(StringUtil.handleJsonParam(visitGuid));
+		jsonMap.put("visitGuid", visitGuid);
+		String jsonMapJson = JsonUtil.objectToJson(jsonMap);
+		if(medicalRecordJsons.isEmpty()){
+			medicalRecordMapper.insertMedicalRecordJson(jsonMapJson);
+		}else{
+			medicalRecordMapper.deleteMedicalRecordJsonByVisitGuid(StringUtil.handleJsonParam(visitGuid));
+			medicalRecordMapper.insertMedicalRecordJson(jsonMapJson);
+		}
+		return 1;
+	}
+
+	
 	@Override
 	public List<Map<String, Object>> getDiseaseMedicalRecord(MedicalRecordSearchingQuery params) {
 		// TODO Auto-generated method stub

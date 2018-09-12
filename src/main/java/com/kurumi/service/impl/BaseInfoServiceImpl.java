@@ -77,9 +77,7 @@ public class BaseInfoServiceImpl implements BaseInfoService {
 		
 		List<Map<String, Object>> hospitals = baseInfoMapper.getHospitalByCode(this.hospitalCode);
 		List<Map<String, Object>> medicalDepts = new ArrayList<Map<String,Object>>();
-		if(!hospitals.isEmpty()){
-			medicalDepts = baseInfoMapper.getMedicalDeptByHospitalId(((Integer)hospitals.get(0).get("id")));
-		}
+		medicalDepts = baseInfoMapper.getMedicalDeptByHospitalCode(hospitalCode);
 		baseInfo.put("hospitals", hospitals);
 		baseInfo.put("medicalDepts", medicalDepts);
 		return baseInfo;
@@ -163,9 +161,7 @@ public class BaseInfoServiceImpl implements BaseInfoService {
 		
 		List<Map<String, Object>> hospitals = baseInfoMapper.getHospitalByCode(this.hospitalCode);
 		List<Map<String, Object>> medicalDepts = new ArrayList<Map<String,Object>>();
-		if(!hospitals.isEmpty()){
-			medicalDepts = baseInfoMapper.getMedicalDeptByHospitalId(((Integer)hospitals.get(0).get("id")));
-		}
+		medicalDepts = baseInfoMapper.getMedicalDeptByHospitalCode(hospitalCode);
 		baseInfo.put("hospitals", hospitals);
 		baseInfo.put("medicalDepts", medicalDepts);
 		return baseInfo;
@@ -181,7 +177,7 @@ public class BaseInfoServiceImpl implements BaseInfoService {
 	}
 
 	@Override
-	public Map<String, List<Map<String, Object>>> getBaseInfoOfHomePageIntensiveCare() {
+	public Map<String, List<Map<String, Object>>> getBaseDataOfIntensiveCareInfo() {
 		// TODO Auto-generated method stub
 		Map<String, List<Map<String, Object>>> baseInfo = new HashMap<String, List<Map<String,Object>>>();
 		List<Map<String, Object>> ICUTypes = baseInfoMapper.getICUTypes();
@@ -254,11 +250,8 @@ public class BaseInfoServiceImpl implements BaseInfoService {
 	@Override
 	public List<Map<String, Object>> getMedicalDepts() {
 		// TODO Auto-generated method stub
-		List<Map<String, Object>> hospitals = baseInfoMapper.getHospitalByCode(this.hospitalCode);
 		List<Map<String, Object>> medicalDepts = new ArrayList<Map<String,Object>>();
-		if(!hospitals.isEmpty()){
-			medicalDepts = baseInfoMapper.getMedicalDeptByHospitalId(((Integer)hospitals.get(0).get("id")));
-		}
+		medicalDepts = baseInfoMapper.getMedicalDeptByHospitalCode(hospitalCode);
 		return medicalDepts;
 	}
 
@@ -268,9 +261,8 @@ public class BaseInfoServiceImpl implements BaseInfoService {
 		Map<String, List<Map<String, Object>>> baseInfo = new HashMap<String, List<Map<String,Object>>>();
 		List<Map<String, Object>> hospitals = baseInfoMapper.getHospitalByCode(this.hospitalCode);
 		List<Map<String, Object>> medicalDepts = new ArrayList<Map<String,Object>>();
-		if(!hospitals.isEmpty()){
-			medicalDepts = baseInfoMapper.getMedicalDeptByHospitalId(((Integer)hospitals.get(0).get("id")));
-		}
+		
+		medicalDepts = baseInfoMapper.getMedicalDeptByHospitalCode(hospitalCode);
 		baseInfo.put("hospitals", hospitals);
 		baseInfo.put("medicalDepts", medicalDepts);
 		List<Map<String, Object>> outHospitalTypes = baseInfoMapper.getOutHospitalTypes();
@@ -316,9 +308,7 @@ public class BaseInfoServiceImpl implements BaseInfoService {
 		Map<String, List<Map<String, Object>>> baseInfo = new HashMap<String, List<Map<String,Object>>>();
 		List<Map<String, Object>> hospitals = baseInfoMapper.getHospitalByCode(this.hospitalCode);
 		List<Map<String, Object>> medicalDepts = new ArrayList<Map<String,Object>>();
-		if(!hospitals.isEmpty()){
-			medicalDepts = baseInfoMapper.getMedicalDeptByHospitalId(((Integer)hospitals.get(0).get("id")));
-		}
+		medicalDepts = baseInfoMapper.getMedicalDeptByHospitalCode(hospitalCode);
 		
 		baseInfo.put("hospitals", hospitals);
 		baseInfo.put("medicalDepts", medicalDepts);
@@ -337,9 +327,7 @@ public class BaseInfoServiceImpl implements BaseInfoService {
 		Map<String, List<Map<String, Object>>> baseInfo = new HashMap<String, List<Map<String,Object>>>();
 		List<Map<String, Object>> hospitals = baseInfoMapper.getHospitalByCode(this.hospitalCode);
 		List<Map<String, Object>> medicalDepts = new ArrayList<Map<String,Object>>();
-		if(!hospitals.isEmpty()){
-			medicalDepts = baseInfoMapper.getMedicalDeptByHospitalId(((Integer)hospitals.get(0).get("id")));
-		}
+		medicalDepts = baseInfoMapper.getMedicalDeptByHospitalCode(hospitalCode);
 		
 		baseInfo.put("hospitals", hospitals);
 		baseInfo.put("medicalDepts", medicalDepts);

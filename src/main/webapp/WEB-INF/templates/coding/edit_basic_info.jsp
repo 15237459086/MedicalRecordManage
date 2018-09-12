@@ -360,13 +360,9 @@ String respondResultJson= (String)request.getAttribute("respondResultJson");
 					</td>
 				</tr>
 				<tr>
-				<td class="tdLabel_7">病理号</td>
-				<td class="tdLabel_8">
-					
-					<input type="text" name="pathologyNumber" value="${basicInfo.pathologyNumber}" />
-				</td>
+				
 				<td class="tdLabel_7">再住院计划</td>
-				<td class="tdLabel_8">
+				<td class="tdLabel_8" colspan="2">
 					<select name="rehospitalAimCode">
 						
 					</select>

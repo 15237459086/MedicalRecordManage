@@ -63,7 +63,7 @@ public interface MedicalRecordMapper {
 	 */
 	int checkMeditalRecordUniq(@Param("onlyId") String onlyId,@Param("mrId") String mrId,@Param("visitNumber") Integer visitNumber);
 	
-	
+	List<String> getVisitGuidByMrIdAndVisitNumber(@Param("mrId") String mrId,@Param("visitNumber") Integer visitNumber);
 	
 	/**
 	 * 获取病案示踪数量

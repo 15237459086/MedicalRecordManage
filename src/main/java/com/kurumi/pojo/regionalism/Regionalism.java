@@ -7,32 +7,44 @@ package com.kurumi.pojo.regionalism;
  */
 public class Regionalism {
 
-	//省（自治区，直辖市）编号
+	//省/自治区/直辖市/特别行政区编号
 	private String provinceCode;
 	
-	//省（自治区，直辖市）名称
+	//省/自治区/直辖市/特别行政区名称
 	private String provinceName;
 	
-	//市编号
+	//地级市/自治州/盟编号
 	private String cityCode;
 	
-	//市名称
+	//地级市/自治州/盟名称
 	private String cityName;
 	
-	//县（地级市，区）编号
+	//市辖区/县/自治县/县级市/旗/自治旗/林区/特区编号
 	private String countyCode;
 	
-	//县（地级市，区）名称
+	//市辖区/县/自治县/县级市/旗/自治旗/林区/特区名称
 	private String countyName;
 	
-	//乡（镇）编号
+	//镇/乡/民族乡/街道/苏木/民族苏木/区公所编号
+	private String townCode;
+	
+	//镇/乡/民族乡/街道/苏木/民族苏木/区公所名称
+	private String townName;
+	
+	//行政村/社区/居/嘎査编号
 	private String villageCode;
 	
-	//乡（镇）名称
+	//行政村/社区/居/嘎査名称
 	private String villageName;
 	
-	//详细地址
-	private String detailAddress;
+	//自然村村民小组/社区居民小组编号
+	private String groupCode;
+	
+	//自然村村民小组/社区居民小组名称
+	private String groupName;
+	
+	//额外地址描述
+	private String extraAddressDesc;
 
 	public String getProvinceCode() {
 		return provinceCode;
@@ -98,13 +110,47 @@ public class Regionalism {
 		this.villageName = villageName;
 	}
 
-	public String getDetailAddress() {
-		return detailAddress;
+	public String getTownCode() {
+		return townCode;
 	}
 
-	public void setDetailAddress(String detailAddress) {
-		this.detailAddress = detailAddress;
+	public void setTownCode(String townCode) {
+		this.townCode = townCode;
 	}
+
+	public String getTownName() {
+		return townName;
+	}
+
+	public void setTownName(String townName) {
+		this.townName = townName;
+	}
+
+	public String getGroupCode() {
+		return groupCode;
+	}
+
+	public void setGroupCode(String groupCode) {
+		this.groupCode = groupCode;
+	}
+
+	public String getGroupName() {
+		return groupName;
+	}
+
+	public void setGroupName(String groupName) {
+		this.groupName = groupName;
+	}
+
+	public String getExtraAddressDesc() {
+		return extraAddressDesc;
+	}
+
+	public void setExtraAddressDesc(String extraAddressDesc) {
+		this.extraAddressDesc = extraAddressDesc;
+	}
+
+	
 	
 	
 	

@@ -9,14 +9,18 @@ import org.springframework.format.annotation.DateTimeFormat;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.kurumi.util.DateUtil;
 import com.kurumi.util.StringUtil;
-
-public class MedicalRecord {
+/**
+ * 放疗病案
+ * @author lyh
+ *
+ */
+public class MedicalRecordRadioTherapy {
     private String visitGuid;
 
     private String patientName;
 
     private String sexCode;
-
+ 
     private String sexName;
 
     @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd")
@@ -50,10 +54,6 @@ public class MedicalRecord {
     private String outDeptCode;
 
     private String outDeptName;
-
-    private String outHospitalTypeCode;
-
-    private String outHospitalTypeName;
 
     private String treatmentSignCode;
 
@@ -197,21 +197,6 @@ public class MedicalRecord {
         this.outDeptName = StringUtil.meaningStr(outDeptName);
     }
 
-    public String getOutHospitalTypeCode() {
-        return StringUtil.meaningStr(outHospitalTypeCode);
-    }
-
-    public void setOutHospitalTypeCode(String outHospitalTypeCode) {
-        this.outHospitalTypeCode = StringUtil.meaningStr(outHospitalTypeCode);
-    }
-
-    public String getOutHospitalTypeName() {
-        return StringUtil.meaningStr(outHospitalTypeName);
-    }
-
-    public void setOutHospitalTypeName(String outHospitalTypeName) {
-        this.outHospitalTypeName = StringUtil.meaningStr(outHospitalTypeName);
-    }
 
     public String getTreatmentSignCode() {
         return StringUtil.meaningStr(treatmentSignCode);
@@ -237,8 +222,8 @@ public class MedicalRecord {
         this.version = version;
     }
     
-    public static  MedicalRecord buildMedicalRecord(Map<String, Object> data){
-    	MedicalRecord medicalRecord = new MedicalRecord();
+    public static  MedicalRecordRadioTherapy buildMedicalRecord(Map<String, Object> data){
+    	MedicalRecordRadioTherapy medicalRecord = new MedicalRecordRadioTherapy();
     	String visitGuid = StringUtil.meaningStr((String)data.get("visitGuid"));
     	medicalRecord.setVisitGuid(visitGuid);
     	
@@ -257,13 +242,16 @@ public class MedicalRecord {
     	}
     	
     	String inTimeStr = StringUtil.meaningStr((String)data.get("inHospitalDateTime"));
-    	try {
-			Date inHospitalDateTime = DateUtil.dateParse(inTimeStr);
-			medicalRecord.setInHospitalDateTime(inHospitalDateTime);
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+    	if(inTimeStr != null){
+    		try {
+    			Date inHospitalDateTime = DateUtil.dateParse(inTimeStr);
+    			medicalRecord.setInHospitalDateTime(inHospitalDateTime);
+    		} catch (ParseException e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    		}
+    	}
+    	
     	String inDeptCode = StringUtil.meaningStr((String)data.get("inDeptCode"));
     	medicalRecord.setInDeptCode(inDeptCode);
     	
@@ -271,26 +259,24 @@ public class MedicalRecord {
     	medicalRecord.setInDeptName(inDeptName);
     	
     	String outTimeStr = StringUtil.meaningStr((String)data.get("outHospitalDateTime"));
-    	try {
-			Date outHospitalDateTime = DateUtil.dateParse(outTimeStr);
-			medicalRecord.setOutHospitalDateTime(outHospitalDateTime);
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+    	if(outTimeStr != null){
+    		try {
+    			Date outHospitalDateTime = DateUtil.dateParse(outTimeStr);
+    			medicalRecord.setOutHospitalDateTime(outHospitalDateTime);
+    		} catch (ParseException e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    		}
+    	}
+    	
     	String outDeptCode = StringUtil.meaningStr((String)data.get("outDeptCode"));
     	medicalRecord.setOutDeptCode(outDeptCode);
     	
     	String outDeptName = StringUtil.meaningStr((String)data.get("outDeptName"));
     	medicalRecord.setOutDeptName(outDeptName);
     	
-    	
-    	String outHospitalTypeCode = StringUtil.meaningStr((String)data.get("outHospitalTypeCode"));
-    	medicalRecord.setOutHospitalTypeCode(outHospitalTypeCode);
-    	
-    	String outHospitalTypeName = StringUtil.meaningStr((String)data.get("outHospitalTypeName"));
-    	medicalRecord.setOutHospitalTypeName(outHospitalTypeName);
-    	
+
+
     	
     	return medicalRecord;
     }

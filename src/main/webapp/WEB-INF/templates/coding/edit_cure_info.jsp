@@ -239,14 +239,14 @@ String respondResultJson= (String)request.getAttribute("respondResultJson");
 				<tr>
 				<td class="tdLabel_7 redColor">科主任</td>
 					<td class="tdLabel_8">
-						<input type="hidden" name="cureWorkers[0].professionTitleCode" value="kzr"/>
+						<input type="hidden" name="cureWorkers[0].professionTitleCode" value="A1001"/>
 						<input type="hidden" name="cureWorkers[0].professionTitleName" value="科主任"/>
 						<input type="text" name="cureWorkers[0].medicalWorkerName" required="required"/>
 						<input type="hidden" name="cureWorkers[0].medicalWorkerCode">
 					</td>
 					<td class="tdLabel_7 redColor">主任医师</td>
 					<td class="tdLabel_8">
-						<input type="hidden" name="cureWorkers[1].professionTitleCode" value="zrys"/>
+						<input type="hidden" name="cureWorkers[1].professionTitleCode" value="A2001"/>
 						<input type="hidden" name="cureWorkers[1].professionTitleName" value="主任医师"/>
 						<input type="text" name="cureWorkers[1].medicalWorkerName" required="required"/>
 						<input type="hidden" name="cureWorkers[1].medicalWorkerCode">
@@ -254,7 +254,7 @@ String respondResultJson= (String)request.getAttribute("respondResultJson");
 						
 					<td class="tdLabel_7">副主任医师</td>
 					<td class="tdLabel_8">
-						<input type="hidden" name="cureWorkers[2].professionTitleCode" value="fzrys"/>
+						<input type="hidden" name="cureWorkers[2].professionTitleCode" value="A2002"/>
 						<input type="hidden" name="cureWorkers[2].professionTitleName" value="副主任医师"/>
 						<input type="text" name="cureWorkers[2].medicalWorkerName"/>
 						<input type="hidden" name="cureWorkers[2].medicalWorkerCode">
@@ -264,21 +264,21 @@ String respondResultJson= (String)request.getAttribute("respondResultJson");
 				<tr>
 					<td class="tdLabel_7 redColor">主治医师</td>
 					<td class="tdLabel_8">
-						<input type="hidden" name="cureWorkers[3].professionTitleCode" value="zzys"/>
+						<input type="hidden" name="cureWorkers[3].professionTitleCode" value="A2003"/>
 						<input type="hidden" name="cureWorkers[3].professionTitleName" value="主治医师"/>
 						<input type="text" name="cureWorkers[3].medicalWorkerName" required="required"/>
 						<input type="hidden" name="cureWorkers[3].medicalWorkerCode">
 					</td>
 					<td class="tdLabel_7 redColor">住院医师</td>
 					<td class="tdLabel_8">
-						<input type="hidden" name="cureWorkers[4].professionTitleCode" value="zyys"/>
+						<input type="hidden" name="cureWorkers[4].professionTitleCode" value="A2005"/>
 						<input type="hidden" name="cureWorkers[4].professionTitleName" value="住院医师"/>
 						<input type="text" name="cureWorkers[4].medicalWorkerName" required="required"/>
 						<input type="hidden" name="cureWorkers[4].medicalWorkerCode">
 					</td>
 					<td class="tdLabel_7">进修医师</td>
 					<td class="tdLabel_8">
-						<input type="hidden" name="cureWorkers[5].professionTitleCode" value="jxys"/>
+						<input type="hidden" name="cureWorkers[5].professionTitleCode" value="A2006"/>
 						<input type="hidden" name="cureWorkers[5].professionTitleName" value="进修医师"/>
 						<input type="text" name="cureWorkers[5].medicalWorkerName"/>
 						<input type="hidden" name="cureWorkers[5].medicalWorkerCode">
@@ -287,21 +287,21 @@ String respondResultJson= (String)request.getAttribute("respondResultJson");
 				<tr>
 					<td class="tdLabel_7">研究生实习医师</td>
 					<td class="tdLabel_8">
-						<input type="hidden" name="cureWorkers[6].professionTitleCode" value="yjssxys"/>
+						<input type="hidden" name="cureWorkers[6].professionTitleCode" value="A2007"/>
 						<input type="hidden" name="cureWorkers[6].professionTitleName" value="研究生实习医师"/>
 						<input type="text" name="cureWorkers[6].medicalWorkerName"/>
 						<input type="hidden" name="cureWorkers[6].medicalWorkerCode">
 					</td>
 					<td class="tdLabel_7">实习医师</td>
 					<td class="tdLabel_8">
-						<input type="hidden" name="cureWorkers[7].professionTitleCode" value="sxys"/>
+						<input type="hidden" name="cureWorkers[7].professionTitleCode" value="A2008"/>
 						<input type="hidden" name="cureWorkers[7].professionTitleName" value="实习医师"/>
 						<input type="text" name="cureWorkers[7].medicalWorkerName"/>
 						<input type="hidden" name="cureWorkers[7].medicalWorkerCode" value="">
 					</td>
 					<td class="tdLabel_7">实习护士</td>
 					<td class="tdLabel_8">
-						<input type="hidden" name="cureWorkers[8].professionTitleCode" value="sxhs"/>
+						<input type="hidden" name="cureWorkers[8].professionTitleCode" value="A3002"/>
 						<input type="hidden" name="cureWorkers[8].professionTitleName" value="实习护士"/>
 						<input type="text"  name="cureWorkers[8].medicalWorkerName"/>
 						<input type="hidden" name="cureWorkers[8].medicalWorkerCode">
@@ -311,21 +311,21 @@ String respondResultJson= (String)request.getAttribute("respondResultJson");
 				<tr>
 					<td class="tdLabel_7">质控医师</td>
 					<td class="tdLabel_8">
-						<input type="hidden" name="cureWorkers[9].professionTitleCode" value="zkys"/>
+						<input type="hidden" name="cureWorkers[9].professionTitleCode" value="A2009"/>
 						<input type="hidden" name="cureWorkers[9].professionTitleName" value="质控医师"/>
 						<input type="text" name="cureWorkers[9].medicalWorkerName" readonly="readonly"/>
 						<input type="hidden" name="cureWorkers[9].medicalWorkerCode">
 					</td>
 					<td class="tdLabel_7">质控护士</td>
 					<td class="tdLabel_8">
-						<input type="hidden" name="cureWorkers[10].professionTitleCode" value="zkhs"/>
+						<input type="hidden" name="cureWorkers[10].professionTitleCode" value="A3003"/>
 						<input type="hidden" name="cureWorkers[10].professionTitleName" value="质控护士"/>
 						<input type="text" name="cureWorkers[10].medicalWorkerName"/>
 						<input type="hidden" name="cureWorkers[10].medicalWorkerCode">
 					</td>
 					<td class="tdLabel_7">编码员</td>
 					<td class="tdLabel_8">
-						<input type="hidden" name="cureWorkers[11].professionTitleCode" value="bmy"/>
+						<input type="hidden" name="cureWorkers[11].professionTitleCode" value="A4001"/>
 						<input type="hidden" name="cureWorkers[11].professionTitleName" value="编码员"/>
 						<input type="text" readonly="readonly" name="cureWorkers[11].medicalWorkerName"/>
 						<input type="hidden" name="cureWorkers[11].medicalWorkerCode">

@@ -601,9 +601,14 @@ public class BasicInfo {
     private String autopsyName;
     
     /**
-     * 病理号
+     * 是否药物过敏编号
      */
-    private String pathologyNumber;
+    private String whetherDrugAllergyCode;
+    
+    /**
+     * 是否药物过敏名称
+     */
+    private String whetherDrugAllergyName;
     
     /**
      * 过敏药物描述
@@ -1463,13 +1468,7 @@ public class BasicInfo {
 		this.autopsyName = autopsyName;
 	}
 
-	public String getPathologyNumber() {
-		return StringUtil.meaningStr(pathologyNumber);
-	}
-
-	public void setPathologyNumber(String pathologyNumber) {
-		this.pathologyNumber = pathologyNumber;
-	}
+	
 
 	public String getAgeUnitCode() {
 		return StringUtil.meaningStr(ageUnitCode);
@@ -1517,6 +1516,22 @@ public class BasicInfo {
 
 	public void setInfusionBloodDesc(String infusionBloodDesc) {
 		this.infusionBloodDesc = infusionBloodDesc;
+	}
+
+	public String getWhetherDrugAllergyCode() {
+		return whetherDrugAllergyCode;
+	}
+
+	public void setWhetherDrugAllergyCode(String whetherDrugAllergyCode) {
+		this.whetherDrugAllergyCode = whetherDrugAllergyCode;
+	}
+
+	public String getWhetherDrugAllergyName() {
+		return whetherDrugAllergyName;
+	}
+
+	public void setWhetherDrugAllergyName(String whetherDrugAllergyName) {
+		this.whetherDrugAllergyName = whetherDrugAllergyName;
 	}
 
 	

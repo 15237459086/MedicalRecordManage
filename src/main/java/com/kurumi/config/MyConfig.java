@@ -38,6 +38,8 @@ public class MyConfig {
 	@Value("${config.worker.signature.path}")
 	private String workerSignaturePath;
 
+	@Value("${config.default_print.type.code}")
+	private String defaultPrintTypeCode;
 	
 	public String getRemoteLoginUrl() {
 		return remoteLoginUrl;
@@ -101,6 +103,10 @@ public class MyConfig {
 
 	public String getWorkerSignaturePath() {
 		return workerSignaturePath;
+	}
+
+	public String getDefaultPrintTypeCode() {
+		return defaultPrintTypeCode;
 	}
 
 	

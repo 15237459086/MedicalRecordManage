@@ -60,6 +60,14 @@ public class MedicalRecordServiceImpl implements MedicalRecordService {
 		// TODO Auto-generated method stub
 		return medicalRecordMapper.checkMeditalRecordUniq(onlyId, mrId, visitNumber);
 	}
+	
+	@Override
+	public List<String> getVisitGuidByMrIdAndVisitNumber(String mrId, Integer visitNumber) {
+		// TODO Auto-generated method stub
+		return medicalRecordMapper.getVisitGuidByMrIdAndVisitNumber( mrId, visitNumber);
+	}
+	
+	
 
 	@SuppressWarnings("unchecked")
 	@Transactional(propagation=Propagation.REQUIRED)

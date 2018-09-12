@@ -7,10 +7,11 @@
   	select id, name as label,code as uniq_code from hospital where code = #{hospitalCode}
  </select>
  
- <!-- 依据医院id获取医疗科室 -->
- <select id="getMedicalDeptByHospitalId" resultType="map">
+ 
+  <!-- 依据医院id获取医疗科室 -->
+ <select id="getMedicalDeptByHospitalCode" resultType="map">
   	select name as label,code as uniq_code from medical_office
-  	where hospital_id = #{hospitalId}
+  	where hospital_code = #{hospitalCode}
  </select>
  
  <!-- 依据编号获取医疗科室 -->

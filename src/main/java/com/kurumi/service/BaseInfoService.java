@@ -25,7 +25,7 @@ public interface BaseInfoService {
 	
 	Map<String, List<Map<String,Object>>> getBaseInfoOfHomePageInfusionBlood();
 	
-	Map<String, List<Map<String,Object>>> getBaseInfoOfHomePageIntensiveCare();
+	Map<String, List<Map<String,Object>>> getBaseDataOfIntensiveCareInfo();
 	
 	Map<String, List<Map<String,Object>>> getBaseInfoOfHomePageAllergyDrug();
 	

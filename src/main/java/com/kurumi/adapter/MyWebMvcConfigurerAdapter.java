@@ -20,7 +20,7 @@ public class MyWebMvcConfigurerAdapter extends WebMvcConfigurerAdapter {
 		registry.addInterceptor(new SecurityHandlerInterceptor()).
 		excludePathPatterns("/login*").
 		excludePathPatterns("/captcha/*").
-		/*excludePathPatterns("/user/*").*/
+		excludePathPatterns("/interface_medical_record/*").
 		addPathPatterns("/**");
 		super.addInterceptors(registry);
 	}

@@ -68,9 +68,9 @@
 				<li class="TC_li"><a onclick="loadContent('${basePath}medical_record/edit_home_page_transfer_dept_form?visitGuid=${visitGuid}')" aria-controls="transferDeptMentInfo" role="tab" data-toggle="tab">转科记录</a>
 				</li>
 				<li class="TC_li"><a onclick="loadContent('${basePath}medical_record/edit_home_page_drug_allergy_form?visitGuid=${visitGuid}')" aria-controls="drugAllergyMentInfo" role="tab" data-toggle="tab">药物过敏</a>
-				</li>
-				<li class="TC_li"><a onclick="loadContent('${basePath}medical_record/edit_home_page_intensive_care_form?visitGuid=${visitGuid}')" aria-controls="intensiveCareMentInfo" role="tab" data-toggle="tab">重症监护</a>
 				</li> --%>
+				<li class="TC_li"><a onclick="loadContent('${basePath}medical_record_coding/edit_intensive_care_info_form?visitGuid=${visitGuid}')" aria-controls="intensiveCareMentInfo" role="tab" data-toggle="tab">重症监护</a>
+				</li>
 				<li class="TC_li"><a onclick="loadContent('${basePath}medical_record_coding/edit_nurse_info_form?visitGuid=${visitGuid}')" aria-controls="nurseMentInfo" role="tab" data-toggle="tab">护理记录</a>
 				</li>
 				<%-- <li class="TC_li"><a onclick="loadContent('${basePath}medical_record/edit_home_page_pressure_sore_form?visitGuid=${visitGuid}')" aria-controls="pressureSoreMentInfo" role="tab" data-toggle="tab">压疮/床褥</a>

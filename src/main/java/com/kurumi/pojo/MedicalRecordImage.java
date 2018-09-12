@@ -10,6 +10,8 @@ public class MedicalRecordImage {
     private String visitGuid;
 
     private String mrPageTypeCode;
+    
+    private String mrPageTypeName;
 
     private String createUserId;
 
@@ -124,4 +126,14 @@ public class MedicalRecordImage {
     public void setVersion(Integer version) {
         this.version = version;
     }
+
+	public String getMrPageTypeName() {
+		return mrPageTypeName;
+	}
+
+	public void setMrPageTypeName(String mrPageTypeName) {
+		this.mrPageTypeName = mrPageTypeName;
+	}
+
+	
 }

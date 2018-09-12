@@ -1,5 +1,6 @@
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -55,8 +56,8 @@ String respondResultJson= (String)request.getAttribute("respondResultJson");
 						<input type="hidden" name="outpatientDiagRecord.diagTypeCode" value="1"/>
 					</td>
 					<td class="tdLabel_8">
-						<input type="text" name="outpatientDiagRecord.diseaseDiagOriginalDesc" style="width: 100%" readonly="readonly">
-						<input type="hidden" name="outpatientDiagRecord.diseaseDiagOriginalCode">
+						<input type="text" name="outpatientDiagRecord.diseaseDiagOriginalDesc" style="width: 100%" readonly="readonly" value="${diseaseDiagInfo.outpatientDiagRecord.diseaseDiagOriginalDesc }">
+						<input type="hidden" name="outpatientDiagRecord.diseaseDiagOriginalCode" value="${diseaseDiagInfo.outpatientDiagRecord.diseaseDiagOriginalCode }">
 					</td>
 					<td class="tdLabel_8">
 						<c:if test="${(not empty diseaseDiagInfo.outpatientDiagRecord.diseaseDiagName) and (not empty diseaseDiagInfo.outpatientDiagRecord.diseaseDiagCode)  }">
@@ -76,8 +77,8 @@ String respondResultJson= (String)request.getAttribute("respondResultJson");
 						<input type="hidden" name="mainDiagRecord.diagTypeCode" value="3"/>
 					</td>
 					<td class="tdLabel_8">
-						<input type="text" name="mainDiagRecord.diseaseDiagOriginalDesc" style="width: 100%" readonly="readonly">
-						<input type="hidden" name="mainDiagRecord.diseaseDiagOriginalCode">
+						<input type="text" name="mainDiagRecord.diseaseDiagOriginalDesc" style="width: 100%" readonly="readonly" value="${diseaseDiagInfo.mainDiagRecord.diseaseDiagOriginalDesc}">
+						<input type="hidden" name="mainDiagRecord.diseaseDiagOriginalCode" value="${diseaseDiagInfo.mainDiagRecord.diseaseDiagOriginalCode}">
 					</td>
 					<td class="tdLabel_8">
 						<c:if test="${(not empty diseaseDiagInfo.mainDiagRecord.diseaseDiagName) and (not empty diseaseDiagInfo.mainDiagRecord.diseaseDiagCode)  }">
@@ -96,42 +97,91 @@ String respondResultJson= (String)request.getAttribute("respondResultJson");
 				<tfoot>
 					<tr>
 						<td class="tdLabel_8">
-							<input type="text" readonly="readonly" name="damageAndVenenationDiagRecord.diagTypeName" value="损伤和中毒的外部原因"/>
-							<input type="hidden" name="damageAndVenenationDiagRecord.diagTypeCode" value="7"/>
+							<input type="text" readonly="readonly" name="damageAndVenenationDiagRecords[0].diagTypeName" value="损伤和中毒的外部原因"/>
+							<input type="hidden" name="damageAndVenenationDiagRecords[0].diagTypeCode" value="7"/>
 						</td>
 						<td class="tdLabel_8">
-							<input type="text" name="damageAndVenenationDiagRecord.diseaseDiagOriginalDesc" style="width: 100%" readonly="readonly">
-							<input type="hidden" name="damageAndVenenationDiagRecord.diseaseDiagOriginalCode">
+							<c:choose>
+								<c:when test="${(not empty diseaseDiagInfo.damageAndVenenationDiagRecords) and  fn:length(diseaseDiagInfo.damageAndVenenationDiagRecords) > 0}">
+									<input type="text" name="damageAndVenenationDiagRecords[0].diseaseDiagOriginalDesc" style="width: 100%" readonly="readonly" value="${diseaseDiagInfo.damageAndVenenationDiagRecords[0].diseaseDiagOriginalDesc}">
+									<input type="hidden" name="damageAndVenenationDiagRecords[0].diseaseDiagOriginalCode" value="${diseaseDiagInfo.damageAndVenenationDiagRecords[0].diseaseDiagOriginalCode}">
+								</c:when>
+								<c:otherwise>
+									<input type="text" name="damageAndVenenationDiagRecords[0].diseaseDiagOriginalDesc" style="width: 100%" readonly="readonly">
+									<input type="hidden" name="damageAndVenenationDiagRecords[0].diseaseDiagOriginalCode">
+								</c:otherwise>
+							</c:choose>
+							
 						</td>
 						<td class="tdLabel_8">
-							<c:if test="${(not empty diseaseDiagInfo.damageAndVenenationDiagRecord.diseaseDiagName) and (not empty diseaseDiagInfo.damageAndVenenationDiagRecord.diseaseDiagCode)  }">
-								<c:set scope="page" var="damageAndVenenationDiagShow" value="${diseaseDiagInfo.damageAndVenenationDiagRecord.diseaseDiagCode }[${diseaseDiagInfo.damageAndVenenationDiagRecord.diseaseDiagName }]"></c:set>
-							</c:if>
-							<input class="input_box" data-type="diseaseDiag" type="text" name="damageAndVenenationDiagRecord.diseaseDiagShow" value="${damageAndVenenationDiagShow}">
-							<input type="hidden" name="damageAndVenenationDiagRecord.diseaseDiagName" value="${diseaseDiagInfo.damageAndVenenationDiagRecord.diseaseDiagName }">
-							<input type="hidden" name="damageAndVenenationDiagRecord.diseaseDiagCode" value="${diseaseDiagInfo.damageAndVenenationDiagRecord.diseaseDiagCode}">
+							<c:choose>
+								<c:when test="${(not empty diseaseDiagInfo.damageAndVenenationDiagRecords) and  fn:length(diseaseDiagInfo.damageAndVenenationDiagRecords) > 0}">
+									<c:if test="${(not empty diseaseDiagInfo.damageAndVenenationDiagRecords[0].diseaseDiagName) and (not empty diseaseDiagInfo.damageAndVenenationDiagRecords[0].diseaseDiagCode)  }">
+										<c:set scope="page" var="damageAndVenenation0DiagShow" value="${diseaseDiagInfo.damageAndVenenationDiagRecords[0].diseaseDiagCode }[${diseaseDiagInfo.damageAndVenenationDiagRecords[0].diseaseDiagName }]"></c:set>
+									</c:if>
+									<input class="input_box" data-type="diseaseDiag" type="text" name="damageAndVenenationDiagRecords[0].diseaseDiagShow" value="${damageAndVenenation0DiagShow}">
+									<input type="hidden" name="damageAndVenenationDiagRecords[0].diseaseDiagName" value="${diseaseDiagInfo.damageAndVenenationDiagRecords[0].diseaseDiagName }">
+									<input type="hidden" name="damageAndVenenationDiagRecords[0].diseaseDiagCode" value="${diseaseDiagInfo.damageAndVenenationDiagRecords[0].diseaseDiagCode}">
+										
+								</c:when>
+								<c:otherwise>
+									<input class="input_box" data-type="diseaseDiag" type="text" name="damageAndVenenationDiagRecords[0].diseaseDiagShow">
+									<input type="hidden" name="damageAndVenenationDiagRecords[0].diseaseDiagName">
+									<input type="hidden" name="damageAndVenenationDiagRecords[0].diseaseDiagCode">
+									
+								</c:otherwise>
+							</c:choose>
+							
 						</td>
 						<td class="tdLabel_8" colspan="5">
 						</td>
 					</tr>
 					<tr>
 						<td class="tdLabel_8">
-							<input type="text" readonly="readonly" name="pathologyDiagRecord.diagTypeName" value="病理学诊断"/>
-							<input type="hidden" name="pathologyDiagRecord.diagTypeCode" value="8"/>
+							<input type="text" readonly="readonly" name="pathologyDiagRecords[0].diagTypeName" value="病理学诊断"/>
+							<input type="hidden" name="pathologyDiagRecords[0].diagTypeCode" value="8"/>
 						</td>
 						<td class="tdLabel_8">
-							<input type="text" name="pathologyDiagRecord.diseaseDiagOriginalDesc" style="width: 100%" readonly="readonly">
-							<input type="hidden" name="pathologyDiagRecord.diseaseDiagOriginalCode">
+							<c:choose>
+								<c:when test="${(not empty diseaseDiagInfo.pathologyDiagRecords) and  fn:length(diseaseDiagInfo.pathologyDiagRecords) > 0}">
+									<input type="text" name="pathologyDiagRecords[0].diseaseDiagOriginalDesc" style="width: 100%" readonly="readonly" value="${diseaseDiagInfo.pathologyDiagRecords[0].diseaseDiagOriginalDesc }">
+									<input type="hidden" name="pathologyDiagRecords[0].diseaseDiagOriginalCode" value="${diseaseDiagInfo.pathologyDiagRecords[0].diseaseDiagOriginalCode }">
+								</c:when>
+								<c:otherwise>
+									<input type="text" name="pathologyDiagRecords[0].diseaseDiagOriginalDesc" style="width: 100%" readonly="readonly">
+									<input type="hidden" name="pathologyDiagRecords[0].diseaseDiagOriginalCode">
+								</c:otherwise>
+							</c:choose>
+							
 						</td>
 						<td class="tdLabel_8">
-							<c:if test="${(not empty diseaseDiagInfo.pathologyDiagRecord.diseaseDiagName) and (not empty diseaseDiagInfo.pathologyDiagRecord.diseaseDiagCode)  }">
-								<c:set scope="page" var="pathologyDiagShow" value="${diseaseDiagInfo.pathologyDiagRecord.diseaseDiagCode }[${diseaseDiagInfo.pathologyDiagRecord.diseaseDiagName }]"></c:set>
-							</c:if>
-							<input class="input_box" data-type="diseaseDiag" type="text" name="pathologyDiagRecord.diseaseDiagShow" value="${pathologyDiagShow}">
-							<input type="hidden" name="pathologyDiagRecord.diseaseDiagName" value="${diseaseDiagInfo.pathologyDiagRecord.diseaseDiagName }">
-							<input type="hidden" name="pathologyDiagRecord.diseaseDiagCode" value="${diseaseDiagInfo.pathologyDiagRecord.diseaseDiagCode}">
+							<c:choose>
+								<c:when test="${(not empty diseaseDiagInfo.pathologyDiagRecords) and  fn:length(diseaseDiagInfo.pathologyDiagRecords) > 0}">
+									<c:if test="${(not empty diseaseDiagInfo.pathologyDiagRecords[0].diseaseDiagName) and (not empty diseaseDiagInfo.pathologyDiagRecords[0].diseaseDiagCode)  }">
+										<c:set scope="page" var="pathologyDiag0Show" value="${diseaseDiagInfo.pathologyDiagRecords[0].diseaseDiagCode }[${diseaseDiagInfo.pathologyDiagRecords[0].diseaseDiagName }]"></c:set>
+									</c:if>
+									<input class="input_box" data-type="diseaseDiag" type="text" name="pathologyDiagRecords[0].diseaseDiagShow" value="${pathologyDiag0Show}">
+									<input type="hidden" name="pathologyDiagRecords[0].diseaseDiagName" value="${diseaseDiagInfo.pathologyDiagRecords[0].diseaseDiagName }">
+									<input type="hidden" name="pathologyDiagRecords[0].diseaseDiagCode" value="${diseaseDiagInfo.pathologyDiagRecords[0].diseaseDiagCode}">
+								</c:when>
+								<c:otherwise>
+									<input class="input_box" data-type="diseaseDiag" type="text" name="pathologyDiagRecords[0].diseaseDiagShow">
+									<input type="hidden" name="pathologyDiagRecords[0].diseaseDiagName">
+									<input type="hidden" name="pathologyDiagRecords[0].diseaseDiagCode">
+								</c:otherwise>
+							</c:choose>
+							
 						</td>
 						<td class="tdLabel_8" colspan="5">
+							<c:choose>
+								<c:when test="${(not empty diseaseDiagInfo.pathologyDiagRecords) and  fn:length(diseaseDiagInfo.pathologyDiagRecords) > 0}">
+									病理号<input type="text" name="pathologyDiagRecords[0].pathologyNumber" value="${ diseaseDiagInfo.pathologyDiagRecords[0].pathologyNumber}">
+								</c:when>
+								<c:otherwise>
+									病理号<input type="text" name="pathologyDiagRecords[0].pathologyNumber">
+								</c:otherwise>
+							</c:choose>
+						
 						</td>
 					</tr>
 					<tr>
