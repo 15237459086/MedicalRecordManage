@@ -92,6 +92,41 @@ function initPage(baseInfoJson,cureInfo){
 	$("input[name='followUpClinicLimitName']").val(cureInfo.followUpClinicLimitName);
 	
 	
+	$("input[name='isFirstCaseCode']").each(function(){
+		 $(this).click(function(){
+			 
+			 $(this).nextAll("input[name='"+$(this).attr("name").replace("Code", "Name")+"']").val($(this).attr("title"));
+		 });
+		 $(this).dblclick(function(){
+			$(this).removeAttr("checked");
+			var title = $('input:radio[name="isFirstCaseCode"]:checked').attr("title");
+			$(this).nextAll("input[name='"+$(this).attr("name").replace("Code", "Name")+"']").val(title);
+		});
+	});
+	
+	if(cureInfo.isFirstCaseCode){
+		$("input[name='isFirstCaseCode'][value='"+cureInfo.isFirstCaseCode+"']").attr("checked",true);
+	}
+	$("input[name='isFirstCaseName']").val(cureInfo.isFirstCaseName);
+	
+	$("input[name='isTeachingCaseCode']").each(function(){
+		 $(this).click(function(){
+			 
+			 $(this).nextAll("input[name='"+$(this).attr("name").replace("Code", "Name")+"']").val($(this).attr("title"));
+		 });
+		 $(this).dblclick(function(){
+			$(this).removeAttr("checked");
+			var title = $('input:radio[name="isTeachingCaseCode"]:checked').attr("title");
+			$(this).nextAll("input[name='"+$(this).attr("name").replace("Code", "Name")+"']").val(title);
+		});
+	});
+	
+	if(cureInfo.isTeachingCaseCode){
+		$("input[name='isTeachingCaseCode'][value='"+cureInfo.isTeachingCaseCode+"']").attr("checked",true);
+	}
+	$("input[name='isTeachingCaseName']").val(cureInfo.isTeachingCaseName);
+	
+	
 	
 	var cureWorkers = cureInfo['cureWorkers'];//治疗医师集合
 	console.log(cureInfo);
@@ -404,6 +439,25 @@ function initPage(baseInfoJson,cureInfo){
             followUpClinicDayNumber: {
             	number:true,
             	range:[1,500]
+            },dayOfBeforeInHospitalComa: {
+            	digits:true,
+            	range:[1,200]
+            },hourOfBeforeInHospitalComa: {
+            	digits:true,
+            	range:[1,200]
+            },minuteOfBeforeInHospitalComa: {
+            	digits:true,
+            	range:[1,200]
+            }
+            ,dayOfAfterInHospitalComa: {
+            	digits:true,
+            	range:[1,200]
+            },hourOfAfterInHospitalComa: {
+            	digits:true,
+            	range:[1,200]
+            },minuteOfAfterInHospitalComa: {
+            	digits:true,
+            	range:[1,200]
             }/*,
             medicalRecordQualityName: {
 				required: true

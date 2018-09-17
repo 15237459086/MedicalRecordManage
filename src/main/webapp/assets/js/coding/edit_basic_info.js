@@ -45,6 +45,10 @@ jQuery.validator.addMethod("idCard", function(value, element) {
 
 function initPage(baseInfoJson,basicInfo){
 	var basePath = $("#basePath").val();
+	
+	init_city_select($("#nativePlaceRegionalismSelect,#birthRegionalismSelect,#registeredAddressRegionalismSelect," +
+			"#permanentAddressRegionalismSelect,#workUnitRegionalismSelect,#linkManAddressRegionalismSelect"));
+	
 	$("select:not([data-address])").each(function(){
 		$(this).append("<option value=''>---请选择---</option>");
 		
@@ -633,7 +637,14 @@ function initPage(baseInfoJson,basicInfo){
             	required:true
             },
             yearOfAge: {
-            	required: true,
+            	digits:true,
+            	range:[1,200]
+            },
+            monthOfAge: {
+            	digits:true,
+            	range:[1,200]
+            },
+            dayOfAge: {
             	digits:true,
             	range:[1,200]
             },

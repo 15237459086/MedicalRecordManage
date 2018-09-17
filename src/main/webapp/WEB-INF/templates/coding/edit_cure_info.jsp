@@ -84,8 +84,10 @@ String respondResultJson= (String)request.getAttribute("respondResultJson");
 				<td class="tdLabel_8">
 					<input type="text" name="infusionReactTimes" value="${cureInfo.infusionReactTimes }" />
 				</td>
+				</tr>
+				<tr>
 				<td class="tdLabel_7">随诊</td>
-					<td class="tdLabel_8">
+					<td class="tdLabel_8" colspan="2">
 					<input type="radio"
 						class="radio_cl" name="followUpClinicLimitCode" title="是 " value="1"/>
 						是 
@@ -93,11 +95,40 @@ String respondResultJson= (String)request.getAttribute("respondResultJson");
 						否 
 					<input type="hidden" name="followUpClinicLimitName" value=""/>
 						期限: 
-					<input type="text" style="width: 60px;" name="followUpClinicDayNumber"
+					<input type="text" style="width: 35px;" name="followUpClinicDayNumber"
 						value="${cureInfo.followUpClinicDayNumber }">
 						天
+						<input type="text" style="width: 35px;" name="followUpClinicWeekNumber"
+						value="${cureInfo.followUpClinicWeekNumber }">
+						周
+						<input type="text" style="width: 35px;" name="followUpClinicMonthNumber"
+						value="${cureInfo.followUpClinicMonthNumber }">
+						月
+						<input type="text" style="width: 35px;" name="followUpClinicYearNumber"
+						value="${cureInfo.followUpClinicYearNumber }">
+						年
 					</td>
 				
+				</tr>
+				<tr>
+					<td class="tdLabel_7">手术、治疗、检查、诊断为本院第一例</td>
+					<td class="tdLabel_8">
+						<input type="radio"
+						class="radio_cl" name="isFirstCaseCode" title="是 " value="1"/>
+						是 
+						<input type="radio" class="radio_cl" name="isFirstCaseCode" title="否" value="0"/>
+							否 
+						<input type="hidden" name="isFirstCaseName" value=""/>
+					</td>
+					<td class="tdLabel_7">示教病例</td>
+					<td class="tdLabel_8" colspan="3">
+						<input type="radio"
+						class="radio_cl" name="isTeachingCaseCode" title="是 " value="1"/>
+						是 
+						<input type="radio" class="radio_cl" name="isTeachingCaseCode" title="否" value="0"/>
+							否 
+						<input type="hidden" name="isTeachingCaseName" value=""/>
+					</td>
 				</tr>
 				<tr>
 					<td class="tdLabel_7">31天再住院计划</td>
@@ -111,7 +142,26 @@ String respondResultJson= (String)request.getAttribute("respondResultJson");
 						<input type="text" name="rehospitalAimOf31Description" style="width: 500px" value="${cureInfo.rehospitalAimOf31Description }">
 					</td>
 				</tr>
-				
+				<tr>
+					<td class="tdLabel_7">入院前昏迷时间</td>
+					<td class="tdLabel_8" colspan="2">
+						<input type="text" name="dayOfBeforeInHospitalComa"
+					value="${cureInfo.dayOfBeforeInHospitalComa }" style="width: 25%"/>天
+					<input type="text" name="hourOfBeforeInHospitalComa"
+					value="${cureInfo.hourOfBeforeInHospitalComa }" style="width: 25%"/>时
+					<input type="text" name="minuteOfBeforeInHospitalComa"
+					value="${cureInfo.minuteOfBeforeInHospitalComa }" style="width: 25%"/>分
+					</td>
+					<td class="tdLabel_7">入院后昏迷时间</td>
+					<td class="tdLabel_8" colspan="2">
+						<input type="text" name="dayOfAfterInHospitalComa"
+						value="${cureInfo.dayOfAfterInHospitalComa }" style="width: 25%"/>天
+						<input type="text" name="hourOfAfterInHospitalComa"
+						value="${cureInfo.hourOfAfterInHospitalComa }" style="width: 25%"/>时
+						<input type="text" name="minuteOfAfterInHospitalComa"
+						value="${cureInfo.minuteOfAfterInHospitalComa }" style="width: 25%"/>分
+					</td>
+				</tr>
 				<tr>
 					<td class="tdLabel_7">入院前昏迷时间描述</td>
 					<td class="tdLabel_8">
@@ -305,6 +355,31 @@ String respondResultJson= (String)request.getAttribute("respondResultJson");
 						<input type="hidden" name="cureWorkers[8].professionTitleName" value="实习护士"/>
 						<input type="text"  name="cureWorkers[8].medicalWorkerName"/>
 						<input type="hidden" name="cureWorkers[8].medicalWorkerCode">
+					</td>
+					
+				</tr>
+				
+				<tr>
+					<td class="tdLabel_7">主诊医师</td>
+					<td class="tdLabel_8">
+						<input type="hidden" name="cureWorkers[12].professionTitleCode" value="A2004"/>
+						<input type="hidden" name="cureWorkers[12].professionTitleName" value="主诊医师"/>
+						<input type="text" name="cureWorkers[12].medicalWorkerName"/>
+						<input type="hidden" name="cureWorkers[12].medicalWorkerCode">
+					</td>
+					<td class="tdLabel_7">责任医师</td>
+					<td class="tdLabel_8">
+						<input type="hidden" name="cureWorkers[13].professionTitleCode" value="A2010"/>
+						<input type="hidden" name="cureWorkers[13].professionTitleName" value="责任医师"/>
+						<input type="text" name="cureWorkers[13].medicalWorkerName"/>
+						<input type="hidden" name="cureWorkers[13].medicalWorkerCode" value="">
+					</td>
+					<td class="tdLabel_7">责任护士</td>
+					<td class="tdLabel_8">
+						<input type="hidden" name="cureWorkers[14].professionTitleCode" value="A3001"/>
+						<input type="hidden" name="cureWorkers[14].professionTitleName" value="责任护士"/>
+						<input type="text"  name="cureWorkers[14].medicalWorkerName"/>
+						<input type="hidden" name="cureWorkers[14].medicalWorkerCode">
 					</td>
 					
 				</tr>

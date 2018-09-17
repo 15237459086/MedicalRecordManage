@@ -28,16 +28,30 @@ function initPage(baseInfoJson,intensiveCareInfoJson){
 			add_content.find("textarea[name$='.reIcuComment']").text(reIcuComment);
 		}
 		
-		if(intensiveCareRecord.icuTypeCode){
-			var selectOption = add_content.find("select[name$='icuTypeCode']").find("option[value='"+intensiveCareRecord.icuTypeCode+"']")
-			if(selectOption.length > 0){
-				selectOption.attr("selected",true);
-			}else{
-				$(item).append("<option selected='selected' value='"+intensiveCareRecord.icuTypeCode+"'>"+intensiveCareRecord.icuTypeName+"</option>");
-			}
-			
-		};
-		add_content.find("input[name$='.icuTypeName']").val(intensiveCareRecord.icuTypeName);
+		$.each(add_content.find("select[name$='.icuTypeCode']"),function(i,item) {
+			$(item).change(function(){
+		   		var eventObj = $(this);
+		   		var nameObjName = eventObj.attr("name").replace("Code", "Name");
+		   		
+		   		if(eventObj.val()!=""){
+		   			var name=eventObj.find("option:selected").text();
+		   			eventObj.next("input[name='"+nameObjName+"']").val(name);
+		   		}else{
+		   			eventObj.next("input[name='"+nameObjName+"']").val("");
+		   		}
+		   	});
+			if(intensiveCareRecord.icuTypeCode){
+				
+				var selectOption = $(item).find("option[value='"+intensiveCareRecord.icuTypeCode+"']")
+				if(selectOption.length > 0){
+					selectOption.attr("selected",true);
+				}else{
+					$(item).append("<option selected='selected' value='"+intensiveCareRecord.icuTypeCode+"'>"+intensiveCareRecord.icuTypeName+"</option>");
+				}
+				
+			};
+			$(item).next("input[name='"+$(item).attr("name").replace("Code", "Name")+"']").val(intensiveCareRecord.icuTypeName);
+		});
 		if(intensiveCareRecord.reIcuPlanCode){
 			
 			add_content.find("input[name$='.reIcuPlanCode'][value='"+intensiveCareRecord.reIcuPlanCode+"']").attr("checked",true);

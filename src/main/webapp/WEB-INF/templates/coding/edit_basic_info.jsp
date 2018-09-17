@@ -11,10 +11,16 @@ String respondResultJson= (String)request.getAttribute("respondResultJson");
 <link rel="stylesheet" href="${basePath}assets/jquery-ui/jquery-ui.css"/>   
 <link rel="stylesheet" href="${basePath}assets/css/coding/edit_index_info.css"/>
 <link rel="stylesheet" href="${basePath}assets/css/basic.css"/>
+<link rel="stylesheet" href="${basePath}assets/cityselect/cityselect/cityLayout.css"/>
+
+
+
+
 <script type="text/javascript" src="${basePath}assets/jquery/jquery.min.js"></script>
 <script type="text/javascript" src="${basePath}assets/bootstrap/js/bootstrap.js"></script>
 <script type="text/javascript" src="${basePath}assets/jquery-ui/jquery-ui.js"></script>
 <script type="text/javascript" src="${basePath}assets/layer/layer.js"></script>
+<script type="text/javascript" src="${basePath}assets/cityselect/cityselect/cityselect.js"></script>
 <script type="text/javascript" src="${basePath}assets/js/header.js"></script> 
 
 <script type="text/javascript" src="${basePath}assets/js/iframe.js"></script>
@@ -39,16 +45,16 @@ String respondResultJson= (String)request.getAttribute("respondResultJson");
 			<tr>
 				<td class="tdLabel_7 redColor">住院号</td>
 				<td class="tdLabel_8">
-					<input type="text" name="onlyId" value="${basicInfo.onlyId }"/>
+					<input type="text" name="onlyId" value="${basicInfo.onlyId }" readonly="readonly"/>
 				</td>
 
 				<td class="tdLabel_7 redColor">病案号</td>
 				<td class="tdLabel_8">
-					<input type="text" name="mrId" value="${basicInfo.mrId }" />
+					<input type="text" name="mrId" value="${basicInfo.mrId }" readonly="readonly"/>
 				</td>
 				<td class="tdLabel_7 redColor">住院次数</td>
 				<td class="tdLabel_8">
-					<input type="text" name="visitNumber" value="${basicInfo.visitNumber }" />
+					<input type="text" name="visitNumber" value="${basicInfo.visitNumber }" readonly="readonly"/>
 				</td>
 			</tr>
 			<tr>
@@ -101,9 +107,11 @@ String respondResultJson= (String)request.getAttribute("respondResultJson");
 				<td class="tdLabel_8"><input type="text"
 					onFocus="WdatePicker()" name="birthday" value="${basicInfo.birthday }" />
 				</td>
-				<td class="tdLabel_7 redColor">年龄</td>
+				<td class="tdLabel_7">年龄</td>
 				<td class="tdLabel_8">
-					<input type="text" name="yearOfAge" value="${basicInfo.yearOfAge }"/>
+					<input type="text" name="yearOfAge" value="${basicInfo.yearOfAge }" style="width: 15%"/>岁
+					<input type="text" name="monthOfAge" value="${basicInfo.monthOfAge }" style="width: 15%"/>月
+					<input type="text" name="dayOfAge" value="${basicInfo.dayOfAge }" style="width: 15%"/>天
 				</td>
 			</tr>
 			<tr>
@@ -145,36 +153,34 @@ String respondResultJson= (String)request.getAttribute("respondResultJson");
 				</td>
 			</tr>
 			<tr>
-				<td class="tdLabel_7">籍贯</td>
-				<td class="tdLabel_8" colspan="5">
-					<span class="redColor">地址</span>&nbsp;&nbsp;<input type="text" name="nativePlace"  style="width: 95%;" value="${basicInfo.nativePlace}"/>
-				</td>
-				
-			</tr>
-			<%-- <tr>
 				<td class="tdLabel_7" rowspan="2">籍贯</td>
-				<td class="tdLabel_8" colspan="5">
-					<div id="nativePlaceRegionalismDiv">
-						&nbsp;&nbsp;<label for="province10">省：</label>
-						<select name="nativePlaceRegionalism.provinceName" id="province10" data-address></select>
-						&nbsp;&nbsp;&nbsp;&nbsp;<label for="city10">市：</label>
-						<select name="nativePlaceRegionalism.cityName" id="city10" data-address></select>
-						&nbsp;&nbsp;&nbsp;&nbsp;<label for="district10">县：</label>
-						<select name="nativePlaceRegionalism.countyName" id="district10" data-address></select>
-					</div>
-				</td>
 				
+				<td class="tdLabel_8" colspan="2">
+					<input name="nativePlaceRegionalism.provinceCityCountyName" id="nativePlaceRegionalismSelect"  type="text"  class="city_input" style="width: 95%;" readonly="readonly"
+					value="${basicInfo.nativePlaceRegionalism.provinceCityCountyName}">
+				</td>
+				<td class="tdLabel_8" colspan="3">
+					<input type="text" name="nativePlaceRegionalism.extraAddressDesc"  style="width: 95%;" value="${basicInfo.nativePlaceRegionalism.extraAddressDesc}"/>
+				</td>
 			</tr>
 			<tr>
 				<td class="tdLabel_8" colspan="5">
-					地址&nbsp;&nbsp;<input type="text" name="nativePlace"  style="width: 95%;" value="${basicInfo.nativePlace}"/>
+					<span class="redColor">完整地址</span>&nbsp;&nbsp;<input type="text" name="nativePlace"  style="width: 90%;" value="${basicInfo.nativePlace}"/>
 				</td>
 			</tr>
-			 --%>
 			<tr>
-				<td class="tdLabel_7">出生地</td>
+				<td class="tdLabel_7" rowspan="2">出生地</td>
+				<td class="tdLabel_8" colspan="2">
+					<input name="birthRegionalism.provinceCityCountyName" id="birthRegionalismSelect"  type="text"  class="city_input" style="width: 95%;" readonly="readonly"
+					value="${basicInfo.birthRegionalism.provinceCityCountyName}">
+				</td>
 				<td class="tdLabel_8" colspan="3">
-					地址&nbsp;&nbsp;<input type="text" name="birthAddress"  style="width: 90%;" value="${basicInfo.birthAddress}"/>
+					<input type="text" name="birthRegionalism.extraAddressDesc"  style="width: 95%;" value="${basicInfo.birthRegionalism.extraAddressDesc}"/>
+				</td>
+			</tr>
+			<tr>
+				<td class="tdLabel_8" colspan="3">
+					完整地址&nbsp;&nbsp;<input type="text" name="birthAddress"  style="width: 85%;" value="${basicInfo.birthAddress}"/>
 				</td>
 				<td class="tdLabel_7">邮编</td>
 				<td class="tdLabel_8" ><input type="text"
@@ -184,9 +190,19 @@ String respondResultJson= (String)request.getAttribute("respondResultJson");
 			</tr>
 			
 			<tr>
-				<td class="tdLabel_7">户口</td>
+				<td class="tdLabel_7" rowspan="2">户口</td>
+				<td class="tdLabel_8" colspan="2">
+					<input name="registeredAddressRegionalism.provinceCityCountyName" id="registeredAddressRegionalismSelect"  type="text"  class="city_input" style="width: 95%;" readonly="readonly"
+					value="${basicInfo.registeredAddressRegionalism.provinceCityCountyName}">
+				</td>
 				<td class="tdLabel_8" colspan="3">
-					地址&nbsp;&nbsp;<input type="text" name="registeredAddress"  style="width: 90%;" value="${basicInfo.registeredAddress}"/>
+					<input type="text" name="registeredAddressRegionalism.extraAddressDesc"  style="width: 95%;" value="${basicInfo.registeredAddressRegionalism.extraAddressDesc}"/>
+				</td>
+			</tr>
+			
+			<tr>
+				<td class="tdLabel_8" colspan="3">
+					完整地址&nbsp;&nbsp;<input type="text" name="registeredAddress"  style="width: 85%;" value="${basicInfo.registeredAddress}"/>
 				</td>
 				<td class="tdLabel_7">邮编</td>
 				<td class="tdLabel_8" ><input type="text"
@@ -196,9 +212,18 @@ String respondResultJson= (String)request.getAttribute("respondResultJson");
 			</tr>
 			
 			<tr>
-				<td class="tdLabel_7" rowspan="2">现/常住地</td>
-				<td class="tdLabel_8" colspan="5">地址 
-					<input type="text" name="permanentAddress" style="width: 500px" value="${basicInfo.permanentAddress}">
+				<td class="tdLabel_7" rowspan="3">现/常住地</td>
+				<td class="tdLabel_8" colspan="2">
+					<input name="permanentAddressRegionalism.provinceCityCountyName" id="permanentAddressRegionalismSelect"  type="text"  class="city_input" style="width: 95%;" readonly="readonly"
+					value="${basicInfo.permanentAddressRegionalism.provinceCityCountyName}">
+				</td>
+				<td class="tdLabel_8" colspan="3">
+					<input type="text" name="permanentAddressRegionalism.extraAddressDesc"  style="width: 95%;" value="${basicInfo.permanentAddressRegionalism.extraAddressDesc}"/>
+				</td>
+			</tr>
+			<tr>
+				<td class="tdLabel_8" colspan="5">完整地址 
+					<input type="text" name="permanentAddress" style="width: 90%" value="${basicInfo.permanentAddress}">
 				</td>
 			</tr>
 			<tr>
@@ -217,18 +242,7 @@ String respondResultJson= (String)request.getAttribute("respondResultJson");
 			</tr>
 			
 			<tr>
-				<td class="tdLabel_7" rowspan="2">工作单位</td>
-				<td class="tdLabel_8" colspan="3">地址： <input
-					type="text" name="workUnitAddress" style="width: 500px"
-					value="${basicInfo.workUnitAddress }">
-				</td>
-				
-				<td class="tdLabel_7">电话</td>
-				<td class="tdLabel_8"><input type="text"
-					name="workUnitPhone" value="${basicInfo.workUnitPhone }">
-				</td>
-			</tr>
-			<tr>
+				<td class="tdLabel_7" rowspan="3">工作单位</td>
 				<td class="tdLabel_8" colspan="3">单位名：<input type="text" style="width: 490px"
 					name="workUnitName" value="${basicInfo.workUnitName }">
 				</td>
@@ -238,7 +252,29 @@ String respondResultJson= (String)request.getAttribute("respondResultJson");
 				</td>
 			</tr>
 			<tr>
-				<td class="tdLabel_7" rowspan="2">联系人</td>
+				<td class="tdLabel_8" colspan="2">
+					<input name="workUnitRegionalism.provinceCityCountyName" id="workUnitRegionalismSelect"  type="text"  class="city_input" style="width: 95%;" readonly="readonly"
+					value="${basicInfo.workUnitRegionalism.provinceCityCountyName}">
+				</td>
+				<td class="tdLabel_8" colspan="3">
+					<input type="text" name="workUnitRegionalism.extraAddressDesc"  style="width: 95%;" value="${basicInfo.workUnitRegionalism.extraAddressDesc}"/>
+				</td>
+				
+			</tr>
+			<tr>
+				<td class="tdLabel_8" colspan="3">完整地址： <input
+					type="text" name="workUnitAddress" style="width: 500px"
+					value="${basicInfo.workUnitAddress }">
+				</td>
+				
+				<td class="tdLabel_7">电话</td>
+				<td class="tdLabel_8"><input type="text"
+					name="workUnitPhone" value="${basicInfo.workUnitPhone }">
+				</td>
+				
+			</tr>
+			<tr>
+				<td class="tdLabel_7" rowspan="3">联系人</td>
 				<td class="tdLabel_8"><span class="redColor">姓名</span> 
 				<input type="text"
 					name="linkManName" style="width: 150px"
@@ -257,6 +293,16 @@ String respondResultJson= (String)request.getAttribute("respondResultJson");
 				</td>
 
 			</tr>
+			<tr>
+				<td class="tdLabel_8" colspan="2">
+					<input name="linkManAddressRegionalism.provinceCityCountyName" id="linkManAddressRegionalismSelect"  type="text"  class="city_input" style="width: 95%;" readonly="readonly"
+					value="${basicInfo.linkManAddressRegionalism.provinceCityCountyName}">
+				</td>
+				<td class="tdLabel_8" colspan="3">
+					<input type="text" name="linkManAddressRegionalism.extraAddressDesc"  style="width: 95%;" value="${basicInfo.linkManAddressRegionalism.extraAddressDesc}"/>
+				</td>
+			</tr>
+			
 			<tr>
 				<td class="tdLabel_8" colspan="3">地址： <input
 					type="text" name="linkManAddress" style="width: 500px"
@@ -336,10 +382,10 @@ String respondResultJson= (String)request.getAttribute("respondResultJson");
 					onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})"
 					value="${basicInfo.inHospitalDateTime}"></td>
 
-				<td class="tdLabel_7">诊疗科目</td>
+				<td class="tdLabel_7">入院病房</td>
 				<td class="tdLabel_8">
-				<input type="text" name="diagSubjectName"
-					value="${basicInfo.diagSubjectName}">
+				<input type="text" name="inHospitalHouseName"
+					value="${basicInfo.inHospitalHouseName}">
 				</td>
 				<tr>
 					<td class="tdLabel_7">转科描述</td>
@@ -362,7 +408,7 @@ String respondResultJson= (String)request.getAttribute("respondResultJson");
 				<tr>
 				
 				<td class="tdLabel_7">再住院计划</td>
-				<td class="tdLabel_8" colspan="2">
+				<td class="tdLabel_8" colspan="3">
 					<select name="rehospitalAimCode">
 						
 					</select>
@@ -370,6 +416,10 @@ String respondResultJson= (String)request.getAttribute("respondResultJson");
 					<input type="text" style="width:30px"
 					name="rehospitalIntervalDayNumber"
 					value="${basicInfo.rehospitalIntervalDayNumber }"> 天</td>
+					<td class="tdLabel_7 redColor">住院天数</td>
+					<td class="tdLabel_8">
+						<input type="text" name="inHospitalDayNumber" value="${basicInfo.inHospitalDayNumber}" />
+					</td>
 				</tr>
 				<tr>
 				<td class="tdLabel_7 redColor">出院科室</td>
@@ -383,9 +433,9 @@ String respondResultJson= (String)request.getAttribute("respondResultJson");
 				<td class="tdLabel_8">
 					<input type="text" name="outHospitalDateTime" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})"
 					value="${basicInfo.outHospitalDateTime}"></td>
-				<td class="tdLabel_7 redColor">住院天数</td>
+				<td class="tdLabel_7">出院病房</td>
 				<td class="tdLabel_8">
-					<input type="text" name="inHospitalDayNumber" value="${basicInfo.inHospitalDayNumber}" />
+					<input type="text" name="outHospitalHouseName" value="${basicInfo.outHospitalHouseName}" />
 				</td>
 					
 			</tr>

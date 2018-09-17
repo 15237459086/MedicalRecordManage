@@ -18,12 +18,14 @@ public class BasicInfo {
 
 	/**
 	 * 患者名
+	 * HQMS P4 字符（40）必填
 	 */
 	private String patientName;
 	
 	
 	/**
 	 * 性别编号
+	 * HQMS P5 字符（1）必填
 	 */
 	private String sexCode;
 	
@@ -35,6 +37,7 @@ public class BasicInfo {
 	
 	/**
 	 * 出生日期
+	 * HQMS P6  日期（YYYY-MM-DD）
 	 */
 	@JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd")
 	@DateTimeFormat(pattern="yyyy-MM-dd")
@@ -42,6 +45,7 @@ public class BasicInfo {
 	
 	/**
 	 * 年龄（年）
+	 * HQMS P7 数字（3）必填
 	 */
 	private BigDecimal yearOfAge;
 	
@@ -78,6 +82,7 @@ public class BasicInfo {
 	
 	/**
      * 婚姻状况编号
+     * HQMS P8 字符（1）必填
      */
     private String marriageCode;
     
@@ -89,6 +94,7 @@ public class BasicInfo {
     
     /**
      * 职业编号
+     * HQMS P9 字符（2）
      */
     private String professionCode;
     
@@ -214,16 +220,19 @@ public class BasicInfo {
 	
 	/**
 	 * 医院编号
+	 * HQMS P900 字符（22）必填
 	 */
 	private String hospitalCode;
 	
 	/**
 	 * 医院名称
+	 * HQMS P6891 字符（80）必填
 	 */
 	private String hospitalName;
 	
 	/**
 	 * 病案号
+	 * HQMS P3 字符（20）必填
 	 */
 	private String mrId;
 	
@@ -234,12 +243,14 @@ public class BasicInfo {
 	
 	/**
 	 * 住院次数
+	 * HQMS P2 数字（3）必填
 	 */
 	private BigDecimal visitNumber;
 	
 	
 	/**
 	 * 医疗付费方式编号
+	 * HQMS P1 字符（1）必填
 	 */
 	private String medicalPayTypeCode;
 	
@@ -250,11 +261,13 @@ public class BasicInfo {
 	
 	/**
 	 * 医疗保险（社会保险）账号
+	 * HQMS P686 字符（50）
 	 */
 	private String medicalInsuranceNumber;
 	
 	/**
 	 * 健康卡号
+	 * HQMS P800 字符（50）
 	 */
 	private String medicalHealthNumber;
 	
@@ -500,7 +513,7 @@ public class BasicInfo {
 	private String outHospitalTypeName;
     
     /**
-     *诊断确诊时间
+     *入院诊断确诊时间
      */
     @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
     @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")

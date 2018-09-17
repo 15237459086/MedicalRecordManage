@@ -63,6 +63,26 @@ public class CureInfo {
 	private Integer outConsultationNumber;
 	
 	/**
+	 * 手术、治疗、检查、诊断为本院第一例编号
+	 */
+	private String isFirstCaseCode;
+	
+	/**
+	 * 手术、治疗、检查、诊断为本院第一例名称
+	 */
+	private String isFirstCaseName;
+	
+	/**
+	 * 示教病例编号
+	 */
+	private String isTeachingCaseCode;
+	
+	/**
+	 * 示教病例名称
+	 */
+	private String isTeachingCaseName;
+	
+	/**
 	 * 输液次数
 	 */
 	private Integer infusionTimes;
@@ -219,6 +239,21 @@ public class CureInfo {
 	 * 随诊期限天数
 	 */
 	private BigDecimal followUpClinicDayNumber;
+	
+	/**
+	 * 随诊期限zho数
+	 */
+	private BigDecimal followUpClinicWeekNumber;
+	
+	/**
+	 * 随诊期限天数
+	 */
+	private BigDecimal followUpClinicMonthNumber;
+	
+	/**
+	 * 随诊期限天数
+	 */
+	private BigDecimal followUpClinicYearNumber;
 	
 	/**
 	 * 随诊期限单位编号
@@ -696,6 +731,62 @@ public class CureInfo {
 
 	public void setMinuteOfAfterInHospitalComa(BigDecimal minuteOfAfterInHospitalComa) {
 		this.minuteOfAfterInHospitalComa = minuteOfAfterInHospitalComa;
+	}
+
+	public String getIsFirstCaseCode() {
+		return isFirstCaseCode;
+	}
+
+	public void setIsFirstCaseCode(String isFirstCaseCode) {
+		this.isFirstCaseCode = isFirstCaseCode;
+	}
+
+	public String getIsFirstCaseName() {
+		return isFirstCaseName;
+	}
+
+	public void setIsFirstCaseName(String isFirstCaseName) {
+		this.isFirstCaseName = isFirstCaseName;
+	}
+
+	public String getIsTeachingCaseCode() {
+		return isTeachingCaseCode;
+	}
+
+	public void setIsTeachingCaseCode(String isTeachingCaseCode) {
+		this.isTeachingCaseCode = isTeachingCaseCode;
+	}
+
+	public String getIsTeachingCaseName() {
+		return isTeachingCaseName;
+	}
+
+	public void setIsTeachingCaseName(String isTeachingCaseName) {
+		this.isTeachingCaseName = isTeachingCaseName;
+	}
+
+	public BigDecimal getFollowUpClinicWeekNumber() {
+		return followUpClinicWeekNumber;
+	}
+
+	public void setFollowUpClinicWeekNumber(BigDecimal followUpClinicWeekNumber) {
+		this.followUpClinicWeekNumber = followUpClinicWeekNumber;
+	}
+
+	public BigDecimal getFollowUpClinicMonthNumber() {
+		return followUpClinicMonthNumber;
+	}
+
+	public void setFollowUpClinicMonthNumber(BigDecimal followUpClinicMonthNumber) {
+		this.followUpClinicMonthNumber = followUpClinicMonthNumber;
+	}
+
+	public BigDecimal getFollowUpClinicYearNumber() {
+		return followUpClinicYearNumber;
+	}
+
+	public void setFollowUpClinicYearNumber(BigDecimal followUpClinicYearNumber) {
+		this.followUpClinicYearNumber = followUpClinicYearNumber;
 	}
 	
 	

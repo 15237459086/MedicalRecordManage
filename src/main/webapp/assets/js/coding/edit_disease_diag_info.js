@@ -5,7 +5,7 @@ function initPage(baseInfoJson,diseaseDiagInfoJson){
 	var diseaseStates = baseInfoJson['inHospitalizationDiseaseStates'];//治疗结果
 	
 	var treatmentResults = baseInfoJson['treatmentResults'];//治疗结果
-	
+	var mainDiagRecord = diseaseDiagInfoJson['mainDiagRecord'];//主要诊断
 	var diseaseDiagRecords = diseaseDiagInfoJson['diseaseDiagRecords'];//诊断记录集合
 	
 	$("select").each(function(){
@@ -93,6 +93,56 @@ function initPage(baseInfoJson,diseaseDiagInfoJson){
 		});
 	});
 	
+	
+	$.each($("select[name$='mainDiagRecord.inHospitalDiseaseStateCode']"),function(i,item) {
+		$(item).change(function(){
+	   		var eventObj = $(this);
+	   		var nameObjName = eventObj.attr("name").replace("Code", "Name");
+	   		
+	   		if(eventObj.val()!=""){
+	   			var name=eventObj.find("option:selected").text();
+	   			eventObj.next("input[name='"+nameObjName+"']").val(name);
+	   		}else{
+	   			eventObj.next("input[name='"+nameObjName+"']").val("");
+	   		}
+	   	});
+		var eventObj = $(this);
+		var nameObjName = eventObj.attr("name").replace("Code", "Name");
+		if(mainDiagRecord.inHospitalDiseaseStateCode){
+			var selectOption = eventObj.find("option[value='"+mainDiagRecord.inHospitalDiseaseStateCode+"']")
+			if(selectOption.length > 0){
+				selectOption.attr("selected",true);
+			}else{
+				eventObj.append("<option selected='selected' value='"+mainDiagRecord.inHospitalDiseaseStateCode+"'>"+mainDiagRecord.inHospitalDiseaseStateName+"</option>");
+			}
+		}
+		eventObj.next("input[name='"+nameObjName+"']").val(mainDiagRecord.inHospitalDiseaseStateName);
+	});
+	
+	$.each($("select[name$='mainDiagRecord.treatResultCode']"),function(i,item) {
+		$(item).change(function(){
+	   		var eventObj = $(this);
+	   		var nameObjName = eventObj.attr("name").replace("Code", "Name");
+	   		
+	   		if(eventObj.val()!=""){
+	   			var name=eventObj.find("option:selected").text();
+	   			eventObj.next("input[name='"+nameObjName+"']").val(name);
+	   		}else{
+	   			eventObj.next("input[name='"+nameObjName+"']").val("");
+	   		}
+	   	});
+		var eventObj = $(this);
+		var nameObjName = eventObj.attr("name").replace("Code", "Name");
+		if(mainDiagRecord.treatResultCode){
+			var selectOption = eventObj.find("option[value='"+mainDiagRecord.treatResultCode+"']")
+			if(selectOption.length > 0){
+				selectOption.attr("selected",true);
+			}else{
+				eventObj.append("<option selected='selected' value='"+mainDiagRecord.treatResultCode+"'>"+mainDiagRecord.treatResultName+"</option>");
+			}
+		}
+		eventObj.next("input[name='"+nameObjName+"']").val(mainDiagRecord.treatResultName);
+	});
 	
 	for(var index in diseaseDiagRecords){
 		var diseaseDiagRecord = diseaseDiagRecords[index];

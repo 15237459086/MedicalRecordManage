@@ -1,5 +1,15 @@
 package com.kurumi.pojo.regionalism;
 
+import java.net.URL;
+
+import org.dom4j.DocumentException;
+import org.dom4j.Element;
+import org.dom4j.Node;
+
+import com.kurumi.util.RegionalismUtil;
+import com.kurumi.util.StringUtil;
+import com.kurumi.util.XMLUtil;
+
 /**
  * 行政区域划分
  * @author lyh
@@ -45,6 +55,9 @@ public class Regionalism {
 	
 	//额外地址描述
 	private String extraAddressDesc;
+	
+	//省市县三级描述
+	private String provinceCityCountyName;
 
 	public String getProvinceCode() {
 		return provinceCode;
@@ -150,8 +163,76 @@ public class Regionalism {
 		this.extraAddressDesc = extraAddressDesc;
 	}
 
+	public String getProvinceCityCountyName() {
+		return StringUtil.meaningStr(provinceCityCountyName);
+	}
+
+	public void setProvinceCityCountyName(String provinceCityCountyName) {
+		this.provinceCityCountyName = provinceCityCountyName;
+	}
+
 	
-	
+	public void initProvinceCityCountyCode(){
+		if(this.getProvinceCityCountyName() != null){
+			String[] provinceCityCountys = this.getProvinceCityCountyName().split("-");
+			if(provinceCityCountys.length == 3){
+				ClassLoader classLoader = XMLUtil.class.getClassLoader();
+				URL resource = classLoader.getResource("LocList.xml");
+				try {
+					Element regionalismElement = RegionalismUtil.getRegionalismElement(resource, "UTF-8");
+					String provinceName = provinceCityCountys[0];
+					String cityName = provinceCityCountys[1];
+					String countyName = provinceCityCountys[2];
+					String provinceCode = null;
+					String cityCode = null;
+					String countyCode = null;
+					Node provinceNode = regionalismElement.selectSingleNode("//CountryRegion//State[contains('"+provinceName+"',@Name)]");
+					if(provinceNode != null){
+						Element provinceElement = (Element)provinceNode;
+						provinceCode = provinceElement.attribute("Code").getValue();
+						this.setProvinceCode(provinceCode);
+						this.setProvinceName(provinceName);
+					}
+					if(cityName.contains("北京") || cityName.contains("天津") 
+							|| cityName.contains("上海") || cityName.contains("重庆")){
+						Node cityNode = regionalismElement.selectSingleNode("//CountryRegion//State[contains('"+cityName+"',@Name)]");
+						if(cityNode != null){
+							Element cityElement = (Element)cityNode;
+							cityCode = cityElement.attribute("Code").getValue();
+							this.setCityCode(provinceCode);
+							this.setCityName(provinceName);
+							Node countyNode = regionalismElement.selectSingleNode("//CountryRegion//State[@Code='"+cityCode+"']//City[contains('"+countyName+"',@Name)]");
+							if(countyNode != null){
+								Element countyElement = (Element)countyNode;
+								countyCode = countyElement.attribute("Code").getValue();
+								this.setCountyCode(countyCode);
+								this.setCountyName(countyName);
+							}
+						}
+					}else{
+						Node cityNode = regionalismElement.selectSingleNode("//CountryRegion//State[@Code='"+provinceCode+"']//City[contains('"+cityName+"',@Name)]");
+						if(cityNode != null){
+							Element cityElement = (Element)cityNode;
+							cityCode = cityElement.attribute("Code").getValue();
+							this.setCityCode(cityCode);
+							this.setCityName(cityName);
+							
+							Node countyNode = regionalismElement.selectSingleNode("//CountryRegion//State[@Code='"+provinceCode+"']//City[@Code='"+cityCode+"']//Region[contains('"+countyName+"',@Name)]");
+							if(countyNode != null){
+								Element countyElement = (Element)countyNode;
+								countyCode = countyElement.attribute("Code").getValue();
+								this.setCountyCode(countyCode);
+								this.setCountyName(countyName);
+							}
+						}
+					}
+				} catch (DocumentException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+	}
 	
 	
 }

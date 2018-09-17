@@ -6,6 +6,9 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Param;
 
 public interface BaseInfoMapper {
+	
+	
+	List<Map<String,Object>> getBaseInfoByTableName(@Param("tableName")String tableName);
 
 	/**
 	 * 依据医院编号获取医院

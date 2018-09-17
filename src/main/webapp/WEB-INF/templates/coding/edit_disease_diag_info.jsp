@@ -67,7 +67,7 @@ String respondResultJson= (String)request.getAttribute("respondResultJson");
 						<input type="hidden" name="outpatientDiagRecord.diseaseDiagName" value="${diseaseDiagInfo.outpatientDiagRecord.diseaseDiagName }">
 						<input type="hidden" name="outpatientDiagRecord.diseaseDiagCode" value="${diseaseDiagInfo.outpatientDiagRecord.diseaseDiagCode }">
 					</td>
-					<td class="tdLabel_8" colspan="5" rowspan="2">
+					<td class="tdLabel_8" colspan="5">
 					</td>
 					
 				</tr>
@@ -87,6 +87,16 @@ String respondResultJson= (String)request.getAttribute("respondResultJson");
 						<input class="input_box" data-type="diseaseDiag" type="text" name="mainDiagRecord.diseaseDiagShow" value="${mainDiagShow }">
 						<input type="hidden" name="mainDiagRecord.diseaseDiagName" value="${diseaseDiagInfo.mainDiagRecord.diseaseDiagName}">
 						<input type="hidden" name="mainDiagRecord.diseaseDiagCode" value="${diseaseDiagInfo.mainDiagRecord.diseaseDiagCode}">
+					</td>
+					<td class="tdLabel_8">
+						<select name="mainDiagRecord.inHospitalDiseaseStateCode" style="width: 100%">
+						</select>
+						<input type="hidden" name="mainDiagRecord.inHospitalDiseaseStateName">
+					</td>
+					<td class="tdLabel_8">
+						<select name="mainDiagRecord.treatResultCode" style="width: 100%">
+						</select>
+						<input type="hidden" name="mainDiagRecord.treatResultName">
 					</td>
 				</tr>
 				</thead>
@@ -222,7 +232,7 @@ String respondResultJson= (String)request.getAttribute("respondResultJson");
 		</td>
 		
 		<td class="tdLabel_8">
-			<input class="input_box" type="text" name="diseaseDiagRecords[0].treatDayNumber">
+			<input class="input_box" type="number" name="diseaseDiagRecords[0].treatDayNumber">
 		</td>
 		
 		<td class="tdLabel_8">

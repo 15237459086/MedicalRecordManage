@@ -2,6 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.kurumi.mapper.BaseInfoMapper" >
  
+ <select id="getBaseInfoByTableName" resultType="map">
+  	select id, name as label,code as uniq_code from ${tableName}
+ </select>
+ 
  <!-- 依据医院编号获取医院 -->
  <select id="getHospitalByCode" resultType="map">
   	select id, name as label,code as uniq_code from hospital where code = #{hospitalCode}

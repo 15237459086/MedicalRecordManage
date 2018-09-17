@@ -156,7 +156,18 @@
     	<groupId>com.itextpdf</groupId>
 	    <artifactId>itext-asian</artifactId>
 	    <version>5.2.0</version>
+	</dependency>
+	<dependency>
+	    <groupId>org.json</groupId>
+	    <artifactId>json</artifactId>
+	    <version>20140107</version>
 	</dependency> 
+	
+	<dependency>
+	    <groupId>jaxen</groupId>
+	    <artifactId>jaxen</artifactId>
+	    <version>1.1.6</version><!--$NO-MVN-MAN-VER$-->
+	</dependency>
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>

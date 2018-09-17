@@ -207,6 +207,10 @@ public class MedicalRecordCodingController {
 	public String editBasicInfo(BasicInfo basicInfo,HttpServletRequest request,Model model){
 		
 		try {
+			basicInfo.getNativePlaceRegionalism().initProvinceCityCountyCode();
+			basicInfo.getBirthRegionalism().initProvinceCityCountyCode();
+			basicInfo.getRegisteredAddressRegionalism().initProvinceCityCountyCode();
+			basicInfo.getPermanentAddressRegionalism().initProvinceCityCountyCode();
 			String filePath = myConfig.getJsonRecourcePath() + StringUtil.getLocalPath(basicInfo.getVisitGuid());
 			String versionFilePath = myConfig.getJsonRecourcePath()+ StringUtil.getLocalPath(basicInfo.getVisitGuid())+"version\\";
 			String fileName = basicInfo.getVisitGuid() + ".json";
