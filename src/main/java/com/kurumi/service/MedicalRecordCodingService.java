@@ -9,6 +9,7 @@ import com.kurumi.pojo.coding.BasicInfo;
 import com.kurumi.pojo.coding.CostInfo;
 import com.kurumi.pojo.coding.CureInfo;
 import com.kurumi.pojo.coding.DiseaseDiagInfo;
+import com.kurumi.pojo.coding.InfectionInfo;
 import com.kurumi.pojo.coding.IntensiveCareInfo;
 import com.kurumi.pojo.coding.NurseInfo;
 import com.kurumi.pojo.coding.OperateInfo;
@@ -27,6 +28,8 @@ public interface MedicalRecordCodingService {
 	int editOperateInfo(String visitGuid,OperateInfo operateInfo,Map<String, Object> jsonMap);
 	
 	int editNurseInfo(String visitGuid,NurseInfo nurseInfo,Map<String, Object> jsonMap);
+	
+	int editInfectionInfo(String visitGuid,InfectionInfo infectionInfo,Map<String, Object> jsonMap);
 	
 	int editCostInfo(String visitGuid,CostInfo costInfo,Map<String, Object> jsonMap);
 	

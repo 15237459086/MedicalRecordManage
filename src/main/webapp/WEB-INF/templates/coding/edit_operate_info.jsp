@@ -10,6 +10,7 @@ String respondResultJson= (String)request.getAttribute("respondResultJson");
 <link rel="stylesheet" href="${basePath}assets/css/basic.css"/>
 <link rel="stylesheet" href="${basePath}assets/bootstrap/css/bootstrap.css"/>
 <link rel="stylesheet" href="${basePath}assets/jquery-ui/jquery-ui.css"/>
+<link rel="stylesheet" href="${basePath}assets/hsCheckData/css/hsCheckData.css"/>
 <link rel="stylesheet" href="${basePath}assets/css/coding/edit_index_info.css"/>
 
 <script type="text/javascript" src="${basePath}assets/jquery/jquery.min.js"></script>
@@ -17,7 +18,8 @@ String respondResultJson= (String)request.getAttribute("respondResultJson");
 <script type="text/javascript" src="${basePath}assets/bootstrap/js/bootstrap.js"></script>
 <script type="text/javascript" src="${basePath}assets/jquery-ui/jquery-ui.js"></script>
 <script type="text/javascript" src="${basePath}assets/My97DatePicker/WdatePicker.js"></script>
-
+<script type="text/javascript" src="${basePath}assets/hsCheckData/js/hsCheckData.js"></script>
+<script type="text/javascript" src="${basePath}assets/hsCheckData/js/cityData.js"></script>
 <script type="text/javascript" src="${basePath}assets/jqueryValidate/jquery.validate.js"></script>
 <script type="text/javascript" src="${basePath}assets/jqueryValidate/localization/messages_zh.js"></script>
 <script type="text/javascript" src="${basePath}assets/js/coding/edit_operate_info.js"></script>
@@ -48,7 +50,7 @@ String respondResultJson= (String)request.getAttribute("respondResultJson");
 		</ul>
 	</div>
 	<input type="hidden" id="operationCount" value="0"/>
-	<div class="content" id="operation_records">
+	<div class="content" style="width: 100%" id="operation_records">
 		
 		
 	</div>
@@ -63,17 +65,24 @@ String respondResultJson= (String)request.getAttribute("respondResultJson");
 			<tbody>
 				<tr>
 					<td class="tdLabel_7">开始时间</td>
-					<td colspan="2" class="tdLabel_8"><input type="text"
+					<td class="tdLabel_8"><input type="text"
 						name="operateRecords[0].operateStartDate"
 						onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})"
-						class="input_box" style="width: 250px"
+						class="input_box"
 						value="">
 					</td>
 					<td class="tdLabel_7">结束时间</td>
-					<td colspan="2" class="tdLabel_8"><input type="text"
+					<td class="tdLabel_8"><input type="text"
 						name="operateRecords[0].operateEndDate"
 						onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})"
-						class="input_box" style="width: 250px"
+						class="input_box"
+						value="">
+					</td>
+					<td class="tdLabel_7">持续时间(小时)</td>
+					<td class="tdLabel_8"><input type="text"
+						name="operateRecords[0].operateDurationTime" style="width: 70%"
+						
+						class="input_box"
 						value="">
 					</td>
 				</tr>
@@ -134,6 +143,15 @@ String respondResultJson= (String)request.getAttribute("respondResultJson");
 						<input type="text" name="operateRecords[0].operateWorkers[0].medicalWorkerName"/>
 						<input type="hidden" name="operateRecords[0].operateWorkers[0].medicalWorkerCode"/>
 					</td>
+				</tr>
+				<tr>
+					<td class="tdLabel_7">手术部位</td>
+					<td class="tdLabel_8">
+						<div id="operateBodyPart" style="width:300px;" class="hsCheckData" data-id=""></div>
+						<input type="hidden" name="operateRecords[0].operateBodyPartCodes"/>
+						<input type="hidden" name="operateRecords[0].operateBodyPartNames"/>
+							
+				</td>
 				</tr>
 				<tr>
 					<td class="tdLabel_7">手术医师</td>

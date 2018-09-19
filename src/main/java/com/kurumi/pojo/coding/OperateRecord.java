@@ -1,5 +1,6 @@
 package com.kurumi.pojo.coding;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -154,12 +155,17 @@ public class OperateRecord {
 	/**
 	 * 手术部位代码
 	 */
-	private String operateBodyPartCode;
+	private String operateBodyPartCodes;
 	
 	/**
 	 * 手术部位代码
 	 */
-	private String operateBodyPartName;
+	private String operateBodyPartNames;
+	
+	/**
+	 * 手术持续时间
+	 */
+	private BigDecimal operateDurationTime;
 	
 	/**
 	 * 切口感染部位代码
@@ -507,20 +513,22 @@ public class OperateRecord {
 		this.operatMarkName = operatMarkName;
 	}
 
-	public String getOperateBodyPartCode() {
-		return operateBodyPartCode;
+	
+
+	public String getOperateBodyPartCodes() {
+		return operateBodyPartCodes;
 	}
 
-	public void setOperateBodyPartCode(String operateBodyPartCode) {
-		this.operateBodyPartCode = operateBodyPartCode;
+	public void setOperateBodyPartCodes(String operateBodyPartCodes) {
+		this.operateBodyPartCodes = operateBodyPartCodes;
 	}
 
-	public String getOperateBodyPartName() {
-		return operateBodyPartName;
+	public String getOperateBodyPartNames() {
+		return operateBodyPartNames;
 	}
 
-	public void setOperateBodyPartName(String operateBodyPartName) {
-		this.operateBodyPartName = operateBodyPartName;
+	public void setOperateBodyPartNames(String operateBodyPartNames) {
+		this.operateBodyPartNames = operateBodyPartNames;
 	}
 
 	public String getSurgicalSiteInfectionCode() {
@@ -633,6 +641,14 @@ public class OperateRecord {
 
 	public void setAnaesthesiaUnintendedName(String anaesthesiaUnintendedName) {
 		this.anaesthesiaUnintendedName = anaesthesiaUnintendedName;
+	}
+
+	public BigDecimal getOperateDurationTime() {
+		return operateDurationTime;
+	}
+
+	public void setOperateDurationTime(BigDecimal operateDurationTime) {
+		this.operateDurationTime = operateDurationTime;
 	}
 	
 	

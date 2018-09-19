@@ -77,10 +77,12 @@
 				</li> --%>
 				<%-- <li class="TC_li"><a onclick="loadContent('${basePath}medical_record/edit_home_page_pregnancy_birth_form?visitGuid=${visitGuid}')" aria-controls="pregnancyBirthMentInfo" role="tab" data-toggle="tab">产科记录</a>
 				</li> --%>
+				
+				<li class="TC_li"><a onclick="loadContent('${basePath}medical_record_coding/edit_infection_info_form?visitGuid=${visitGuid}')" aria-controls="infectionMentInfo" role="tab" data-toggle="tab">医院感染</a>
+				</li>
 				<%-- <li class="TC_li"><a onclick="loadContent('${basePath}medical_record/edit_home_page_antibacterial_drug_form?visitGuid=${visitGuid}')" aria-controls="antibacterialAgentsMentInfo" role="tab" data-toggle="tab">抗菌药物</a>
 				</li>
-				<li class="TC_li"><a onclick="loadContent('${basePath}medical_record/edit_home_page_infection_form?visitGuid=${visitGuid}')" aria-controls="infectionMentInfo" role="tab" data-toggle="tab">医院感染</a>
-				</li>
+				
 				<li class="TC_li"><a onclick="loadContent('${basePath}medical_record/edit_home_page_examination_reports_form?visitGuid=${visitGuid}')" aria-controls="examinationReportsMentInfo" role="tab" data-toggle="tab">检验报告单</a>
 				</li>
 				<li class="TC_li"><a onclick="loadContent('${basePath}medical_record/edit_home_page_doctor_advice_temporary_form?visitGuid=${visitGuid}')" aria-controls="doctorAdviceTemporaryMentInfo" role="tab" data-toggle="tab">临时医嘱</a>

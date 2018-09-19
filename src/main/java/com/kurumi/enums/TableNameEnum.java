@@ -2,7 +2,14 @@ package com.kurumi.enums;
 
 public enum TableNameEnum {
 
-	BooleanType("布尔类型","boolean_type"); 
+	/**
+	 * 布尔类型
+	 */
+	BooleanType("布尔类型","boolean_type"),
+	/**
+	 * 身体部位
+	 */
+	BodyPart("身体部位","body_part"); 
 	
 	// 成员变量  
     private String tableNameDesc;  

@@ -1,8 +1,19 @@
+var bodyPartData= new Array();
 function initPage(baseInfoJson,operateInfoJson){
 	var basePath = $("#basePath").val();
 	$("select").each(function(){
 		$(this).append("<option value=''>---请选择---</option>");
 	});
+	
+	var bodyParts = baseInfoJson['bodyParts'];//身体部位
+	for(var index in bodyParts){
+		var bodyPart = bodyParts[index];
+		var temBodyPart = new Object();
+		temBodyPart[bodyPart.uniq_code] = bodyPart.label;
+		bodyPartData.push(temBodyPart);
+    	/*options+="<option value='"+incisionLevel.uniq_code+"'>"+incisionLevel.label+"</option>"*/
+    } 
+	
 	var incisionLevels = baseInfoJson['incisionLevels'];//切口等级
 	$("select[name$='.incisionLevelCode']").each(function(){
 		var options = "";
@@ -137,6 +148,20 @@ function addOperateRecord(){
 	   });
     });
     
+    $.each(add_content.find("#operateBodyPart"), function(i,item) {    
+    	$(item).attr("id",$(item).attr("id")+count);
+    	
+    	$(item).bind('DOMNodeInserted', function(e) {
+    		add_content.find("input[name$='.operateBodyPartCodes']").val($(this).attr("data-id"));
+    		add_content.find("input[name$='.operateBodyPartNames']").val($(this).text());
+    	}).hsCheckData({
+            isShowCheckBox: true, //默认为false
+            //minCheck: 3,//默认为0，不限最少选择个数
+            //maxCheck: 6,//默认为0，不限最多选择个数
+            data: bodyPartData
+    	});
+    });
+    
     $.each(add_content.find("input[name$='.operateDescShow']"), function(i,item) {    
     	$(this).autocomplete({
     		source: function( request, response ) {
@@ -243,7 +268,7 @@ function addOperateRecordByRecord(operateRecord){
 	}
 	add_content.find("input[name$='.operateCode']").val(operateRecord.operateCode);
 	add_content.find("input[name$='.operateName']").val(operateRecord.operateName);
-	
+	add_content.find("input[name$='.operateDurationTime']").val(operateRecord.operateDurationTime);
 	if(operateRecord.incisionLevelCode){
 		
 		var selectOption = add_content.find("select[name$='.incisionLevelCode']").find("option[value='"+operateRecord.incisionLevelCode+"']")
@@ -297,8 +322,9 @@ function addOperateRecordByRecord(operateRecord){
 			add_content.find("select[name$='.anaesthesiaTypeCode']").append("<option selected='selected' value='"+operateRecord.anaesthesiaTypeCode+"'>"+operateRecord.anaesthesiaTypeName+"</option>");
 		}
 	}
-	add_content.find("input[name$='.anaesthesiaTypeName']").val(operateRecord.anaesthesiaTypeName);
-
+	add_content.find("div[id^='operateBodyPart']").attr("data-id",operateRecord.operateBodyPartCodes).text(operateRecord.operateBodyPartNames);
+	add_content.find("input[name$='.operateBodyPartCodes']").val(operateRecord.operateBodyPartCodes);
+	add_content.find("input[name$='.operateBodyPartNames']").val(operateRecord.operateBodyPartNames);
 	var operateWorkers = operateRecord.operateWorkers
 	for(var index in operateWorkers){
 		var operateWorker = operateWorkers[index];

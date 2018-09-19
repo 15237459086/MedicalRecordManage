@@ -304,7 +304,7 @@ String respondResultJson= (String)request.getAttribute("respondResultJson");
 			</tr>
 			
 			<tr>
-				<td class="tdLabel_8" colspan="3">地址： <input
+				<td class="tdLabel_8" colspan="3">完整地址： <input
 					type="text" name="linkManAddress" style="width: 500px"
 					value="${basicInfo.linkManAddress}">
 				</td>

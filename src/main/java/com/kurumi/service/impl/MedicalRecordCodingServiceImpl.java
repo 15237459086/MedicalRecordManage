@@ -33,6 +33,7 @@ import com.kurumi.pojo.coding.CostInfo;
 import com.kurumi.pojo.coding.CureInfo;
 import com.kurumi.pojo.coding.DiseaseDiagInfo;
 import com.kurumi.pojo.coding.DiseaseDiagRecord;
+import com.kurumi.pojo.coding.InfectionInfo;
 import com.kurumi.pojo.coding.IntensiveCareInfo;
 import com.kurumi.pojo.coding.NurseInfo;
 import com.kurumi.pojo.coding.OperateInfo;
@@ -929,6 +930,22 @@ public class MedicalRecordCodingServiceImpl implements MedicalRecordCodingServic
 		return 1;
 	}
 
+	
+	@Transactional(propagation=Propagation.REQUIRED)
+	@Override
+	public int editInfectionInfo(String visitGuid,InfectionInfo infectionInfo, Map<String, Object> jsonMap) {
+		// TODO Auto-generated method stub
+		List<String> medicalRecordJsons = medicalRecordMapper.getMedicalRecordJsonByVisitGuid(StringUtil.handleJsonParam(visitGuid));
+		jsonMap.put("visitGuid", visitGuid);
+		String jsonMapJson = JsonUtil.objectToJson(jsonMap);
+		if(medicalRecordJsons.isEmpty()){
+			medicalRecordMapper.insertMedicalRecordJson(jsonMapJson);
+		}else{
+			medicalRecordMapper.deleteMedicalRecordJsonByVisitGuid(StringUtil.handleJsonParam(visitGuid));
+			medicalRecordMapper.insertMedicalRecordJson(jsonMapJson);
+		}
+		return 1;
+	}
 	
 	@Override
 	public List<Map<String, Object>> getDiseaseMedicalRecord(MedicalRecordSearchingQuery params) {

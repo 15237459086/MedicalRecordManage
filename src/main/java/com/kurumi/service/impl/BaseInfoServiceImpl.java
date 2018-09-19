@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kurumi.config.MyConfig;
+import com.kurumi.enums.TableNameEnum;
 import com.kurumi.mapper.BaseInfoMapper;
 import com.kurumi.service.BaseInfoService;
 import com.kurumi.util.StringUtil;
@@ -145,6 +146,10 @@ public class BaseInfoServiceImpl implements BaseInfoService {
 		
 		List<Map<String, Object>> anaesthesiaLevels = baseInfoMapper.getAnaesthesiaLevels();
 		baseInfo.put("anaesthesiaLevels", anaesthesiaLevels);
+		
+		List<Map<String, Object>> bodyParts = baseInfoMapper.getBaseInfoByTableName(TableNameEnum.BodyPart.getTableName());
+		baseInfo.put("bodyParts", bodyParts);
+		
 		return baseInfo;
 	}
 
