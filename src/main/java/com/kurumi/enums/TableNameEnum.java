@@ -9,7 +9,15 @@ public enum TableNameEnum {
 	/**
 	 * 身体部位
 	 */
-	BodyPart("身体部位","body_part"); 
+	BodyPart("身体部位","body_part"),
+	/**
+	 * 血液类型
+	 */
+	BloodType("血液类型","blood_type"),
+	/**
+	 * 药物过敏类型
+	 */
+	DrugAllergyType("药物过敏类型","drug_allergy_type"); 
 	
 	// 成员变量  
     private String tableNameDesc;  

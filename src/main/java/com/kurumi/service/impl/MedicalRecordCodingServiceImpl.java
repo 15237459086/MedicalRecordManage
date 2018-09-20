@@ -1,5 +1,6 @@
 package com.kurumi.service.impl;
 
+import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.text.ParseException;
@@ -33,7 +34,9 @@ import com.kurumi.pojo.coding.CostInfo;
 import com.kurumi.pojo.coding.CureInfo;
 import com.kurumi.pojo.coding.DiseaseDiagInfo;
 import com.kurumi.pojo.coding.DiseaseDiagRecord;
+import com.kurumi.pojo.coding.DrugAllergyInfo;
 import com.kurumi.pojo.coding.InfectionInfo;
+import com.kurumi.pojo.coding.InfusionBloodInfo;
 import com.kurumi.pojo.coding.IntensiveCareInfo;
 import com.kurumi.pojo.coding.NurseInfo;
 import com.kurumi.pojo.coding.OperateInfo;
@@ -256,14 +259,18 @@ public class MedicalRecordCodingServiceImpl implements MedicalRecordCodingServic
 				}
 			}
 		}
+		String pageIndexpPdfTemplatePath = myConfig.getPageIndexpPdfTemplatePath();
+		File pdfTemplateFile = new File(pageIndexpPdfTemplatePath);
+		if(pdfTemplateFile.exists()){
+			MedicalRecordResource medicalRecordResource = new MedicalRecordResource();
+			medicalRecordResource.setDataMap(jsonMap);
+			medicalRecordResource.setPageIndexTemplatePDFPath(myConfig.getPageIndexpPdfTemplatePath());
+			String newPDFPath = myConfig.getPdfRecourcePath()+StringUtil.getLocalPath(visitGuid)+ visitGuid+"\\page_index.pdf";
+			medicalRecordResource.setNewPDFPath(newPDFPath);
+			PageIndexPDFThread pageIndexPDFThread = new PageIndexPDFThread(medicalRecordResource);
+			pageIndexPDFThread.start();
+		}
 		
-		MedicalRecordResource medicalRecordResource = new MedicalRecordResource();
-		medicalRecordResource.setDataMap(jsonMap);
-		medicalRecordResource.setPageIndexTemplatePDFPath(myConfig.getPageIndexpPdfTemplatePath());
-		String newPDFPath = myConfig.getPdfRecourcePath()+StringUtil.getLocalPath(visitGuid)+ visitGuid+"\\page_index.pdf";
-		medicalRecordResource.setNewPDFPath(newPDFPath);
-		PageIndexPDFThread pageIndexPDFThread = new PageIndexPDFThread(medicalRecordResource);
-		pageIndexPDFThread.start();
 		return null;
 	}
 
@@ -947,6 +954,38 @@ public class MedicalRecordCodingServiceImpl implements MedicalRecordCodingServic
 		return 1;
 	}
 	
+	@Transactional(propagation=Propagation.REQUIRED)
+	@Override
+	public int editInfusionBloodInfo(String visitGuid, InfusionBloodInfo infusionBloodInfo,
+			Map<String, Object> jsonMap) {
+		List<String> medicalRecordJsons = medicalRecordMapper.getMedicalRecordJsonByVisitGuid(StringUtil.handleJsonParam(visitGuid));
+		jsonMap.put("visitGuid", visitGuid);
+		String jsonMapJson = JsonUtil.objectToJson(jsonMap);
+		if(medicalRecordJsons.isEmpty()){
+			medicalRecordMapper.insertMedicalRecordJson(jsonMapJson);
+		}else{
+			medicalRecordMapper.deleteMedicalRecordJsonByVisitGuid(StringUtil.handleJsonParam(visitGuid));
+			medicalRecordMapper.insertMedicalRecordJson(jsonMapJson);
+		}
+		return 1;
+	}
+	
+	@Transactional(propagation=Propagation.REQUIRED)
+	@Override
+	public int editDrugAllergyInfo(String visitGuid, DrugAllergyInfo drugAllergyInfo, Map<String, Object> jsonMap) {
+		// TODO Auto-generated method stub
+		List<String> medicalRecordJsons = medicalRecordMapper.getMedicalRecordJsonByVisitGuid(StringUtil.handleJsonParam(visitGuid));
+		jsonMap.put("visitGuid", visitGuid);
+		String jsonMapJson = JsonUtil.objectToJson(jsonMap);
+		if(medicalRecordJsons.isEmpty()){
+			medicalRecordMapper.insertMedicalRecordJson(jsonMapJson);
+		}else{
+			medicalRecordMapper.deleteMedicalRecordJsonByVisitGuid(StringUtil.handleJsonParam(visitGuid));
+			medicalRecordMapper.insertMedicalRecordJson(jsonMapJson);
+		}
+		return 1;
+	}
+	
 	@Override
 	public List<Map<String, Object>> getDiseaseMedicalRecord(MedicalRecordSearchingQuery params) {
 		// TODO Auto-generated method stub
@@ -982,5 +1021,9 @@ public class MedicalRecordCodingServiceImpl implements MedicalRecordCodingServic
 		// TODO Auto-generated method stub
 		return medicalRecordCodingMapper.getMedicalRecordOfDefectDetail(params);
 	}
+
+	
+
+	
 
 }

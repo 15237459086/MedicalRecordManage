@@ -360,7 +360,7 @@ String respondResultJson= (String)request.getAttribute("respondResultJson");
 				 <input type="text" name="craniocerebralInjuryAndComaDateTime"
 					onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})"
 					value="${basicInfo.craniocerebralInjuryAndComaDateTime}"></td>
-				<td class="tdLabel_7">诊断确诊时间</td>
+				<td class="tdLabel_7">入院确诊时间</td>
 				<td class="tdLabel_8">
 				 <input type="text" name="diagConfirmedDateTime"
 					onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})"

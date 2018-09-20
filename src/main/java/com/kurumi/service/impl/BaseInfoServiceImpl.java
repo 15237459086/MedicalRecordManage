@@ -173,10 +173,10 @@ public class BaseInfoServiceImpl implements BaseInfoService {
 	}
 
 	@Override
-	public Map<String, List<Map<String, Object>>> getBaseInfoOfHomePageInfusionBlood() {
+	public Map<String, List<Map<String, Object>>> getBaseDataOfInfusionBloodInfo() {
 		// TODO Auto-generated method stub
 		Map<String, List<Map<String, Object>>> baseInfo = new HashMap<String, List<Map<String,Object>>>();
-		List<Map<String, Object>> bloodTypes = baseInfoMapper.getBloodTypes();
+		List<Map<String, Object>> bloodTypes = baseInfoMapper.getBaseInfoByTableName(TableNameEnum.BloodType.getTableName());
 		baseInfo.put("bloodTypes", bloodTypes);
 		return baseInfo;
 	}
@@ -191,11 +191,11 @@ public class BaseInfoServiceImpl implements BaseInfoService {
 	}
 
 	@Override
-	public Map<String, List<Map<String, Object>>> getBaseInfoOfHomePageAllergyDrug() {
+	public Map<String, List<Map<String, Object>>> getBaseDataOfDrugAllergyInfo() {
 		// TODO Auto-generated method stub
 		Map<String, List<Map<String, Object>>> baseInfo = new HashMap<String, List<Map<String,Object>>>();
 		
-		List<Map<String, Object>> allergyDrugTypes = baseInfoMapper.getAllergyDrugTypes();
+		List<Map<String, Object>> allergyDrugTypes = baseInfoMapper.getBaseInfoByTableName(TableNameEnum.DrugAllergyType.getTableName());
 		baseInfo.put("allergyDrugTypes", allergyDrugTypes);
 		return baseInfo;
 	}

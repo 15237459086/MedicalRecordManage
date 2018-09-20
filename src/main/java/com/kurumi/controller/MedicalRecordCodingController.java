@@ -32,7 +32,9 @@ import com.kurumi.pojo.coding.CostInfo;
 import com.kurumi.pojo.coding.CureInfo;
 import com.kurumi.pojo.coding.DiseaseDiagInfo;
 import com.kurumi.pojo.coding.DiseaseDiagRecord;
+import com.kurumi.pojo.coding.DrugAllergyInfo;
 import com.kurumi.pojo.coding.InfectionInfo;
+import com.kurumi.pojo.coding.InfusionBloodInfo;
 import com.kurumi.pojo.coding.IntensiveCareInfo;
 import com.kurumi.pojo.coding.NurseInfo;
 import com.kurumi.pojo.coding.OperateInfo;
@@ -509,6 +511,164 @@ public class MedicalRecordCodingController {
 		return "coding/edit_operate_info";
 	}
 	
+	
+	@GetMapping("/edit_infusion_blood_info_form")
+	public String editInfusionBloodInfoForm(String visitGuid,Model model){
+		
+		model.addAttribute("visitGuid", visitGuid);
+		Map<String, List<Map<String, Object>>> baseInfo = baseInfoService.getBaseDataOfInfusionBloodInfo();
+		String baseInfoJson = JsonUtil.objectToJson(baseInfo);
+		model.addAttribute("baseInfoJson", baseInfoJson);
+		List<String> jsonDatas = medicalRecordCodingService.getMedicalRecordJsonByVisitGuid(visitGuid);
+		
+		Map<String, Object> infusionBloodInfo = new HashMap<String, Object>();
+		if(!jsonDatas.isEmpty()){
+			Map<String, Object> jsonMap = JsonUtil.jsonToPojo(jsonDatas.get(0), Map.class);
+			infusionBloodInfo = (Map<String, Object>)jsonMap.get("infusionBloodInfo");
+			if(infusionBloodInfo == null){
+				infusionBloodInfo = new HashMap<String, Object>();
+			}
+		}
+		
+		String infusionBloodInfoJson = JsonUtil.objectToJson(infusionBloodInfo);
+		model.addAttribute("infusionBloodInfo", infusionBloodInfo);
+		model.addAttribute("infusionBloodInfoJson", infusionBloodInfoJson);
+		return "coding/edit_infusion_blood_info";
+	}
+	
+	@SuppressWarnings("unchecked")
+	@PostMapping("/edit_infusion_blood_info")
+	public String editInfusionBloodInfo(InfusionBloodInfo infusionBloodInfo,HttpServletRequest request,Model model){
+		try {
+			
+			String filePath = myConfig.getJsonRecourcePath() + StringUtil.getLocalPath(infusionBloodInfo.getVisitGuid());
+			String versionFilePath = myConfig.getJsonRecourcePath()+ StringUtil.getLocalPath(infusionBloodInfo.getVisitGuid())+"version\\";
+			String fileName = infusionBloodInfo.getVisitGuid() + ".json";
+			String versionFileName = infusionBloodInfo.getVisitGuid()+"-" + DateUtil.dateFormat("yyyyMMddHHmmssssss", new Date()) + ".json";
+			
+			/*String jsonData = FileUtil.readFile(filePath, fileName);*/
+			List<String> jsonDatas = medicalRecordCodingService.getMedicalRecordJsonByVisitGuid(infusionBloodInfo.getVisitGuid());
+			Map<String, Object> jsonMap = new HashMap<String, Object>();
+			if(!jsonDatas.isEmpty()){
+				jsonMap = JsonUtil.jsonToPojo(jsonDatas.get(0), Map.class);
+				if(jsonMap == null){
+					jsonMap = new HashMap<String, Object>();
+				}
+			}
+			Subject subject=SecurityUtils.getSubject();
+			Session session = subject.getSession();
+			Map<String, Object> currentUser = (Map<String, Object>)session.getAttribute("currentUser");
+			String userCode =(String)currentUser.get("user_code");
+			String userName =(String)currentUser.get("user_name");
+			jsonMap.put("userCode", userCode);
+			jsonMap.put("userName", userName);
+			jsonMap.put("infusionBloodInfo", infusionBloodInfo);
+			String jsonMapJson = JsonUtil.objectToJson(jsonMap);
+			FileUtil.createOrEditFile(jsonMapJson, filePath, fileName);
+			FileUtil.createOrEditFile(jsonMapJson, versionFilePath, versionFileName);
+			medicalRecordCodingService.editInfusionBloodInfo(infusionBloodInfo.getVisitGuid(), infusionBloodInfo, jsonMap);
+			jsonMap = JsonUtil.jsonToPojo(jsonMapJson, Map.class);
+			model.addAttribute("visitGuid", infusionBloodInfo.getVisitGuid());
+			
+			Map<String, Object> infusionBloodInfoMap = (Map<String, Object>)jsonMap.get("infusionBloodInfo");
+			String infusionBloodInfoJson = JsonUtil.objectToJson(infusionBloodInfoMap);
+			model.addAttribute("infusionBloodInfo", infusionBloodInfoMap);
+			
+			model.addAttribute("infusionBloodInfoJson",infusionBloodInfoJson);
+			Map<String, List<Map<String, Object>>> baseInfo = baseInfoService.getBaseDataOfInfusionBloodInfo();
+			String baseInfoJson = JsonUtil.objectToJson(baseInfo);
+			model.addAttribute("baseInfoJson", baseInfoJson);
+			RespondResult respondResult = new RespondResult(true,"200","保存成功",null);
+			model.addAttribute("respondResultJson", JsonUtil.objectToJson(respondResult));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			RespondResult respondResult = new RespondResult(false,"500","保存失败",null);
+			model.addAttribute("respondResultJson", JsonUtil.objectToJson(respondResult));
+		}
+		return "coding/edit_infusion_blood_info";
+	}
+	
+	@GetMapping("/edit_drug_allergy_info_form")
+	public String editDrugAllergyInfoForm(String visitGuid,Model model){
+		
+		model.addAttribute("visitGuid", visitGuid);
+		Map<String, List<Map<String, Object>>> baseInfo = baseInfoService.getBaseDataOfDrugAllergyInfo();
+		String baseInfoJson = JsonUtil.objectToJson(baseInfo);
+		model.addAttribute("baseInfoJson", baseInfoJson);
+		List<String> jsonDatas = medicalRecordCodingService.getMedicalRecordJsonByVisitGuid(visitGuid);
+		
+		Map<String, Object> drugAllergyInfo = new HashMap<String, Object>();
+		if(!jsonDatas.isEmpty()){
+			Map<String, Object> jsonMap = JsonUtil.jsonToPojo(jsonDatas.get(0), Map.class);
+			drugAllergyInfo = (Map<String, Object>)jsonMap.get("drugAllergyInfo");
+			if(drugAllergyInfo == null){
+				drugAllergyInfo = new HashMap<String, Object>();
+			}
+		}
+		
+		String drugAllergyInfoJson = JsonUtil.objectToJson(drugAllergyInfo);
+		model.addAttribute("drugAllergyInfo", drugAllergyInfo);
+		model.addAttribute("drugAllergyInfoJson",drugAllergyInfoJson);
+		return "coding/edit_drug_allergy_info";
+	}
+	
+	
+	@SuppressWarnings("unchecked")
+	@PostMapping("/edit_drug_allergy_info")
+	public String editDrugAllergyInfo(DrugAllergyInfo drugAllergyInfo,HttpServletRequest request,Model model){
+		try {
+			
+			String filePath = myConfig.getJsonRecourcePath() + StringUtil.getLocalPath(drugAllergyInfo.getVisitGuid());
+			String versionFilePath = myConfig.getJsonRecourcePath()+ StringUtil.getLocalPath(drugAllergyInfo.getVisitGuid())+"version\\";
+			String fileName = drugAllergyInfo.getVisitGuid() + ".json";
+			String versionFileName = drugAllergyInfo.getVisitGuid()+"-" + DateUtil.dateFormat("yyyyMMddHHmmssssss", new Date()) + ".json";
+			
+			/*String jsonData = FileUtil.readFile(filePath, fileName);*/
+			List<String> jsonDatas = medicalRecordCodingService.getMedicalRecordJsonByVisitGuid(drugAllergyInfo.getVisitGuid());
+			Map<String, Object> jsonMap = new HashMap<String, Object>();
+			if(!jsonDatas.isEmpty()){
+				jsonMap = JsonUtil.jsonToPojo(jsonDatas.get(0), Map.class);
+				if(jsonMap == null){
+					jsonMap = new HashMap<String, Object>();
+				}
+			}
+			Subject subject=SecurityUtils.getSubject();
+			Session session = subject.getSession();
+			Map<String, Object> currentUser = (Map<String, Object>)session.getAttribute("currentUser");
+			String userCode =(String)currentUser.get("user_code");
+			String userName =(String)currentUser.get("user_name");
+			jsonMap.put("userCode", userCode);
+			jsonMap.put("userName", userName);
+			jsonMap.put("drugAllergyInfo", drugAllergyInfo);
+			String jsonMapJson = JsonUtil.objectToJson(jsonMap);
+			FileUtil.createOrEditFile(jsonMapJson, filePath, fileName);
+			FileUtil.createOrEditFile(jsonMapJson, versionFilePath, versionFileName);
+			medicalRecordCodingService.editDrugAllergyInfo(drugAllergyInfo.getVisitGuid(), drugAllergyInfo, jsonMap);
+			jsonMap = JsonUtil.jsonToPojo(jsonMapJson, Map.class);
+			model.addAttribute("visitGuid", drugAllergyInfo.getVisitGuid());
+			
+			Map<String, Object> drugAllergyInfoMap = (Map<String, Object>)jsonMap.get("drugAllergyInfo");
+			String drugAllergyInfoJson = JsonUtil.objectToJson(drugAllergyInfoMap);
+			model.addAttribute("drugAllergyInfo",drugAllergyInfoMap);
+			
+			model.addAttribute("drugAllergyInfoJson",drugAllergyInfoJson);
+			Map<String, List<Map<String, Object>>> baseInfo = baseInfoService.getBaseDataOfDrugAllergyInfo();
+			String baseInfoJson = JsonUtil.objectToJson(baseInfo);
+			model.addAttribute("baseInfoJson", baseInfoJson);
+			RespondResult respondResult = new RespondResult(true,"200","保存成功",null);
+			model.addAttribute("respondResultJson", JsonUtil.objectToJson(respondResult));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			RespondResult respondResult = new RespondResult(false,"500","保存失败",null);
+			model.addAttribute("respondResultJson", JsonUtil.objectToJson(respondResult));
+		}
+		
+		return "coding/edit_drug_allergy_info";
+	}
+	
+	
 	@GetMapping("/edit_nurse_info_form")
 	public String editNurseInfoForm(String visitGuid,Model model){
 		model.addAttribute("visitGuid", visitGuid);
@@ -528,7 +688,6 @@ public class MedicalRecordCodingController {
 		model.addAttribute("nurseInfoJson", nurseInfoJson);
 		return "coding/edit_nurse_info";
 	}
-	
 	
 	@SuppressWarnings("unchecked")
 	@PostMapping("/edit_nurse_info")

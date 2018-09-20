@@ -19,15 +19,17 @@ public interface BaseInfoService {
 	
 	Map<String, List<Map<String,Object>>> getBaseDataOfOperateInfo();
 	
+	Map<String, List<Map<String,Object>>> getBaseDataOfInfusionBloodInfo();
+	
+	Map<String, List<Map<String,Object>>> getBaseDataOfDrugAllergyInfo();
 	
 	
 	Map<String, List<Map<String,Object>>> getBaseInfoOfHomePageTransferDept();
 	
-	Map<String, List<Map<String,Object>>> getBaseInfoOfHomePageInfusionBlood();
+	
 	
 	Map<String, List<Map<String,Object>>> getBaseDataOfIntensiveCareInfo();
 	
-	Map<String, List<Map<String,Object>>> getBaseInfoOfHomePageAllergyDrug();
 	
 	Map<String, List<Map<String,Object>>> getBaseInfoOfHomePagePressureSore();
 	

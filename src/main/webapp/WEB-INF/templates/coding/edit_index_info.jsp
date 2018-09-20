@@ -63,12 +63,14 @@
 				</li>
 				<li class="TC_li"><a onclick="loadContent('${basePath}medical_record_coding/edit_operate_info_form?visitGuid=${visitGuid}')" aria-controls="operateMentInfo" role="tab" data-toggle="tab">手术记录</a>
 				</li>
-				<%-- <li class="TC_li"><a onclick="loadContent('${basePath}medical_record/edit_home_page_infusion_blood_form?visitGuid=${visitGuid}')" aria-controls="infusionBloodMentInfo" role="tab" data-toggle="tab">输血记录</a>
+				<li class="TC_li"><a onclick="loadContent('${basePath}medical_record_coding/edit_infusion_blood_info_form?visitGuid=${visitGuid}')" aria-controls="infusionBloodMentInfo" role="tab" data-toggle="tab">输血记录</a>
 				</li>
+				<%-- 
 				<li class="TC_li"><a onclick="loadContent('${basePath}medical_record/edit_home_page_transfer_dept_form?visitGuid=${visitGuid}')" aria-controls="transferDeptMentInfo" role="tab" data-toggle="tab">转科记录</a>
 				</li>
-				<li class="TC_li"><a onclick="loadContent('${basePath}medical_record/edit_home_page_drug_allergy_form?visitGuid=${visitGuid}')" aria-controls="drugAllergyMentInfo" role="tab" data-toggle="tab">药物过敏</a>
-				</li> --%>
+				--%>
+				<li class="TC_li"><a onclick="loadContent('${basePath}medical_record_coding/edit_drug_allergy_info_form?visitGuid=${visitGuid}')" aria-controls="drugAllergyMentInfo" role="tab" data-toggle="tab">药物过敏</a>
+				</li> 
 				<li class="TC_li"><a onclick="loadContent('${basePath}medical_record_coding/edit_intensive_care_info_form?visitGuid=${visitGuid}')" aria-controls="intensiveCareMentInfo" role="tab" data-toggle="tab">重症监护</a>
 				</li>
 				<li class="TC_li"><a onclick="loadContent('${basePath}medical_record_coding/edit_nurse_info_form?visitGuid=${visitGuid}')" aria-controls="nurseMentInfo" role="tab" data-toggle="tab">护理记录</a>
