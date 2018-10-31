@@ -34,9 +34,9 @@ public interface InterfaceMedicalRecordService {
 	int checkMeditalRecordUniqOfRadioTherapy(String mrId);
 	
 	
-	int importPaginationInfo(MedicalRecord medicalRecord,List<Map<String, Object>> scanImagesJson)throws DocumentException, IOException;
+	int importPaginationInfo(MedicalRecord medicalRecord,List<Map<String, Object>> scanImagesJson,String printTypeCode)throws DocumentException, IOException;
 	
-	int importPaginationInfo(MedicalRecordOutPatient medicalRecord,List<Map<String, Object>> scanImagesJson)throws DocumentException, IOException;
+	int importPaginationInfo(MedicalRecordOutPatient medicalRecord,List<Map<String, Object>> scanImagesJson,String printTypeCode)throws DocumentException, IOException;
 	
-	int importPaginationInfo(MedicalRecordRadioTherapy medicalRecord,List<Map<String, Object>> scanImagesJson)throws DocumentException, IOException;
+	int importPaginationInfo(MedicalRecordRadioTherapy medicalRecord,List<Map<String, Object>> scanImagesJson,String printTypeCode)throws DocumentException, IOException;
 }

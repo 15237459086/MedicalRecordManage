@@ -81,7 +81,26 @@ function queryFormSubmit(){
 			
 		},
 		error:function(XMLHttpRequest, textStatus, errorThrown){
-			layer.msg("未知错误，请联系管理员");
+			if(XMLHttpRequest.status == 200){
+				if(textStatus == 'parsererror'){
+					layer.msg("认证已失效，请重新登录");
+				}else{
+					layer.msg("未知错误，请联系管理员");
+				}
+			}else if(XMLHttpRequest.status == 0){
+				if(textStatus == 'error'){
+					layer.msg("无法连接服务器，请检测网络");
+				}else{
+					layer.msg("未知错误，请联系管理员");
+				}
+			}
+			else{
+				layer.msg("未知错误，请联系管理员");
+				console.log(XMLHttpRequest);
+				console.log(XMLHttpRequest.status);
+				console.log(textStatus)
+			}
+			
 		},
 		complete:function(XMLHttpRequest, textStatus){
 			layer.closeAll('loading');

@@ -21,9 +21,12 @@ import com.kurumi.pojo.MedicalRecord;
 import com.kurumi.pojo.MedicalRecordOutPatient;
 import com.kurumi.pojo.MedicalRecordRadioTherapy;
 import com.kurumi.pojo.RespondResult;
+import com.kurumi.pojo.resource.MedicalRecordResource;
 import com.kurumi.service.InterfaceMedicalRecordService;
+import com.kurumi.service.MedicalRecordScanService;
 import com.kurumi.service.MedicalRecordService;
 import com.kurumi.util.JsonUtil;
+import com.kurumi.util.PDFUtil;
 import com.kurumi.util.StringUtil;
 
 @Controller
@@ -35,6 +38,9 @@ public class InterfaceMedicalRecordController {
 	
 	@Autowired
 	private MedicalRecordService medicalRecordService;
+	
+	@Autowired
+	private MedicalRecordScanService medicalRecordScanService;
 	
 	@Autowired
 	private InterfaceMedicalRecordService interfaceMedicalRecordService;
@@ -55,6 +61,7 @@ public class InterfaceMedicalRecordController {
 			br.close();
 			String postDataJson = sb.toString();
 			Map<String, Object> postData = JsonUtil.jsonToPojo(postDataJson, Map.class);
+			String printTypeCode = (String)postData.get("printTypeCode");
 			Map<String, Object> medicalRecordJson= (Map<String, Object>)postData.get("medicalRecord");
 			List<Map<String, Object>> scanImagesJson = (List<Map<String, Object>>)postData.get("scanImages");
 			MedicalRecord medicalRecord = MedicalRecord.buildMedicalRecord(medicalRecordJson);
@@ -62,18 +69,31 @@ public class InterfaceMedicalRecordController {
 			if(count > 0){
 				List<String> visitGuids = medicalRecordService.getVisitGuidByMrIdAndVisitNumber(medicalRecord.getMrId(), medicalRecord.getVisitNumber());
 				String visitGuid = visitGuids.get(0);
-				String printerPath =myConfig.getPdfRecourcePath()+StringUtil.getLocalPath(visitGuid)+ visitGuid+"\\"+"publish\\"+medicalRecord.getMrId()+"_"+medicalRecord.getVisitNumber()+"_"+myConfig.getDefaultPrintTypeCode()+".pdf";
+				String printerPath =myConfig.getPdfRecourcePath()+StringUtil.getLocalPath(visitGuid)+ visitGuid+"\\"+"publish\\"+medicalRecord.getMrId()+"_"+medicalRecord.getVisitNumber()+"_"+printTypeCode+".pdf";
 				if(!new File(printerPath).exists()){
-					return new RespondResult(true, RespondResult.lackCode, "病案号："+ medicalRecord.getMrId()+",住院次数:"+medicalRecord.getVisitNumber()+",数据存在，资源缺失", printerPath);
+					List<Map<String,Object>> sourceFiles = medicalRecordScanService.getImageFilesByVisitGuidAndPrinterTypeCode(visitGuid, printTypeCode);
+					if(sourceFiles == null || sourceFiles.size() ==0){
+						return new RespondResult(true, RespondResult.lackCode, "住院病案号："+ medicalRecord.getMrId()+",住院次数:"+medicalRecord.getVisitNumber()+",要刻录的类型没有资源", null);
+					}
+					MedicalRecordResource medicalRecordResource = new MedicalRecordResource();
+					/*medicalRecordResource.setCurrentVersion(myConfig.getCurrentVersion());*/
+					medicalRecordResource.getImageRecources().addAll(sourceFiles);
+					medicalRecordResource.setImageBasicPath(myConfig.getImageRecourcePath());
+					String newPDFPath = myConfig.getPdfRecourcePath()+StringUtil.getLocalPath(visitGuid)+ visitGuid+"\\"+"publish\\"+medicalRecord.getMrId()+"_"+medicalRecord.getVisitNumber()+"_"+printTypeCode+".pdf";
+					medicalRecordResource.setNewPDFPath(newPDFPath);
+					/*MedicalRecordPDFThread medicalRecordPDFThread = new MedicalRecordPDFThread(medicalRecordResource);
+					medicalRecordPDFThread.start();*/
+					PDFUtil.createPdf(medicalRecordResource.getImageRecources(),medicalRecordResource.getImageBasicPath(), medicalRecordResource.getNewPDFPath());
+					return new RespondResult(true, RespondResult.successCode, null, printerPath);
 				}else{
 					return new RespondResult(true, RespondResult.repeatCode, "资源已存在", printerPath);
 				}
 				
 			}
-			count = interfaceMedicalRecordService.importPaginationInfo(medicalRecord,scanImagesJson);
+			count = interfaceMedicalRecordService.importPaginationInfo(medicalRecord,scanImagesJson,printTypeCode);
 			if(count == 1){
 				Thread.sleep(3000);
-				String printerPath =myConfig.getPdfRecourcePath()+StringUtil.getLocalPath(medicalRecord.getVisitGuid())+ medicalRecord.getVisitGuid()+"\\"+"publish\\"+medicalRecord.getMrId()+"_"+medicalRecord.getVisitNumber()+"_"+myConfig.getDefaultPrintTypeCode()+".pdf";
+				String printerPath =myConfig.getPdfRecourcePath()+StringUtil.getLocalPath(medicalRecord.getVisitGuid())+ medicalRecord.getVisitGuid()+"\\"+"publish\\"+medicalRecord.getMrId()+"_"+medicalRecord.getVisitNumber()+"_"+printTypeCode+".pdf";
 				if(!new File(printerPath).exists()){
 					return new RespondResult(true, RespondResult.lackCode, "病案号："+ medicalRecord.getMrId()+",住院次数:"+medicalRecord.getVisitNumber()+",数据存在，资源缺失", printerPath);
 				}else{
@@ -82,6 +102,8 @@ public class InterfaceMedicalRecordController {
 				
 			}else if(count == -2){
 				respondResult = new RespondResult(true, RespondResult.lackCode, "资源缺失", null);
+			}else if(count == -3){
+				respondResult = new RespondResult(true, RespondResult.lackCode, "住院病案号："+ medicalRecord.getMrId()+",住院次数:"+medicalRecord.getVisitNumber()+",要刻录的类型没有资源", null);
 			}else{
 				respondResult = new RespondResult(true, RespondResult.errorCode, "错误", null);
 			}
@@ -116,23 +138,38 @@ public class InterfaceMedicalRecordController {
 			for (Map<String, Object> postData : postDatas) {
 				Map<String, Object> medicalRecordJson= (Map<String, Object>)postData.get("medicalRecord");
 				List<Map<String, Object>> scanImagesJson = (List<Map<String, Object>>)postData.get("scanImages");
+				String printTypeCode = (String)postData.get("printTypeCode");
 				MedicalRecord medicalRecord = MedicalRecord.buildMedicalRecord(medicalRecordJson);
 				int count = medicalRecordService.checkMeditalRecordUniq(medicalRecord.getOnlyId(), medicalRecord.getMrId(), medicalRecord.getVisitNumber());
 				if(count > 0){
 					List<String> visitGuids = medicalRecordService.getVisitGuidByMrIdAndVisitNumber(medicalRecord.getMrId(), medicalRecord.getVisitNumber());
 					String visitGuid = visitGuids.get(0);
-					String printerPath =myConfig.getPdfRecourcePath()+StringUtil.getLocalPath(visitGuid)+ visitGuid+"\\"+"publish\\"+medicalRecord.getMrId()+"_"+medicalRecord.getVisitNumber()+"_"+myConfig.getDefaultPrintTypeCode()+".pdf";
+					String printerPath =myConfig.getPdfRecourcePath()+StringUtil.getLocalPath(visitGuid)+ visitGuid+"\\"+"publish\\"+medicalRecord.getMrId()+"_"+medicalRecord.getVisitNumber()+"_"+printTypeCode+".pdf";
 					if(!new File(printerPath).exists()){
-						return new RespondResult(true, RespondResult.lackCode, "病案号："+ medicalRecord.getMrId()+",住院次数:"+medicalRecord.getVisitNumber()+",数据存在，资源缺失", printerPath);
+						List<Map<String,Object>> sourceFiles = medicalRecordScanService.getImageFilesByVisitGuidAndPrinterTypeCode(visitGuid, printTypeCode);
+						if(sourceFiles == null || sourceFiles.size() ==0){
+							return new RespondResult(true, RespondResult.lackCode, "住院病案号："+ medicalRecord.getMrId()+",住院次数:"+medicalRecord.getVisitNumber()+",要刻录的类型没有资源", null);
+						}
+						MedicalRecordResource medicalRecordResource = new MedicalRecordResource();
+						/*medicalRecordResource.setCurrentVersion(myConfig.getCurrentVersion());*/
+						medicalRecordResource.getImageRecources().addAll(sourceFiles);
+						medicalRecordResource.setImageBasicPath(myConfig.getImageRecourcePath());
+						String newPDFPath = myConfig.getPdfRecourcePath()+StringUtil.getLocalPath(visitGuid)+ visitGuid+"\\"+"publish\\"+medicalRecord.getMrId()+"_"+medicalRecord.getVisitNumber()+"_"+printTypeCode+".pdf";
+						medicalRecordResource.setNewPDFPath(newPDFPath);
+						/*MedicalRecordPDFThread medicalRecordPDFThread = new MedicalRecordPDFThread(medicalRecordResource);
+						medicalRecordPDFThread.start();*/
+						PDFUtil.createPdf(medicalRecordResource.getImageRecources(),medicalRecordResource.getImageBasicPath(), medicalRecordResource.getNewPDFPath());
+						printerPaths.add(printerPath);
+						continue;
 					}else{
 						printerPaths.add(printerPath);
 						continue;
 					}
 					
 				}
-				count = interfaceMedicalRecordService.importPaginationInfo(medicalRecord,scanImagesJson);
+				count = interfaceMedicalRecordService.importPaginationInfo(medicalRecord,scanImagesJson,printTypeCode);
 				if(count == 1){
-					String printerPath =myConfig.getPdfRecourcePath()+StringUtil.getLocalPath(medicalRecord.getVisitGuid())+ medicalRecord.getVisitGuid()+"\\"+"publish\\"+medicalRecord.getMrId()+"_"+medicalRecord.getVisitNumber()+"_"+myConfig.getDefaultPrintTypeCode()+".pdf";
+					String printerPath =myConfig.getPdfRecourcePath()+StringUtil.getLocalPath(medicalRecord.getVisitGuid())+ medicalRecord.getVisitGuid()+"\\"+"publish\\"+medicalRecord.getMrId()+"_"+medicalRecord.getVisitNumber()+"_"+printTypeCode+".pdf";
 					if(!new File(printerPath).exists()){
 						return new RespondResult(true, RespondResult.lackCode, "病案号："+ medicalRecord.getMrId()+",住院次数:"+medicalRecord.getVisitNumber()+",数据存在，资源缺失", printerPath);
 					}else{
@@ -142,6 +179,8 @@ public class InterfaceMedicalRecordController {
 					
 				}else if(count == -2){
 					return new RespondResult(true, RespondResult.lackCode, "资源缺失", null);
+				}else if(count == -3){
+					respondResult = new RespondResult(true, RespondResult.lackCode, "住院病案号："+ medicalRecord.getMrId()+",住院次数:"+medicalRecord.getVisitNumber()+",要刻录的类型没有资源", null);
 				}else{
 					return new RespondResult(true, RespondResult.errorCode, "错误", null);
 				}
@@ -176,22 +215,36 @@ public class InterfaceMedicalRecordController {
 			Map<String, Object> postData = JsonUtil.jsonToPojo(postDataJson, Map.class);
 			Map<String, Object> medicalRecordJson= (Map<String, Object>)postData.get("medicalRecord");
 			List<Map<String, Object>> scanImagesJson = (List<Map<String, Object>>)postData.get("scanImages");
+			String printTypeCode = (String)postData.get("printTypeCode");
 			MedicalRecordOutPatient medicalRecord = MedicalRecordOutPatient.buildMedicalRecord(medicalRecordJson);
 			int count = interfaceMedicalRecordService.checkMeditalRecordUniqOfOutPatient(medicalRecord.getMrId());
 			if(count > 0){
 				List<String> visitGuids = interfaceMedicalRecordService.getVisitGuidByOutPatientMrId(medicalRecord.getMrId());
 				String visitGuid = visitGuids.get(0);
-				String printerPath =myConfig.getPdfRecourcePath()+StringUtil.getLocalPath(visitGuid)+ visitGuid+"\\"+"publish\\"+medicalRecord.getMrId()+"_"+myConfig.getDefaultPrintTypeCode()+".pdf";
+				String printerPath =myConfig.getPdfRecourcePath()+StringUtil.getLocalPath(visitGuid)+ visitGuid+"\\"+"publish\\"+medicalRecord.getMrId()+"_"+printTypeCode+".pdf";
 				if(!new File(printerPath).exists()){
-					return new RespondResult(true, RespondResult.lackCode, "病案号："+ medicalRecord.getMrId()+",数据存在，资源缺失1", printerPath);
+					List<Map<String,Object>> sourceFiles = medicalRecordScanService.getImageFilesByVisitGuidAndPrinterTypeCode(visitGuid, printTypeCode);
+					if(sourceFiles == null || sourceFiles.size() ==0){
+						return new RespondResult(true, RespondResult.lackCode, "门诊病案号："+ medicalRecord.getMrId()+",要刻录的类型没有资源", null);
+					}
+					MedicalRecordResource medicalRecordResource = new MedicalRecordResource();
+					/*medicalRecordResource.setCurrentVersion(myConfig.getCurrentVersion());*/
+					medicalRecordResource.getImageRecources().addAll(sourceFiles);
+					medicalRecordResource.setImageBasicPath(myConfig.getImageRecourcePath());
+					String newPDFPath = myConfig.getPdfRecourcePath()+StringUtil.getLocalPath(visitGuid)+ visitGuid+"\\"+"publish\\"+medicalRecord.getMrId()+"_"+printTypeCode+".pdf";
+					medicalRecordResource.setNewPDFPath(newPDFPath);
+					/*MedicalRecordPDFThread medicalRecordPDFThread = new MedicalRecordPDFThread(medicalRecordResource);
+					medicalRecordPDFThread.start();*/
+					PDFUtil.createPdf(medicalRecordResource.getImageRecources(),medicalRecordResource.getImageBasicPath(), medicalRecordResource.getNewPDFPath());
+					return new RespondResult(true, RespondResult.successCode, null, printerPath);
 				}else{
 					return new RespondResult(true, RespondResult.repeatCode, "资源已存在", printerPath);
 				}
 				
 			}
-			count = interfaceMedicalRecordService.importPaginationInfo(medicalRecord,scanImagesJson);
+			count = interfaceMedicalRecordService.importPaginationInfo(medicalRecord,scanImagesJson,printTypeCode);
 			if(count == 1){
-				String printerPath =myConfig.getPdfRecourcePath()+StringUtil.getLocalPath(medicalRecord.getVisitGuid())+ medicalRecord.getVisitGuid()+"\\"+"publish\\"+medicalRecord.getMrId()+"_"+myConfig.getDefaultPrintTypeCode()+".pdf";
+				String printerPath =myConfig.getPdfRecourcePath()+StringUtil.getLocalPath(medicalRecord.getVisitGuid())+ medicalRecord.getVisitGuid()+"\\"+"publish\\"+medicalRecord.getMrId()+"_"+printTypeCode+".pdf";
 				if(!new File(printerPath).exists()){
 					return new RespondResult(true, RespondResult.lackCode, "病案号："+ medicalRecord.getMrId()+",数据存在，资源缺失2", printerPath);
 				}else{
@@ -200,6 +253,8 @@ public class InterfaceMedicalRecordController {
 				
 			}else if(count == -2){
 				respondResult = new RespondResult(true, RespondResult.lackCode, "资源缺失", null);
+			}else if(count == -3){
+				respondResult = new RespondResult(true, RespondResult.lackCode, "门诊病案号："+ medicalRecord.getMrId()+",要刻录的类型没有资源", null);
 			}else{
 				respondResult = new RespondResult(true, RespondResult.errorCode, "错误", null);
 			}
@@ -232,22 +287,36 @@ public class InterfaceMedicalRecordController {
 			Map<String, Object> postData = JsonUtil.jsonToPojo(postDataJson, Map.class);
 			Map<String, Object> medicalRecordJson= (Map<String, Object>)postData.get("medicalRecord");
 			List<Map<String, Object>> scanImagesJson = (List<Map<String, Object>>)postData.get("scanImages");
+			String printTypeCode = (String)postData.get("printTypeCode");
 			MedicalRecordRadioTherapy medicalRecord = MedicalRecordRadioTherapy.buildMedicalRecord(medicalRecordJson);
 			int count = interfaceMedicalRecordService.checkMeditalRecordUniqOfRadioTherapy(medicalRecord.getMrId());
 			if(count > 0){
 				List<String> visitGuids = interfaceMedicalRecordService.getVisitGuidByRadioTherapyMrId(medicalRecord.getMrId());
 				String visitGuid = visitGuids.get(0);
-				String printerPath =myConfig.getPdfRecourcePath()+StringUtil.getLocalPath(visitGuid)+ visitGuid+"\\"+"publish\\"+medicalRecord.getMrId()+"_"+myConfig.getDefaultPrintTypeCode()+".pdf";
+				String printerPath =myConfig.getPdfRecourcePath()+StringUtil.getLocalPath(visitGuid)+ visitGuid+"\\"+"publish\\"+medicalRecord.getMrId()+"_"+printTypeCode+".pdf";
 				if(!new File(printerPath).exists()){
-					return new RespondResult(true, RespondResult.lackCode, "病案号："+ medicalRecord.getMrId()+",数据存在，资源缺失1", printerPath);
+					List<Map<String,Object>> sourceFiles = medicalRecordScanService.getImageFilesByVisitGuidAndPrinterTypeCode(visitGuid, printTypeCode);
+					if(sourceFiles == null || sourceFiles.size() ==0){
+						return new RespondResult(true, RespondResult.lackCode, "放疗病案号："+ medicalRecord.getMrId()+",要刻录的类型没有资源", null);
+					}
+					MedicalRecordResource medicalRecordResource = new MedicalRecordResource();
+					/*medicalRecordResource.setCurrentVersion(myConfig.getCurrentVersion());*/
+					medicalRecordResource.getImageRecources().addAll(sourceFiles);
+					medicalRecordResource.setImageBasicPath(myConfig.getImageRecourcePath());
+					String newPDFPath = myConfig.getPdfRecourcePath()+StringUtil.getLocalPath(visitGuid)+ visitGuid+"\\"+"publish\\"+medicalRecord.getMrId()+"_"+printTypeCode+".pdf";
+					medicalRecordResource.setNewPDFPath(newPDFPath);
+					/*MedicalRecordPDFThread medicalRecordPDFThread = new MedicalRecordPDFThread(medicalRecordResource);
+					medicalRecordPDFThread.start();*/
+					PDFUtil.createPdf(medicalRecordResource.getImageRecources(),medicalRecordResource.getImageBasicPath(), medicalRecordResource.getNewPDFPath());
+					return new RespondResult(true, RespondResult.successCode, null, printerPath);
 				}else{
 					return new RespondResult(true, RespondResult.repeatCode, "资源已存在", printerPath);
 				}
 				
 			}
-			count = interfaceMedicalRecordService.importPaginationInfo(medicalRecord,scanImagesJson);
+			count = interfaceMedicalRecordService.importPaginationInfo(medicalRecord,scanImagesJson, printTypeCode);
 			if(count == 1){
-				String printerPath =myConfig.getPdfRecourcePath()+StringUtil.getLocalPath(medicalRecord.getVisitGuid())+ medicalRecord.getVisitGuid()+"\\"+"publish\\"+medicalRecord.getMrId()+"_"+myConfig.getDefaultPrintTypeCode()+".pdf";
+				String printerPath =myConfig.getPdfRecourcePath()+StringUtil.getLocalPath(medicalRecord.getVisitGuid())+ medicalRecord.getVisitGuid()+"\\"+"publish\\"+medicalRecord.getMrId()+"_"+printTypeCode+".pdf";
 				if(!new File(printerPath).exists()){
 					return new RespondResult(true, RespondResult.lackCode, "病案号："+ medicalRecord.getMrId()+",数据存在，资源缺失2", printerPath);
 				}else{
@@ -256,6 +325,8 @@ public class InterfaceMedicalRecordController {
 				
 			}else if(count == -2){
 				respondResult = new RespondResult(true, RespondResult.lackCode, "资源缺失", null);
+			}else if(count == -3){
+				respondResult = new RespondResult(true, RespondResult.lackCode, "放疗病案号："+ medicalRecord.getMrId()+",要刻录的类型没有资源", null);
 			}else{
 				respondResult = new RespondResult(true, RespondResult.errorCode, "错误", null);
 			}

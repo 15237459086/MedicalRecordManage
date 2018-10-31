@@ -66,7 +66,7 @@ public class InterfaceMedicalRecordServiceImpl implements InterfaceMedicalRecord
 	
 	@Transactional(propagation=Propagation.REQUIRED)
 	@Override
-	public int importPaginationInfo(MedicalRecord medicalRecord,List<Map<String, Object>> scanImagesJson) throws DocumentException, IOException {
+	public int importPaginationInfo(MedicalRecord medicalRecord,List<Map<String, Object>> scanImagesJson,String printTypeCode) throws DocumentException, IOException {
 		// TODO Auto-generated method stub
 		int count = 0;
 		medicalRecord.setVersion(1);
@@ -156,16 +156,19 @@ public class InterfaceMedicalRecordServiceImpl implements InterfaceMedicalRecord
 		pigeonholeFinishTrace.setTraceTypeCode((String)treatmentTraceTypes.get(0).get("code"));
 		pigeonholeFinishTrace.setTraceTypeName((String)treatmentTraceTypes.get(0).get("name"));
 		count = medicalRecordMapper.insertMedicalRecordTrace(pigeonholeFinishTrace);
-		List<String> objectiveCodes = new ArrayList<String>();
+		/*List<String> objectiveCodes = new ArrayList<String>();
 		objectiveCodes.add("2");
 		objectiveCodes.add("1");
-		List<Map<String,Object>> sourceFiles = medicalRecordImageMapper.getObjectiveImageFilesByVisitGuid(medicalRecord.getVisitGuid(), objectiveCodes);
-		/*List<Map<String,Object>> sourceFiles = medicalRecordScanService.getImageFilesByVisitGuidAndPrinterTypeCode(medicalRecord.getVisitGuid(), myConfig.getDefaultPrintTypeCode());*/
+		List<Map<String,Object>> sourceFiles = medicalRecordImageMapper.getObjectiveImageFilesByVisitGuid(medicalRecord.getVisitGuid(), objectiveCodes);*/
+		List<Map<String,Object>> sourceFiles = medicalRecordScanService.getImageFilesByVisitGuidAndPrinterTypeCode(medicalRecord.getVisitGuid(), printTypeCode);
+		if(sourceFiles == null || sourceFiles.size() ==0){
+			return -3;
+		}
 		MedicalRecordResource medicalRecordResource = new MedicalRecordResource();
 		/*medicalRecordResource.setCurrentVersion(myConfig.getCurrentVersion());*/
 		medicalRecordResource.getImageRecources().addAll(sourceFiles);
 		medicalRecordResource.setImageBasicPath(myConfig.getImageRecourcePath());
-		String newPDFPath = myConfig.getPdfRecourcePath()+StringUtil.getLocalPath(medicalRecord.getVisitGuid())+ medicalRecord.getVisitGuid()+"\\"+"publish\\"+medicalRecord.getMrId()+"_"+medicalRecord.getVisitNumber()+"_"+myConfig.getDefaultPrintTypeCode()+".pdf";
+		String newPDFPath = myConfig.getPdfRecourcePath()+StringUtil.getLocalPath(medicalRecord.getVisitGuid())+ medicalRecord.getVisitGuid()+"\\"+"publish\\"+medicalRecord.getMrId()+"_"+medicalRecord.getVisitNumber()+"_"+printTypeCode+".pdf";
 		medicalRecordResource.setNewPDFPath(newPDFPath);
 		/*MedicalRecordPDFThread medicalRecordPDFThread = new MedicalRecordPDFThread(medicalRecordResource);
 		medicalRecordPDFThread.start();*/
@@ -175,7 +178,7 @@ public class InterfaceMedicalRecordServiceImpl implements InterfaceMedicalRecord
 
 	@Transactional(propagation=Propagation.REQUIRED)
 	@Override
-	public int importPaginationInfo(MedicalRecordOutPatient medicalRecord, List<Map<String, Object>> scanImagesJson)
+	public int importPaginationInfo(MedicalRecordOutPatient medicalRecord, List<Map<String, Object>> scanImagesJson,String printTypeCode)
 			throws DocumentException, IOException {
 		// TODO Auto-generated method stub
 		int count = 0;
@@ -266,16 +269,19 @@ public class InterfaceMedicalRecordServiceImpl implements InterfaceMedicalRecord
 		pigeonholeFinishTrace.setTraceTypeCode((String)treatmentTraceTypes.get(0).get("code"));
 		pigeonholeFinishTrace.setTraceTypeName((String)treatmentTraceTypes.get(0).get("name"));
 		count = medicalRecordMapper.insertMedicalRecordTrace(pigeonholeFinishTrace);
-		List<String> objectiveCodes = new ArrayList<String>();
+		/*List<String> objectiveCodes = new ArrayList<String>();
 		objectiveCodes.add("2");
 		objectiveCodes.add("1");
-		List<Map<String,Object>> sourceFiles = medicalRecordImageMapper.getObjectiveImageFilesByVisitGuid(medicalRecord.getVisitGuid(), objectiveCodes);
-		/*List<Map<String,Object>> sourceFiles = medicalRecordScanService.getImageFilesByVisitGuidAndPrinterTypeCode(medicalRecord.getVisitGuid(), myConfig.getDefaultPrintTypeCode());*/
+		List<Map<String,Object>> sourceFiles = medicalRecordImageMapper.getObjectiveImageFilesByVisitGuid(medicalRecord.getVisitGuid(), objectiveCodes);*/
+		List<Map<String,Object>> sourceFiles = medicalRecordScanService.getImageFilesByVisitGuidAndPrinterTypeCode(medicalRecord.getVisitGuid(), printTypeCode);
+		if(sourceFiles == null || sourceFiles.size() ==0){
+			return -3;
+		}
 		MedicalRecordResource medicalRecordResource = new MedicalRecordResource();
 		/*medicalRecordResource.setCurrentVersion(myConfig.getCurrentVersion());*/
 		medicalRecordResource.getImageRecources().addAll(sourceFiles);
 		medicalRecordResource.setImageBasicPath(myConfig.getImageRecourcePath());
-		String newPDFPath = myConfig.getPdfRecourcePath()+StringUtil.getLocalPath(medicalRecord.getVisitGuid())+ medicalRecord.getVisitGuid()+"\\"+"publish\\"+medicalRecord.getMrId()+"_"+myConfig.getDefaultPrintTypeCode()+".pdf";
+		String newPDFPath = myConfig.getPdfRecourcePath()+StringUtil.getLocalPath(medicalRecord.getVisitGuid())+ medicalRecord.getVisitGuid()+"\\"+"publish\\"+medicalRecord.getMrId()+"_"+printTypeCode+".pdf";
 		medicalRecordResource.setNewPDFPath(newPDFPath);
 		/*MedicalRecordPDFThread medicalRecordPDFThread = new MedicalRecordPDFThread(medicalRecordResource);
 		medicalRecordPDFThread.start();*/
@@ -286,7 +292,7 @@ public class InterfaceMedicalRecordServiceImpl implements InterfaceMedicalRecord
 	
 	@Transactional(propagation=Propagation.REQUIRED)
 	@Override
-	public int importPaginationInfo(MedicalRecordRadioTherapy medicalRecord, List<Map<String, Object>> scanImagesJson)
+	public int importPaginationInfo(MedicalRecordRadioTherapy medicalRecord, List<Map<String, Object>> scanImagesJson,String printTypeCode)
 			throws DocumentException, IOException {
 		// TODO Auto-generated method stub
 		
@@ -378,17 +384,20 @@ public class InterfaceMedicalRecordServiceImpl implements InterfaceMedicalRecord
 		pigeonholeFinishTrace.setTraceTypeCode((String)treatmentTraceTypes.get(0).get("code"));
 		pigeonholeFinishTrace.setTraceTypeName((String)treatmentTraceTypes.get(0).get("name"));
 		count = medicalRecordMapper.insertMedicalRecordTrace(pigeonholeFinishTrace);
-		List<String> objectiveCodes = new ArrayList<String>();
+		/*List<String> objectiveCodes = new ArrayList<String>();
 		objectiveCodes.add("2");
 		objectiveCodes.add("1");
-		List<Map<String,Object>> sourceFiles = medicalRecordImageMapper.getObjectiveImageFilesByVisitGuid(medicalRecord.getVisitGuid(), objectiveCodes);
-		/*
-		List<Map<String,Object>> sourceFiles = medicalRecordScanService.getImageFilesByVisitGuidAndPrinterTypeCode(medicalRecord.getVisitGuid(), myConfig.getDefaultPrintTypeCode());*/
+		List<Map<String,Object>> sourceFiles = medicalRecordImageMapper.getObjectiveImageFilesByVisitGuid(medicalRecord.getVisitGuid(), objectiveCodes);*/
+		
+		List<Map<String,Object>> sourceFiles = medicalRecordScanService.getImageFilesByVisitGuidAndPrinterTypeCode(medicalRecord.getVisitGuid(), printTypeCode);
+		if(sourceFiles == null || sourceFiles.size() ==0){
+			return -3;
+		}
 		MedicalRecordResource medicalRecordResource = new MedicalRecordResource();
 		/*medicalRecordResource.setCurrentVersion(myConfig.getCurrentVersion());*/
 		medicalRecordResource.getImageRecources().addAll(sourceFiles);
 		medicalRecordResource.setImageBasicPath(myConfig.getImageRecourcePath());
-		String newPDFPath = myConfig.getPdfRecourcePath()+StringUtil.getLocalPath(medicalRecord.getVisitGuid())+ medicalRecord.getVisitGuid()+"\\"+"publish\\"+medicalRecord.getMrId()+"_"+myConfig.getDefaultPrintTypeCode()+".pdf";
+		String newPDFPath = myConfig.getPdfRecourcePath()+StringUtil.getLocalPath(medicalRecord.getVisitGuid())+ medicalRecord.getVisitGuid()+"\\"+"publish\\"+medicalRecord.getMrId()+"_"+printTypeCode+".pdf";
 		medicalRecordResource.setNewPDFPath(newPDFPath);
 		/*MedicalRecordPDFThread medicalRecordPDFThread = new MedicalRecordPDFThread(medicalRecordResource);
 		medicalRecordPDFThread.start();*/
